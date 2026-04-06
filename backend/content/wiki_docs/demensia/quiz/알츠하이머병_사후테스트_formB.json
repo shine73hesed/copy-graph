@@ -1,0 +1,201 @@
+{
+  "node_id": "알츠하이머병",
+  "title": "뇌의 붕괴, 20년의 카운트다운",
+  "form": "B",
+  "description": "사후 평가 — 학습 후 이해·적용·분석 수준 측정",
+  "items": [
+    {
+      "id": "알츠하이머_B_01",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "타우 단백질의 과인산화가 뇌세포를 파괴하는 과정으로 올바른 것은?",
+      "options": [
+        "A. 인산기 과다 부착 → 타우가 미세소관에서 이탈(나사 빠짐) → 선로 붕괴 → 영양분 수송 차단 → 세포 사멸",
+        "B. 타우가 아밀로이드로 변환되어 플라크를 형성한다",
+        "C. 타우가 도파민 수용체를 차단하여 운동 장애가 온다",
+        "D. 타우가 혈관벽을 손상시켜 뇌출혈이 발생한다"
+      ],
+      "answer": "A",
+      "explanation": "타우는 미세소관의 '나사'이다. 과인산화로 나사가 빠지면 기찻길(미세소관)이 붕괴하고, 세포는 영양분을 공급받지 못해 굶어 죽으며, 이탈한 타우는 신경섬유매듭(NFT)을 형성한다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션2.2"
+    },
+    {
+      "id": "알츠하이머_B_02",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "LRP1 수용체를 통한 타우 전파에 대한 설명으로 옳은 것은?",
+      "options": [
+        "A. LRP1은 독성 타우를 분해하는 효소이다",
+        "B. 건강한 뉴런의 LRP1이 독성 타우를 영양분으로 착각하여 삼켜, 뇌 전체로 병리가 퍼진다",
+        "C. LRP1은 아밀로이드 플라크만 인식한다",
+        "D. LRP1을 차단하는 것이 현재 치매 치료의 표준이다"
+      ],
+      "answer": "B",
+      "explanation": "LRP1은 본래 영양분을 세포 안으로 받아들이는 도킹 스테이션(문)이다. 독성 타우가 이 수용체에 달라붙으면 건강한 세포가 자기 발로 독을 삼키게 되고, 전염병 바이러스처럼 연쇄 전파된다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션3"
+    },
+    {
+      "id": "알츠하이머_B_03",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Apply",
+      "subtype": null,
+      "question": "치매 환자가 저녁만 되면 극도로 불안해하는 일몰증후군을 보인다. 이 증상과 직접 관련된 뇌 구조물은?",
+      "options": [
+        "A. 해마",
+        "B. 안와 전두엽",
+        "C. 시교차상핵(SCN)",
+        "D. 마이네르트 기저핵"
+      ],
+      "answer": "C",
+      "explanation": "시교차상핵은 빛을 감지해 멜라토닌 분비를 조절하고 24시간 생체 리듬을 맞추는 '물리적 시계'이다. 이 시계의 톱니바퀴가 부서지면 낮과 밤을 구분하지 못해 일몰증후군이 나타난다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션6.3"
+    },
+    {
+      "id": "알츠하이머_B_04",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "신경염증에서 별아교세포가 뿜어내는 과산화수소를 '표백제' 비유로 설명할 때, 이 비유의 핵심 의미는?",
+      "options": [
+        "A. 과산화수소가 아밀로이드만 정확하게 분해한다",
+        "B. 커피 얼룩(아밀로이드)을 지우려고 표백제를 부었더니 카펫과 바닥재(정상 뇌세포)까지 다 녹여버렸다",
+        "C. 표백제를 사용하면 치매가 완치된다",
+        "D. 과산화수소는 뇌에 유익한 물질이다"
+      ],
+      "answer": "B",
+      "explanation": "본래 청소부(면역세포)가 쓰레기(아밀로이드)를 치우려 했으나, 너무 오래 폭주한 결과 표백제(과산화수소)가 얼룩뿐 아니라 집 전체(정상 뇌세포)를 파괴해버렸다는 의미이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션4"
+    },
+    {
+      "id": "알츠하이머_B_05",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "치매 환자가 갑자기 하루 종일 침대에만 누워 있으려 하고, 동시에 식당에서 남의 반찬을 집어 먹기도 합니다. 이 두 가지 상반된 행동이 나타나는 이유를 '전두엽의 엑셀 페달과 브레이크 페달'로 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "엑셀 페달", "description": "내측 전두엽 = 무언가를 시작하게 만드는 엔진. 여기가 망가지면 극도의 무기력증", "points": 12},
+        {"item": "브레이크 페달", "description": "안와 전두엽 = 충동을 억제하는 브레이크. 여기가 파괴되면 충동 조절 실패", "points": 12},
+        {"item": "동시 발생 설명", "description": "두 영역이 모두 손상되어 한쪽에서는 동기 상실, 다른 한쪽에서는 충동 폭발이 동시에 나타남", "points": 8},
+        {"item": "물리적 고장 강조", "description": "성격이 나빠진 것이 아니라 물리적 브레이크/엑셀이 파열된 것임을 명시", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션6.2"
+    },
+    {
+      "id": "알츠하이머_B_06",
+      "seq": 6,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "보호자가 묻습니다: '의사가 도네페질을 처방했는데, 이 약이 치매를 낫게 해주나요?' 도네페질의 작동 원리를 보호자가 이해할 수 있게 '공장' 비유를 활용하여 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "공장 파괴", "description": "마이네르트 기저핵(아세틸콜린 독점 공장)이 파괴되어 생산 중단됨을 설명", "points": 10},
+        {"item": "완치 불가", "description": "이미 파괴된 공장을 다시 세울 수는 없다 → 완치가 아님", "points": 8},
+        {"item": "작동 원리", "description": "남은 극소량의 아세틸콜린이 분해되지 않도록 분해 효소를 막아 오래 쓰게 하는 전략", "points": 12},
+        {"item": "치료 목표", "description": "인지 기능 하강 속도를 조금이라도 늦추는 것이 목표", "points": 10}
+      ],
+      "points": 40,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "알츠하이머_B_07",
+      "seq": 7,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "루이소체 치매 환자가 벽에 걸린 코트를 보고 '저기 사람이 서 있어!'라며 공포에 떨고 있습니다. 이 환시(幻視)가 발생하는 뇌의 메커니즘을 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "관련 뇌 영역", "description": "후두엽과 두정엽이 강하게 교란됨", "points": 10},
+        {"item": "패턴 인식 오작동", "description": "뇌가 시각적 노이즈에서 의미 있는 형태를 찾으려는 패턴 인식 소프트웨어가 심각한 오작동", "points": 10},
+        {"item": "3D 합성", "description": "코트나 그림자를 실제 사람이 서 있는 것처럼 3D 이미지로 합성해버림", "points": 10},
+        {"item": "4차 타격 연결", "description": "뇌 동네별 붕괴 순서에서 4차 타격(후두엽·두정엽=시각 렌즈)에 해당", "points": 10}
+      ],
+      "points": 40,
+      "related_concept": "섹션6.4"
+    },
+    {
+      "id": "알츠하이머_B_08",
+      "seq": 8,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "알츠하이머병의 분자 병리 과정을 '방아쇠(Aβ) → 총알(타우) → 표백제(신경염증) → 공장 파괴(ACh 고갈)'의 연쇄 반응으로 순서대로 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "1단계 방아쇠", "description": "Aβ 과잉 생산 또는 청소 시스템 고장 → 플라크 축적 (15~20년 전부터)", "points": 8},
+        {"item": "2단계 총알", "description": "플라크가 스트레스 환경 조성 → 타우 과인산화 → 미세소관 붕괴(나사 이탈) → NFT 형성 → LRP1 통해 전파", "points": 10},
+        {"item": "3단계 표백제", "description": "독성 단백질 장기 축적 → 별아교세포 폭주 → H₂O₂ 방출 → 카펫 표백제 비유 → 정상 뇌세포까지 파괴", "points": 10},
+        {"item": "4단계 공장 파괴", "description": "뉴런 대량 사멸 → 마이네르트 기저핵 파괴 → ACh 고갈 → 도네페질로 남은 ACh 연장", "points": 8},
+        {"item": "인과관계", "description": "각 단계가 다음 단계의 조건을 형성하는 연쇄 구조임을 설명", "points": 4}
+      ],
+      "points": 40,
+      "related_concept": "섹션2+3+4+5 통합"
+    },
+    {
+      "id": "알츠하이머_B_09",
+      "seq": 9,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "가족이 '치매에 걸리면 처음에 기억을 잃다가 나중에 성격이 변하고 밤낮이 바뀌는 이유가 뭔가요?'라고 질문합니다. 뇌의 동네별 붕괴 순서(1차~4차)를 활용하여 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "1차 해마", "description": "기억 하드디스크 파괴 → 최근 기억 상실이 가장 먼저 (밥 먹고도 또 찾기)", "points": 8},
+        {"item": "2차 전두엽", "description": "엑셀(동기)+브레이크(억제) 파열 → 무기력 또는 성격 변화·충동 폭발", "points": 8},
+        {"item": "3차 시교차상핵", "description": "생체 시계 파괴 → 밤낮 구분 불가, 수면 장애, 일몰증후군", "points": 8},
+        {"item": "4차 후두엽/두정엽", "description": "시각 렌즈 왜곡 → 환시 (루이소체 치매)", "points": 8},
+        {"item": "순서 논리", "description": "병리(타우)가 신경망을 따라 순서대로 확산되기 때문에 증상도 순서대로 나타남", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션6"
+    },
+    {
+      "id": "알츠하이머_B_10",
+      "seq": 10,
+      "type": "short_answer",
+      "bloom": "Analyze",
+      "subtype": "analysis",
+      "question": "수십 년간 제약사들이 아밀로이드를 제거하는 약물을 개발했지만 인지 저하를 막는 데 번번이 실패했습니다. 이 실패의 원인을 '방아쇠-총알-표백제' 프레임워크로 분석하고, 이것이 향후 치매 치료 전략에 대해 시사하는 바를 논하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "방아쇠 제거의 한계", "description": "아밀로이드 제거 = 방아쇠를 치운 것일 뿐. 이미 당겨진 방아쇠의 결과(타우, 염증)는 그대로 진행 중", "points": 10},
+        {"item": "총알의 독립적 파괴", "description": "이미 발사된 총알(타우 매듭)은 LRP1 통해 연쇄 전파 중 → 아밀로이드 제거로는 멈출 수 없음", "points": 10},
+        {"item": "표백제의 폭주", "description": "별아교세포가 뿜어내는 H₂O₂는 아밀로이드와 무관하게 독립적으로 정상 뇌세포를 파괴", "points": 10},
+        {"item": "상호 악화", "description": "타우와 신경염증이 서로를 악화시키는 양방향 관계 — 한쪽만 치워서는 안 됨", "points": 5},
+        {"item": "치료 전략 시사점", "description": "단일 표적(Aβ만) 치료의 한계 → 다중 표적(Aβ+타우+염증) 동시 개입 또는 전임상 단계에서 조기 개입 필요", "points": 5}
+      ],
+      "points": 40,
+      "related_concept": "섹션2+4 통합"
+    }
+  ]
+}

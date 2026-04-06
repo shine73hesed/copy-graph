@@ -1,0 +1,39 @@
+<svg width="720" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" style="font-family:'Pretendard Variable',-apple-system,'Malgun Gothic',sans-serif;max-width:100%;">
+<rect width="720" height="340" fill="#ffffff" rx="12"/>
+<!-- Central node -->
+<rect x="245" y="24" width="230" height="64" rx="12" fill="#fff4ef" stroke="#d85a30" stroke-width="2"/>
+<text x="360" y="50" text-anchor="middle" font-size="17" font-weight="700" fill="#993c1d">치매 증후군 (Dementia)</text>
+<text x="360" y="72" text-anchor="middle" font-size="12" fill="#d85a30">질병이 아닌 증후군 — 80~90가지 원인</text>
+<!-- Connector lines -->
+<line x1="290" y1="88" x2="115" y2="140" stroke="#c4c3be" stroke-width="1.2"/>
+<line x1="330" y1="88" x2="275" y2="140" stroke="#c4c3be" stroke-width="1.2"/>
+<line x1="390" y1="88" x2="435" y2="140" stroke="#c4c3be" stroke-width="1.2"/>
+<line x1="430" y1="88" x2="595" y2="140" stroke="#c4c3be" stroke-width="1.2"/>
+<!-- Branch 1: Alzheimer -->
+<rect x="30" y="140" width="170" height="56" rx="10" fill="#f0effc" stroke="#6b62c2" stroke-width="1.2"/>
+<text x="115" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#3c3489">알츠하이머병</text>
+<text x="115" y="182" text-anchor="middle" font-size="11" fill="#6b62c2">베타아밀로이드 축적 (60~75%)</text>
+<!-- Branch 2: Vascular -->
+<rect x="210" y="140" width="130" height="56" rx="10" fill="#edf5fb" stroke="#3a7cb8" stroke-width="1.2"/>
+<text x="275" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#0c447c">혈관성 치매</text>
+<text x="275" y="182" text-anchor="middle" font-size="11" fill="#3a7cb8">뇌혈관 손상 (15~20%)</text>
+<!-- Branch 3: Lewy Body -->
+<rect x="370" y="140" width="130" height="56" rx="10" fill="#e8f5f1" stroke="#1a8e6e" stroke-width="1.2"/>
+<text x="435" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#085041">루이소체 치매</text>
+<text x="435" y="182" text-anchor="middle" font-size="11" fill="#1a8e6e">도파민 교란 (~5%)</text>
+<!-- Branch 4: Frontotemporal -->
+<rect x="520" y="140" width="150" height="56" rx="10" fill="#f9edf2" stroke="#b84878" stroke-width="1.2"/>
+<text x="595" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#72243e">전두측두엽 치매</text>
+<text x="595" y="182" text-anchor="middle" font-size="11" fill="#b84878">행동조절 영역 (~5%)</text>
+<!-- Other causes note -->
+<rect x="460" y="212" width="170" height="32" rx="8" fill="#f4f3ee" stroke="#b4b2a9" stroke-width="0.8"/>
+<text x="545" y="233" text-anchor="middle" font-size="11" fill="#73726c">+ 80~90가지 기타 원인</text>
+<!-- Bottom comparison: Fever analogy -->
+<rect x="40" y="264" width="300" height="56" rx="10" fill="#fdf8f0" stroke="#d4a84a" stroke-width="1"/>
+<text x="190" y="286" text-anchor="middle" font-size="13" font-weight="600" fill="#7a5c12">비유: "열이 난다" = 증상</text>
+<text x="190" y="304" text-anchor="middle" font-size="11" fill="#9e7a2a">감기? 요로감염? 패혈증? → 원인이 다르다</text>
+<text x="370" y="292" text-anchor="middle" font-size="16" fill="#c4c3be">≈</text>
+<rect x="400" y="264" width="280" height="56" rx="10" fill="#fff4ef" stroke="#d85a30" stroke-width="1"/>
+<text x="540" y="286" text-anchor="middle" font-size="13" font-weight="600" fill="#993c1d">"인지기능이 무너진다" = 증상</text>
+<text x="540" y="304" text-anchor="middle" font-size="11" fill="#d85a30">알츠하이머? 혈관? 루이소체? → 원인이 다르다</text>
+</svg>

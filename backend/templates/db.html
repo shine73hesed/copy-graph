@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ALE DB Dashboard</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        :root{--bg:#f8f6f6;--white:#fff;--text:#1a1a2e;--text2:#64748b;--text3:#94a3b8;--border:#eeecec;--primary:#ec5b13;--primary-light:#fff4ed;--teal:#14b8a6;--teal-bg:#ecfdf5;--blue:#4f6af6;--blue-bg:#eef1fe;--rose:#f43f5e;--rose-bg:#fff1f2;--violet:#7c5cfc;--violet-bg:#f3efff;--yellow-bg:#fff8e1}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+        ::-webkit-scrollbar{width:4px;height:6px}::-webkit-scrollbar-thumb{background:#ccc;border-radius:10px}
+        .top{height:54px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:14px}
+        .logo{font-size:13.5px;font-weight:900;color:var(--primary);display:flex;align-items:center;gap:7px}
+        .top h2{font-size:15px;font-weight:800}
+        .top .back{font-size:12px;font-weight:600;color:var(--text3);text-decoration:none;display:flex;align-items:center;gap:4px;margin-left:auto}.top .back:hover{color:var(--primary)}
+        .wrap{margin:0 auto;padding:24px 28px}
+        .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px}
+        .stat{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+        .stat .v{font-size:24px;font-weight:800;margin-bottom:2px}.stat .l{font-size:11px;color:var(--text3);font-weight:600}
+        .tabs{display:flex;gap:4px;margin-bottom:16px}
+        .tab{padding:8px 18px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:var(--white);color:var(--text2);font-family:inherit;transition:all .15s}
+        .tab.on{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+        .tab:hover:not(.on){border-color:var(--text3)}
+        .filters{display:flex;gap:8px;margin-bottom:12px;align-items:center;flex-wrap:wrap}
+        .filters input,.filters select{padding:7px 12px;border:1.5px solid var(--border);border-radius:10px;font-size:12px;font-family:inherit;outline:none;background:var(--white)}
+        .filters input:focus{border-color:var(--primary)}
+        .fbtn{padding:7px 16px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text2);font-family:inherit}.fbtn:hover{border-color:var(--primary);color:var(--primary)}
+        .card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+        .tbl-wrap{overflow-x:auto;overflow-y:auto;max-height:62vh}
+        table{border-collapse:collapse;font-size:11.5px}
+        th{position:sticky;top:0;background:var(--bg);padding:8px 12px;text-align:left;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;border-bottom:1px solid var(--border);white-space:nowrap;z-index:2}
+        td{padding:7px 12px;border-bottom:1px solid var(--border);color:var(--text2);white-space:nowrap;font-variant-numeric:tabular-nums}
+        tr:hover td{background:rgba(236,91,19,.03)}
+        td.num{text-align:right;font-family:"SF Mono",Consolas,monospace;font-size:11px}
+        td.id{font-family:"SF Mono",Consolas,monospace;font-size:10px;color:var(--text3)}
+        td.long{max-width:300px;overflow:hidden;text-overflow:ellipsis;cursor:pointer;color:var(--blue)}
+        td.long:hover{text-decoration:underline;background:rgba(79,106,246,.04)}
+        .pill{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px}
+        .pill.ok{background:var(--teal-bg);color:var(--teal)}.pill.no{background:var(--rose-bg);color:var(--rose)}.pill.mid{background:var(--blue-bg);color:var(--blue)}.pill.gray{background:var(--bg);color:var(--text3)}
+        .empty{padding:40px;text-align:center;color:var(--text3);font-size:13px}
+        .bbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-top:1px solid var(--border)}
+        .pinfo{font-size:11px;color:var(--text3);font-weight:600}
+        .pbtns{display:flex;gap:4px}
+        .pbtn{padding:5px 12px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--text2);font-family:inherit}.pbtn:hover{border-color:var(--primary);color:var(--primary)}.pbtn.on{background:var(--primary);color:#fff;border-color:var(--primary)}.pbtn:disabled{opacity:.3;cursor:default}
+        .mo{display:none;position:fixed;inset:0;background:rgba(26,26,46,.35);backdrop-filter:blur(2px);z-index:300;align-items:center;justify-content:center}.mo.open{display:flex}
+        .mo-c{background:var(--white);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.12);max-width:720px;width:92vw;max-height:80vh;display:flex;flex-direction:column;overflow:hidden}
+        .mo-h{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border)}.mo-h h3{font-size:13px;font-weight:800;color:var(--text2)}
+        .mo-b{padding:20px;overflow-y:auto;font-size:13px;line-height:1.8;color:var(--text2);white-space:pre-wrap;word-break:break-all}
+    </style>
+</head>
+<body>
+<div class="top">
+    <div class="logo"><span class="material-symbols-outlined" style="font-size:17px">storage</span>ALE</div>
+    <h2>DB Dashboard</h2>
+    <a class="back" href="/test"><span class="material-symbols-outlined" style="font-size:16px">arrow_back</span>학습 화면</a>
+</div>
+<div class="wrap">
+    <div class="stats" id="stats"><div class="stat"><div class="v">-</div><div class="l">Loading...</div></div></div>
+    <div class="tabs">
+        <button class="tab on" onclick="showTab('interactions')">interaction_logs</button>
+        <button class="tab" onclick="showTab('sessions')">sessions</button>
+        <button class="tab" onclick="showTab('conversations')">conversation_logs</button>
+        <button class="tab" onclick="showTab('users')">users</button>
+    </div>
+    <div class="filters" id="filters">
+        <input id="fSession" placeholder="session_id" style="width:160px"/>
+        <input id="fLearner" placeholder="learner_id" style="width:110px"/>
+        <select id="fLimit"><option value="50">50</option><option value="100">100</option><option value="200" selected>200</option><option value="500">500</option><option value="1000">1000</option></select>
+        <button class="fbtn" onclick="currentPage=0;loadTable()">조회</button>
+        <button class="fbtn" onclick="exportCSV()">CSV</button>
+    </div>
+    <div class="card">
+        <div class="tbl-wrap" id="tblWrap"><div class="empty">로딩 중...</div></div>
+        <div class="bbar"><span class="pinfo" id="pinfo"></span><div class="pbtns" id="pbtns"></div></div>
+    </div>
+</div>
+<div class="mo" id="mo" onclick="if(event.target===this)closeMo()"><div class="mo-c"><div class="mo-h"><h3 id="moT">내용</h3><button onclick="closeMo()" style="background:none;border:none;cursor:pointer;color:var(--text3)"><span class="material-symbols-outlined">close</span></button></div><div class="mo-b" id="moB"></div></div></div>
+<script>
+let cTab='interactions',cData=[],cPage=0,pSize=50;
+const LONG=['content','student_answer','tutor_response','tutor_action','checklist_state'];
+
+function openMo(t,c){document.getElementById('moT').textContent=t;document.getElementById('moB').textContent=c;document.getElementById('mo').classList.add('open');}
+function closeMo(){document.getElementById('mo').classList.remove('open');}
+
+async function loadStats(){
+    try{const r=await fetch('/db/stats');const d=await r.json();
+    document.getElementById('stats').innerHTML=`
+        <div class="stat"><div class="v">${d.users||0}</div><div class="l">Users</div></div>
+        <div class="stat"><div class="v">${d.sessions||0}</div><div class="l">Sessions</div></div>
+        <div class="stat"><div class="v">${d.interaction_logs||0}</div><div class="l">Interactions</div></div>
+        <div class="stat"><div class="v">${d.conversation_logs||0}</div><div class="l">Conversations</div></div>
+        <div class="stat"><div class="v" style="color:var(--primary)">$${(d.total_cost||0).toFixed(3)}</div><div class="l">Total Cost</div></div>
+        <div class="stat"><div class="v" style="font-size:16px">${((d.total_input_tokens||0)/1000).toFixed(0)}K / ${((d.total_output_tokens||0)/1000).toFixed(0)}K</div><div class="l">In / Out Tokens</div></div>`;
+    }catch(e){}
+}
+
+function showTab(t){cTab=t;cPage=0;
+    document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('on',b.textContent.includes(t)));
+    document.getElementById('filters').style.display=(t==='users')?'none':'flex';
+    loadTable();}
+
+async function loadTable(){
+    const sid=document.getElementById('fSession').value.trim();
+    const lid=document.getElementById('fLearner').value.trim();
+    const lim=document.getElementById('fLimit').value;
+    let url='';
+    if(cTab==='interactions')url=`/db/interactions?limit=${lim}&session_id=${sid}&learner_id=${lid}`;
+    else if(cTab==='sessions')url='/db/sessions';
+    else if(cTab==='conversations')url=`/db/conversations?limit=${lim}&session_id=${sid}`;
+    else url='/db/users';
+    try{const r=await fetch(url);const d=await r.json();cData=d.rows||[];}catch(e){cData=[];}
+    pSize=Math.min(parseInt(document.getElementById('fLimit').value)||50,50);
+    renderPage();
+}
+
+function renderPage(){
+    const tp=Math.ceil(cData.length/pSize)||1;
+    const s=cPage*pSize,rows=cData.slice(s,s+pSize);
+    renderTbl(rows);
+    document.getElementById('pinfo').textContent=cData.length?`${cData.length}건 중 ${s+1}–${Math.min(s+pSize,cData.length)}`:'0건';
+    let b='';
+    if(tp>1){
+        b+=`<button class="pbtn" onclick="gp(0)" ${cPage===0?'disabled':''}>«</button>`;
+        b+=`<button class="pbtn" onclick="gp(${cPage-1})" ${cPage===0?'disabled':''}>‹</button>`;
+        let ps=Math.max(0,cPage-3),pe=Math.min(tp,ps+7);if(pe-ps<7)ps=Math.max(0,pe-7);
+        for(let i=ps;i<pe;i++)b+=`<button class="pbtn${i===cPage?' on':''}" onclick="gp(${i})">${i+1}</button>`;
+        b+=`<button class="pbtn" onclick="gp(${cPage+1})" ${cPage>=tp-1?'disabled':''}>›</button>`;
+        b+=`<button class="pbtn" onclick="gp(${tp-1})" ${cPage>=tp-1?'disabled':''}>»</button>`;
+    }
+    document.getElementById('pbtns').innerHTML=b;
+}
+function gp(p){const tp=Math.ceil(cData.length/pSize)||1;cPage=Math.max(0,Math.min(p,tp-1));renderPage();}
+
+function renderTbl(rows){
+    const w=document.getElementById('tblWrap');
+    if(!rows.length){w.innerHTML='<div class="empty">데이터 없음</div>';return;}
+    const ks=Object.keys(rows[0]);
+    let h='<table><thead><tr>';ks.forEach(k=>h+=`<th>${k}</th>`);h+='</tr></thead><tbody>';
+    rows.forEach((row,ri)=>{
+        h+='<tr>';
+        ks.forEach(k=>{
+            let v=row[k],raw=v,cls='',isL=LONG.includes(k);
+            if(v===null||v===undefined)v='<span style="color:var(--text3)">—</span>';
+            else if(typeof v==='number'){
+                cls='num';
+                if(k==='cost_usd')v='$'+v.toFixed(5);
+                else if(['score','moving_avg','trend','mastery_before','mastery_after','smoothed','final_mastery','p_correct','p_posterior'].includes(k))v=v.toFixed(4);
+                else if(['timestamp','created_at','updated_at','last_login'].includes(k)){const dt=new Date(v*1000);v=dt.toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+            }else if(typeof v==='string'){
+                if(k==='checklist_state'){try{const cl=JSON.parse(v);const cf=Object.values(cl).filter(x=>x==='confirmed').length;v=`<span class="pill ${cf===Object.keys(cl).length?'ok':'mid'}">${cf}/${Object.keys(cl).length}</span>`;isL=true;}catch(e){}}
+                else if(k==='status')v=v==='completed'?'<span class="pill ok">completed</span>':`<span class="pill gray">${v}</span>`;
+                else if(k==='score_source')v=`<span class="pill mid">${v}</span>`;
+                else if(k==='zpd_position'||k==='struggle_pattern')v=`<span class="pill gray">${v}</span>`;
+                else if(isL){cls='long';if(v.length>80)v=v.substring(0,80)+'…';}
+                else if(k.includes('id')&&v.length>14){cls='id';v=v.substring(0,14)+'…';}
+                else if(v.length>50)v=v.substring(0,50)+'…';
+            }else if(v===true||v===false||(typeof v==='number'&&(v===0||v===1))){
+                if(k.includes('complete')||k.includes('gate')||k==='completed'||k==='attempted')v=v?'<span class="pill ok">✓</span>':'<span class="pill no">✗</span>';
+            }
+            if(isL&&raw&&typeof raw==='string'&&raw.length>30){
+                const idx=cPage*pSize+ri;
+                h+=`<td class="${cls} long" onclick="openMo('${k}',cData[${idx}]['${k}'])">${v}</td>`;
+            }else{
+                h+=`<td class="${cls}">${v}</td>`;
+            }
+        });
+        h+='</tr>';
+    });
+    h+='</tbody></table>';w.innerHTML=h;
+}
+
+function exportCSV(){
+    if(!cData.length)return;
+    const ks=Object.keys(cData[0]);
+    let csv=ks.join(',')+'\n';
+    cData.forEach(r=>{csv+=ks.map(k=>{let v=r[k];if(v==null)return'';if(typeof v==='string')return'"'+v.replace(/"/g,'""')+'"';return v;}).join(',')+'\n';});
+    const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`ale_${cTab}_${new Date().toISOString().slice(0,10)}.csv`;a.click();
+}
+
+loadStats();loadTable();
+</script>
+</body>
+</html>

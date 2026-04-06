@@ -1,0 +1,203 @@
+{
+  "node_id": "배회",
+  "title": "치매 환자의 배회",
+  "form": "B",
+  "description": "사후 평가 — 학습 후 이해·적용·분석 수준 측정",
+  "items": [
+    {
+      "id": "배회_B_01",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "Random(무작위형) 배회 패턴과 관련된 뇌 영역은?",
+      "options": [
+        "A. 마이네르트 기저핵",
+        "B. 좌측 측두-두정엽 (대사 저하)",
+        "C. 시교차상핵",
+        "D. 편도체"
+      ],
+      "answer": "B",
+      "explanation": "무작위 배회는 시공간 능력의 심각한 저하와 관련된다. PET/SPECT 연구에서 배회 환자는 좌측 측두-두정엽 대사 저하 및 혈류 감소가 현저하게 나타난다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "배회_B_02",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "배회가 직접적으로 생명을 위협하는 연쇄 반응으로 올바른 것은?",
+      "options": [
+        "A. 배회 → 체중 감소 → 영양실조 → 사망",
+        "B. 야간 배회 → 낙상 → 고관절 골절 → 침상 안정 → 흡인성 폐렴",
+        "C. 배회 → 근육 강화 → 건강 호전",
+        "D. 배회 → 수면 개선 → 인지 향상"
+      ],
+      "answer": "B",
+      "explanation": "야간 배회 시 시야가 어둡고 시공간 능력이 저하된 상태에서 넘어지면 고관절 골절 → 침상 안정 → 흡인성 폐렴의 연쇄 반응으로 이어진다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션4"
+    },
+    {
+      "id": "배회_B_03",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Apply",
+      "subtype": null,
+      "question": "치매 환자가 '집에 가야 해'라며 현관으로 직행하는 배회 패턴은?",
+      "options": [
+        "A. Lapping (순환형)",
+        "B. Pacing (왕복형)",
+        "C. Random (무작위형)",
+        "D. Direct (목적지향형)"
+      ],
+      "answer": "D",
+      "explanation": "특정 목적지를 향해 걸어가는 것은 Direct 패턴이다. 과거 습관이나 귀가 욕구와 관련되며, 장기 기억에 저장된 행동 패턴의 재현이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "배회_B_04",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "배회를 약물로 멈추려 할 때의 위험은?",
+      "options": [
+        "A. 약물이 배회 원인을 근본적으로 해결한다",
+        "B. 과진정 → 낙상 위험 증가",
+        "C. 인지 기능이 즉시 호전된다",
+        "D. 환자가 스스로 배회를 중단하게 된다"
+      ],
+      "answer": "B",
+      "explanation": "배회 자체를 약으로 멈추려 하면 과진정이 발생하고, 과진정은 낙상→골절→폐렴의 연쇄 반응으로 이어진다. 약물은 초조가 동반될 때에만 최소 용량, 단기간 사용하는 최후의 수단이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션5.2"
+    },
+    {
+      "id": "배회_B_05",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "74세 여성(MMSE 10/30)이 낮에는 거실→주방→복도를 반복 순환하고, 새벽에는 현관문을 열고 나가려 합니다. (1) 두 가지 배회 패턴을 각각 식별하고, (2) 원인의 4개 층위(뇌신경·신체·심리·환경) 중 3가지를 적용하여 원인을 탐색하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "패턴 1 식별", "description": "낮 순환 = Lapping (같은 경로 반복, 전두엽-두정엽 관련)", "points": 8},
+        {"item": "패턴 2 식별", "description": "새벽 현관 직행 = Direct (귀가 욕구, 장기 기억 행동 패턴)", "points": 8},
+        {"item": "신체적 원인", "description": "야간 배뇨 욕구로 화장실을 찾는 것일 수 있음", "points": 8},
+        {"item": "심리적 원인", "description": "과거 직업 습관(새벽 출근)이나 '집에 가야 해' 귀가 욕구", "points": 8},
+        {"item": "환경적 원인", "description": "야간 조명 부족으로 불안 촉발, 낯선 환경 인식", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션2+3+6"
+    },
+    {
+      "id": "배회_B_06",
+      "seq": 6,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "위 74세 여성 환자에 대해 비약물적 대응 전략을 5가지 제시하십시오. 각 전략이 배회의 어떤 측면에 대응하는지도 함께 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "환경 수정", "description": "안전한 실내 순환 경로 확보 + 위험 물건 제거 + 가구 보호대 → 안전한 Lapping 허용", "points": 8},
+        {"item": "출입구 관리", "description": "현관문 잠금장치 + 도어 센서 + GPS 추적 → Direct 패턴의 외출 위험 대비", "points": 8},
+        {"item": "구조화된 활동", "description": "낮 시간 야외 산책 프로그램 → 에너지 소비 → 야간 배회 감소", "points": 8},
+        {"item": "원인 해결", "description": "취침 전 배뇨 유도 → 신체적 원인(배뇨 욕구) 선제 대응", "points": 8},
+        {"item": "환경 안정화", "description": "야간 간접 조명 + 익숙한 음악 → 불안 감소, 환경적 원인 완화", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션5.2+섹션6"
+    },
+    {
+      "id": "배회_B_07",
+      "seq": 7,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "보호자가 묻습니다: '어머니가 자꾸 돌아다니시니까 의자에 묶어놓으면 안 되나요? 넘어질까봐 무서워서요.' 왜 물리적 억제가 부적절한지 설명하고, 대안을 제시하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "억제의 위험", "description": "물리적 차단 → 갈 곳 없는 에너지 → 초조와 공격성 폭발", "points": 10},
+        {"item": "핵심 원칙", "description": "'막지 말고, 길을 터라' — 욕구를 억누르지 않고 안전하게 충족", "points": 10},
+        {"item": "대안 1", "description": "안전한 순환 경로를 만들어 돌아다니되 위험하지 않게", "points": 8},
+        {"item": "대안 2", "description": "낙상 방지: 바닥 정리, 미끄럼 방지, 야간 간접 조명", "points": 6},
+        {"item": "대안 3", "description": "GPS 추적, 도어 센서 등 기술적 보완으로 보호자의 불안 완화", "points": 6}
+      ],
+      "points": 40,
+      "related_concept": "섹션5.1"
+    },
+    {
+      "id": "배회_B_08",
+      "seq": 8,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "배회의 4가지 패턴(Lapping, Pacing, Random, Direct)을 각각 설명하고, 각 패턴과 관련된 뇌 영역 또는 특성을 연결하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "Lapping", "description": "같은 경로 반복 순환 → 전두엽-두정엽 관련, 실행기능과 공간 계획의 반복적 오류", "points": 10},
+        {"item": "Pacing", "description": "한 지점에서 왕복 → 비교적 단순한 운동 패턴, 초조·불안 동반 시 흔함", "points": 10},
+        {"item": "Random", "description": "방향 없이 무작위 이동 → 좌측 측두-두정엽 대사 저하, 시공간 능력 심각 저하", "points": 10},
+        {"item": "Direct", "description": "특정 목적지 향해 직행 → 과거 습관·귀가 욕구, 장기 기억 행동 패턴 재현", "points": 10}
+      ],
+      "points": 40,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "배회_B_09",
+      "seq": 9,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "배회 원인의 4개 층위(뇌신경계·신체적·심리적·환경적)를 각각 설명하고, 왜 '뇌가 고장 나서 돌아다니는 것이다'라는 설명만으로는 부족한지 논하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "뇌신경계", "description": "기저핵·전두엽·두정엽·해마 손상 → 공간 지남력 상실, 충동 억제 실패 (베이스)", "points": 8},
+        {"item": "신체적", "description": "통증·배뇨·공복·변비 → 말로 표현 못하니 몸이 움직인다", "points": 8},
+        {"item": "심리적", "description": "불안·지루함·과거 직업 습관 → 장기 기억에 새겨진 루틴의 재현", "points": 8},
+        {"item": "환경적", "description": "낯선 환경·소음·자극 과잉/부족 → 환경이 불안을 촉발", "points": 8},
+        {"item": "베이스만으로 부족한 이유", "description": "뇌 손상만 보면 대응이 '막아라, 가두어라'가 됨. 층위별 분석해야 '어디에 개입할지' 보인다", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션3"
+    },
+    {
+      "id": "배회_B_10",
+      "seq": 10,
+      "type": "short_answer",
+      "bloom": "Analyze",
+      "subtype": "analysis",
+      "question": "배회 대응에서 '막지 말고, 길을 터라'라는 원칙과 '약물은 최후의 수단'이라는 원칙이 어떻게 연결되는지 분석하십시오. 배회를 약물로 멈추려는 접근이 '브레이크 없는 차에 엔진을 꺼버리는 것'이라는 비유가 의미하는 바를 포함하여 논하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "두 원칙의 연결", "description": "배회 욕구를 억제(물리적이든 화학적이든)하면 안 된다는 공통 철학. 물리적 억제=묶기, 화학적 억제=약물 과진정", "points": 10},
+        {"item": "비유 해석", "description": "'엔진을 끄면 차는 멈추지만 환자도 멈춘다' = 약물로 배회를 멈추면 과진정→낙상→골절→폐렴의 연쇄 반응 발생", "points": 10},
+        {"item": "비약물 우선 논거", "description": "환경 수정, 원인 탐색, 구조화된 활동이 부작용 없이 배회를 안전하게 관리하는 1차 전략", "points": 8},
+        {"item": "약물 사용 조건", "description": "초조가 동반될 때에만, 최소 용량, 단기간 — 비약물이 실패한 후의 마지막 보루", "points": 6},
+        {"item": "미충족 욕구 모델 연결", "description": "배회 = 구조 신호 → 원인을 먼저 찾고 해결하는 것이 근본 접근이라는 결론", "points": 6}
+      ],
+      "points": 40,
+      "related_concept": "섹션5 통합"
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "cases": [
+    {
+      "id": "case_020_mr_lai",
+      "title": "Mr Lai (91세 남성) — 전형적 알츠하이머",
+      "category": "전형적_알츠하이머",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "CDT_시계그리기",
+        "알츠하이머병",
+        "콜린에스터라제_억제제"
+      ],
+      "key_findings": {
+        "mmse": 14,
+        "gds_stage": 5,
+        "diagnosis": "알츠하이머병 치매"
+      },
+      "learning_objectives": [
+        "MMSE 점수 해석 및 교육수준 보정",
+        "CDT 결과 판독",
+        "동반질환(고콜레스테롤, 허혈성심장질환) 평가"
+      ]
+    },
+    {
+      "id": "case_028_ms_cheung",
+      "title": "Ms Cheung (85세 여성) — 우울 동반 알츠하이머",
+      "category": "우울증_동반",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "우울증_치매",
+        "항우울제",
+        "인지자극치료",
+        "CDR_GDS"
+      ],
+      "key_findings": {
+        "mmse": 14,
+        "gds15": 7,
+        "cdr": 1,
+        "diagnosis": "우울증 동반 중등도 알츠하이머"
+      },
+      "learning_objectives": [
+        "우울증과 치매 동시 발병 감별",
+        "GDS-15 해석 및 한계점",
+        "주간보호센터 의뢰 판단"
+      ]
+    },
+    {
+      "id": "case_029_ms_yau",
+      "title": "Ms Yau (89세 여성) — 신체통증 영향",
+      "category": "전형적_알츠하이머",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "알츠하이머병"
+      ],
+      "key_findings": {
+        "mmse": 11,
+        "diagnosis": "알츠하이머병"
+      },
+      "learning_objectives": [
+        "신체적 통증이 인지 평가에 미치는 영향 이해"
+      ]
+    },
+    {
+      "id": "case_031_mrs_ko",
+      "title": "Mrs Ko (82세 여성) — 중등도 알츠하이머 + 실행증",
+      "category": "전형적_알츠하이머",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "CDT_시계그리기",
+        "뇌영상검사",
+        "콜린에스터라제_억제제",
+        "인지자극치료"
+      ],
+      "key_findings": {
+        "mmse": 11,
+        "diagnosis": "중등도 알츠하이머병",
+        "mri": "내측 측두엽 위축"
+      },
+      "learning_objectives": [
+        "실행증(Apraxia) 이해",
+        "인지자극치료 18개월 프로그램 적용"
+      ]
+    },
+    {
+      "id": "case_032_mrs_lau",
+      "title": "Mrs Lau (88세 여성) — 빈혈 동반 초기 알츠하이머",
+      "category": "동반질환_복합",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "뇌영상검사",
+        "혈액검사_감별",
+        "혼합형_치매",
+        "콜린에스터라제_억제제"
+      ],
+      "key_findings": {
+        "mmse": 18,
+        "gds_stage": 4,
+        "mri": "MTL R=7.8 L=8.7 심각 위축",
+        "diagnosis": "소혈관질환 동반 초기 알츠하이머"
+      },
+      "learning_objectives": [
+        "빈혈이 인지장애에 기여하는 기전 이해",
+        "동반질환 우선 치료 후 재평가 원칙"
+      ]
+    },
+    {
+      "id": "case_033_mrs_hung",
+      "title": "Mrs Hung (70세 여성) — 초기 단계",
+      "category": "전형적_알츠하이머",
+      "difficulty": "easy",
+      "related_nodes": [
+        "MMSE",
+        "GPCOG",
+        "알츠하이머병"
+      ],
+      "key_findings": {
+        "mmse": 21,
+        "gds_stage": 4,
+        "diagnosis": "초기 알츠하이머병"
+      },
+      "learning_objectives": [
+        "초기 단계 잔존 능력 활용 전략",
+        "GPCOG 보호자 면담 활용"
+      ]
+    },
+    {
+      "id": "case_036_mrs_lam",
+      "title": "Mrs Lam (75세 여성) — 당뇨+우울+치매",
+      "category": "동반질환_복합",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "우울증_치매",
+        "뇌영상검사",
+        "알츠하이머병"
+      ],
+      "key_findings": {
+        "mmse": 17,
+        "gds15": 2,
+        "diagnosis": "당뇨·우울증·경증 알츠하이머"
+      },
+      "learning_objectives": [
+        "GDS-15 우울 미포착 가능성 인식",
+        "당뇨 동반 시 인지기능 영향 평가"
+      ]
+    },
+    {
+      "id": "case_037_ms_law",
+      "title": "Ms Law (90세 여성) — 심방세동+다약제",
+      "category": "동반질환_복합",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "CDT_시계그리기",
+        "콜린에스터라제_억제제",
+        "알츠하이머병"
+      ],
+      "key_findings": {
+        "mmse": 11,
+        "diagnosis": "알츠하이머병 + 인지취약성"
+      },
+      "learning_objectives": [
+        "콜린에스터라제 억제제 시작 시 서맥 관찰",
+        "다약제 환자 약물 상호작용 평가",
+        "인지 취약성(cognitive frailty) 개념"
+      ]
+    },
+    {
+      "id": "case_038_mr_ho",
+      "title": "Mr Ho (78세 남성) — 뇌졸중 후 혼합형",
+      "category": "동반질환_복합",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "혈관성_치매",
+        "혼합형_치매",
+        "배회",
+        "콜린에스터라제_억제제"
+      ],
+      "key_findings": {
+        "mmse": 14,
+        "cdr": 0.5,
+        "diagnosis": "알츠하이머+혈관성 혼합형 치매"
+      },
+      "learning_objectives": [
+        "혼합형 치매 진단 과정",
+        "항콜린제(옥시부티닌) 상호작용 주의",
+        "뇌졸중 후 인지장애 평가"
+      ]
+    },
+    {
+      "id": "case_039_mr_yue",
+      "title": "Mr Yue (84세 남성) — 중등도 치매",
+      "category": "감별진단",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "CDR_GDS",
+        "CDT_시계그리기"
+      ],
+      "key_findings": {
+        "mmse": 14,
+        "cdr": 2,
+        "diagnosis": "중등도 치매"
+      },
+      "learning_objectives": [
+        "CDR 2점 수준의 기능 장애 이해",
+        "보호자 교육 계획 수립"
+      ]
+    },
+    {
+      "id": "case_042_ms_szeto",
+      "title": "Ms Szeto (83세 여성) — 자살 사고 동반",
+      "category": "우울증_자살위험",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "우울증_치매",
+        "항우울제",
+        "CDR_GDS"
+      ],
+      "key_findings": {
+        "mmse": 15,
+        "gds15": 7,
+        "cdr": "0.5→1",
+        "diagnosis": "알츠하이머+우울+자살사고"
+      },
+      "learning_objectives": [
+        "치매 환자 자살 위험 평가 필수",
+        "정신과 긴급 의뢰 판단 기준",
+        "설트랄린+도네페질 병용"
+      ]
+    },
+    {
+      "id": "case_043_ms_leung",
+      "title": "Ms Leung (83세 여성) — 중등도 관리",
+      "category": "전형적_알츠하이머",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "CDR_GDS",
+        "콜린에스터라제_억제제",
+        "지역사회_자원"
+      ],
+      "key_findings": {
+        "mmse": 20,
+        "cdr": 2,
+        "diagnosis": "중등도 알츠하이머"
+      },
+      "learning_objectives": [
+        "진행성 인지 저하 모니터링",
+        "Care plan 수립",
+        "주간보호 연계"
+      ]
+    },
+    {
+      "id": "case_045_ms_wong",
+      "title": "Ms Wong (77세 여성) — 실행기능 저하+망상",
+      "category": "감별진단",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "CDT_시계그리기",
+        "GPCOG",
+        "망상"
+      ],
+      "key_findings": {
+        "mmse": 20,
+        "diagnosis": "실행기능/사회인지 장애"
+      },
+      "learning_objectives": [
+        "높은 MMSE에도 실행기능 장애 가능성 인식",
+        "GPCOG 보호자 평가 활용"
+      ]
+    },
+    {
+      "id": "case_046_ms_ng",
+      "title": "Ms Ng (77세 여성) — 보호자 교육/지역사회",
+      "category": "보호자_교육",
+      "difficulty": "easy",
+      "related_nodes": [
+        "MMSE",
+        "콜린에스터라제_억제제",
+        "보호자_부담",
+        "지역사회_자원"
+      ],
+      "key_findings": {
+        "mmse": 23,
+        "diagnosis": "경도 치매"
+      },
+      "learning_objectives": [
+        "지역사회 자원 동원 전략",
+        "보호자 지지 시스템 구축"
+      ]
+    },
+    {
+      "id": "case_047_mrs_lam69",
+      "title": "Mrs Lam (69세 여성) — 조기발병 감별",
+      "category": "감별진단",
+      "difficulty": "hard",
+      "related_nodes": [
+        "MMSE",
+        "뇌영상검사",
+        "전두측두엽_치매"
+      ],
+      "key_findings": {
+        "mmse": 9,
+        "diagnosis": "혼합형/전두측두엽 가능성"
+      },
+      "learning_objectives": [
+        "비교적 젊은 나이 심각 인지저하 시 전두측두엽 감별",
+        "ARWMC 해석"
+      ]
+    },
+    {
+      "id": "case_048_mrs_cheung",
+      "title": "Mrs Cheung (사례048) — sundowning+혼합형",
+      "category": "보호자_교육",
+      "difficulty": "medium",
+      "related_nodes": [
+        "MMSE",
+        "혼합형_치매",
+        "일몰증후군",
+        "메만틴",
+        "지역사회_자원"
+      ],
+      "key_findings": {
+        "mmse": 24,
+        "mri": "Scheltens R=6.9 L=7.0",
+        "diagnosis": "혼합형 가능"
+      },
+      "learning_objectives": [
+        "Sundowning과 MMSE 변동 관계",
+        "사회적 자극 + 환경 자극 중재"
+      ]
+    }
+  ]
+}

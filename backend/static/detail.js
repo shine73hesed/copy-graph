@@ -1,0 +1,487 @@
+/**
+ * detail.js — 코스 상세 뷰 + 대화 내역 사이드바
+ */
+var Detail = (function () {
+  var CAT_COLORS = {
+    질환개요: "#ec5b13",
+    병태생리: "#e07830",
+    진단평가: "#d4692a",
+    정신병증상: "#f43f5e",
+    행동증상: "#f59e0b",
+    정서증상: "#14b8a6",
+    기타증상: "#94a3b8",
+    약물치료: "#c0582e",
+    비약물치료: "#14b8a6",
+    간호실무: "#ec4899",
+  };
+  var _sessions = [];
+  var _lastSession = null;
+  var _kgData = null;
+  var _selectedNodeId = null;
+
+  function injectStyles() {
+    if (document.getElementById("detailStyles")) return;
+    var s = document.createElement("style");
+    s.id = "detailStyles";
+    s.textContent =
+      /* 사이드바 전체 */
+      ".conv-sidebar{padding:24px;display:flex;flex-direction:column;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden}" +
+      ".conv-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--border);flex-shrink:0}" +
+      ".conv-header-dot{width:10px;height:10px;border-radius:50%;background:var(--primary);flex-shrink:0}" +
+      ".conv-header h3{font-size:15px;font-weight:700;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}" +
+      /* 세션 목록 영역 */
+      ".conv-sessions{display:flex;flex-direction:column;gap:4px;flex-shrink:0;max-height:40vh;overflow-y:auto;padding-right:2px}" +
+      /* 세션 아이템 */
+      ".conv-sess-item{flex-shrink:0}" +
+      ".conv-sess-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;cursor:pointer;transition:all .15s;border:1px solid var(--border);background:var(--white);font-family:inherit;font-size:12px;font-weight:600;color:var(--text2);text-align:left;width:100%}" +
+      ".conv-sess-btn:hover{border-color:var(--primary);background:var(--primary-light)}" +
+      ".conv-sess-btn.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}" +
+      ".conv-sess-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}" +
+      /* 클릭 시 나타나는 액션 바 (다시학습 + 휴지통) */
+      ".conv-actions{display:none;align-items:center;gap:8px;padding:6px 0 6px 38px}" +
+      ".conv-actions.show{display:flex}" +
+      ".conv-resume-btn{padding:6px 14px;background:var(--primary);color:white;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s}" +
+      ".conv-resume-btn:hover{opacity:.85}" +
+      ".conv-delete-btn{width:28px;height:28px;border-radius:8px;border:none;background:rgba(244,63,94,.08);color:#f43f5e;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s}" +
+      ".conv-delete-btn:hover{background:rgba(244,63,94,.18)}" +
+      /* 구분선 + 라벨 */
+      ".conv-divider{height:1px;background:var(--border);margin:14px 0;flex-shrink:0}" +
+      ".conv-preview-label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;flex-shrink:0}" +
+      /* 대화 미리보기 — flex:1로 남은 공간 채움 + 스크롤 */
+      ".conv-messages{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px 2px;min-height:0}" +
+      ".conv-msg{padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.7;max-width:95%;word-break:break-word;flex-shrink:0}" +
+      ".conv-msg.tutor{background:var(--primary-light);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px}" +
+      ".conv-msg.user{background:var(--text);color:rgba(255,255,255,.9);align-self:flex-end;border-bottom-right-radius:4px}" +
+      ".conv-msg .msg-role{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;opacity:.6}" +
+      ".conv-loading{padding:20px;text-align:center;color:var(--text3);font-size:12px}" +
+      /* 기타 */
+      ".conv-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text3);text-align:center;gap:8px}" +
+      ".conv-empty .material-symbols-outlined{font-size:40px;color:var(--border)}" +
+      ".node-row.selected{background:var(--primary-light);border-left:3px solid var(--primary)}" +
+      ".node-new-btn{padding:3px 8px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:9px;font-weight:700;cursor:pointer;font-family:inherit;margin-left:auto;flex-shrink:0;letter-spacing:.3px;transition:opacity .15s}" +
+      ".node-new-btn:hover{opacity:.85}" +
+      "body.detail-mode nav{display:none!important}";
+    document.head.appendChild(s);
+  }
+
+  // ── 메인 영역 ──
+  function renderMain(el) {
+    var html =
+      '<div class="back-btn" onclick="Detail.back()">' +
+      '<span class="material-symbols-outlined" style="font-size:18px">arrow_back</span>돌아가기</div>' +
+      '<div style="margin-bottom:28px"><h1 style="font-size:24px;font-weight:800;margin-bottom:4px">치매 케어 간호 교육</h1>' +
+      '<p id="dtDesc" style="font-size:14px;color:var(--text2);line-height:1.6"></p></div>';
+
+    if (_lastSession && !_lastSession.completed) {
+      html +=
+        '<div class="continue-card" onclick="Detail.continueLearning()">' +
+        '<div class="blob-bg"></div><div style="position:relative;z-index:1">' +
+        '<div style="font-size:11px;font-weight:700;opacity:.8;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">이어서 학습하기</div>' +
+        '<div style="font-size:20px;font-weight:800;margin-bottom:6px">' +
+        _lastSession.node_id +
+        "</div>" +
+        '<div style="display:flex;align-items:center;gap:12px"><div style="flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.25)"><div style="height:100%;border-radius:3px;background:white;width:0%"></div></div>' +
+        '<span style="font-size:13px;font-weight:700">' +
+        (_lastSession.total_turns || 0) +
+        " turns</span></div></div></div>";
+    }
+
+    var nodes = _kgData.nodes || [];
+    html +=
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
+      '<h2 style="font-size:16px;font-weight:700">과목 목록</h2>' +
+      '<span style="font-size:12px;font-weight:700;color:var(--text3)">' +
+      nodes.length +
+      "개 과목</span></div>" +
+      '<div id="dtCatList"></div>';
+
+    el.innerHTML = html;
+    document.getElementById("dtDesc").textContent =
+      _kgData.description ||
+      "치매의 정의, 분류, 병태생리, 임상증상, 진단, 약물/비약물 치료, 간호 중재를 포괄하는 통합 교육과정";
+    renderCatList();
+  }
+
+  function renderCatList() {
+    var nodes = _kgData.nodes || [];
+    var cats = {};
+    nodes.forEach(function (n) {
+      var c = n.category || "기타";
+      if (!cats[c]) cats[c] = [];
+      cats[c].push(n);
+    });
+    var html = "";
+    Object.keys(cats)
+      .sort()
+      .forEach(function (cat) {
+        var items = cats[cat],
+          done = items.filter(function (n) {
+            return (n.progress || {}).status === "completed";
+          }).length;
+        var color = CAT_COLORS[cat] || "var(--text3)";
+        html +=
+          '<div class="cat-section"><div class="cat-header" onclick="Detail.toggleCat(this)">' +
+          '<div style="display:flex;align-items:center;gap:10px">' +
+          '<span style="width:10px;height:10px;border-radius:3px;background:' +
+          color +
+          ';flex-shrink:0"></span>' +
+          '<span style="font-size:14px;font-weight:700">' +
+          cat +
+          "</span>" +
+          '<span style="font-size:11px;color:var(--text3);font-weight:600">' +
+          done +
+          "/" +
+          items.length +
+          "</span>" +
+          '</div><span class="material-symbols-outlined" style="font-size:18px;color:var(--text3);transition:transform .2s">expand_more</span></div>' +
+          '<div class="cat-nodes">';
+        items.forEach(function (n) {
+          var p = n.progress || {},
+            st = p.status || "not_started";
+          var dotCls =
+            st === "completed"
+              ? "done"
+              : st === "in_progress"
+                ? "progress"
+                : "pending";
+          var badge = "";
+          if (st === "completed")
+            badge =
+              '<span class="node-badge" style="background:var(--teal-bg);color:var(--teal)">완료</span>';
+          else if (st === "in_progress")
+            badge =
+              '<span class="node-badge" style="background:var(--primary-light);color:var(--primary)">진행중</span>';
+          var esc = n.id.replace(/'/g, "\\'"),
+            escL = (n.label || n.id).replace(/'/g, "\\'");
+          html +=
+            '<div class="node-row" data-node="' +
+            n.id +
+            '" onclick="Detail.selectNode(\'' +
+            esc +
+            "','" +
+            escL +
+            "')\">" +
+            '<span class="node-dot ' +
+            dotCls +
+            '"></span>' +
+            '<div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">' +
+            (n.label || n.id) +
+            "</div>" +
+            '<div style="font-size:11px;color:var(--text3);margin-top:2px">depth ' +
+            (n.depth || 0) +
+            "</div></div>" +
+            badge +
+            '<span class="note-icon" data-note-node="' +
+            n.id +
+            '" onclick="event.stopPropagation();Detail.openNote(\'' +
+            esc +
+            '\')" style="display:none;cursor:pointer;margin-right:6px" title="학습 노트"><span class="material-symbols-outlined" style="font-size:16px;color:var(--violet)">note_alt</span></span>' +
+            '<button class="node-new-btn" onclick="event.stopPropagation();Detail.newSession(\'' +
+            esc +
+            "')\">NEW</button>" +
+            "</div>";
+        });
+        html += "</div></div>";
+      });
+    document.getElementById("dtCatList").innerHTML = html;
+  }
+
+  // ── 사이드바 ──
+  function renderSidebar() {
+    var aside = document.querySelector("aside");
+    aside.style.position = "relative";
+    aside.innerHTML =
+      '<div class="conv-sidebar">' +
+      '<div class="conv-header"><span class="conv-header-dot"></span><h3 id="convNodeTitle">과목을 선택하세요</h3></div>' +
+      '<div id="convContent" style="flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden"><div class="conv-empty">' +
+      '<span class="material-symbols-outlined">touch_app</span>' +
+      '<p style="font-size:13px">왼쪽 목록에서 과목을 선택하면<br>학습 대화 기록을 확인할 수 있습니다</p>' +
+      "</div></div></div>";
+  }
+
+  function init(kgData, sessions, lastSession) {
+    _kgData = kgData;
+    _sessions = sessions || [];
+    _lastSession = lastSession;
+    injectStyles();
+    document.body.classList.add("detail-mode");
+    renderMain(document.getElementById("viewCourse"));
+    renderSidebar();
+
+    // 마지막으로 학습했던 노드 자동 선택 (새로고침 복원)
+    var focusNode =
+      sessionStorage.getItem("ale_last_node") ||
+      localStorage.getItem("ale_node");
+    if (focusNode && _kgData) {
+      setTimeout(function () {
+        var nodeRow = document.querySelector(
+          '.node-row[data-node="' + focusNode + '"]',
+        );
+        if (nodeRow) {
+          var catNodes = nodeRow.closest(".cat-nodes");
+          if (catNodes && !catNodes.classList.contains("open")) {
+            catNodes.classList.add("open");
+            var catHeader = catNodes.previousElementSibling;
+            if (catHeader) {
+              catHeader.classList.add("open");
+              var icon = catHeader.querySelector(".material-symbols-outlined");
+              if (icon) icon.style.transform = "rotate(180deg)";
+            }
+          }
+          var label = focusNode;
+          var found = (_kgData.nodes || []).find(function (n) {
+            return n.id === focusNode;
+          });
+          if (found) label = found.label || found.id;
+          selectNode(focusNode, label);
+          nodeRow.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 200);
+    }
+    // 노트 있는 노드에 아이콘 표시
+    loadNoteIcons();
+  }
+
+  function loadNoteIcons() {
+    fetch("/test/notes")
+      .then(function (r) {
+        return r.json();
+      })
+      .then(function (d) {
+        var noteNodes = {};
+        (d.notes || []).forEach(function (n) {
+          noteNodes[n.node_id] = true;
+        });
+        document.querySelectorAll(".note-icon").forEach(function (el) {
+          var nid = el.getAttribute("data-note-node");
+          if (noteNodes[nid]) el.style.display = "inline-flex";
+        });
+      })
+      .catch(function () {});
+  }
+
+  function openNote(nodeId) {
+    window.location.href =
+      "/student?node=" + encodeURIComponent(nodeId) + "&action=note";
+  }
+
+  function toggleCat(el) {
+    el.classList.toggle("open");
+    var n = el.nextElementSibling;
+    n.classList.toggle("open");
+    var i = el.querySelector(".material-symbols-outlined");
+    if (i)
+      i.style.transform = n.classList.contains("open") ? "rotate(180deg)" : "";
+  }
+
+  function newSession(nodeId) {
+    window.location.href =
+      "/student?node=" + encodeURIComponent(nodeId) + "&new=1";
+  }
+
+  // ── 노드 선택 ──
+  function selectNode(nodeId, label) {
+    _selectedNodeId = nodeId;
+    sessionStorage.setItem("ale_last_node", nodeId);
+    document.querySelectorAll(".node-row").forEach(function (r) {
+      r.classList.remove("selected");
+    });
+    var sel = document.querySelector('.node-row[data-node="' + nodeId + '"]');
+    if (sel) sel.classList.add("selected");
+
+    document.getElementById("convNodeTitle").textContent = label;
+    var nodeSessions = _sessions.filter(function (s) {
+      return s.node_id === nodeId;
+    });
+    var content = document.getElementById("convContent");
+
+    if (!nodeSessions.length) {
+      content.innerHTML =
+        '<div class="conv-empty"><span class="material-symbols-outlined">chat_bubble_outline</span>' +
+        '<p style="font-size:13px">아직 학습 기록이 없습니다</p>' +
+        '<p style="font-size:11px;color:var(--text3);margin-top:4px">과목 옆 <strong>NEW</strong> 버튼으로 학습을 시작하세요</p></div>';
+      return;
+    }
+
+    var escNode = nodeId.replace(/'/g, "\\'");
+    var html = '<div class="conv-sessions">';
+    nodeSessions.forEach(function (s, i) {
+      var done = s.completed;
+      var iconBg = done ? "var(--teal-bg)" : "var(--primary-light)";
+      var iconColor = done ? "var(--teal)" : "var(--primary)";
+      var dt = s.updated_at
+        ? new Date(s.updated_at * 1000).toLocaleDateString("ko-KR", {
+            month: "short",
+            day: "numeric",
+          })
+        : "";
+      html +=
+        '<div class="conv-sess-item" data-sid="' +
+        s.id +
+        '">' +
+        // 세션 버튼
+        '<button class="conv-sess-btn" onclick="Detail.clickSession(\'' +
+        s.id +
+        "','" +
+        escNode +
+        "')\">" +
+        '<div class="conv-sess-icon" style="background:' +
+        iconBg +
+        '"><span class="material-symbols-outlined" style="color:' +
+        iconColor +
+        ';font-size:16px">' +
+        (done ? "check_circle" : "chat") +
+        "</span></div>" +
+        '<div style="flex:1"><div>' +
+        (s.total_turns || 0) +
+        "턴 · " +
+        dt +
+        '</div><div style="font-size:10px;color:var(--text3)">' +
+        (done ? "완료" : "진행중") +
+        "</div></div>" +
+        "</button>" +
+        // 액션 바: 다시 학습하기 + 휴지통 (클릭 시 표시)
+        '<div class="conv-actions" id="actions_' +
+        s.id +
+        '">' +
+        '<button class="conv-resume-btn" onclick="Detail.resumeSession(\'' +
+        s.id +
+        "','" +
+        escNode +
+        "')\">다시 학습하기 →</button>" +
+        '<button class="conv-delete-btn" onclick="Detail.deleteSession(\'' +
+        s.id +
+        '\')" title="삭제"><span class="material-symbols-outlined" style="font-size:16px">delete</span></button>' +
+        "</div>" +
+        "</div>";
+    });
+    html += "</div>";
+    html += '<div class="conv-divider"></div>';
+    html += '<div class="conv-preview-label">대화 미리보기</div>';
+    html +=
+      '<div class="conv-messages" id="convMessages"><div class="conv-loading">대화를 불러오는 중...</div></div>';
+    content.innerHTML = html;
+
+    // 첫 세션 자동 선택
+    clickSession(nodeSessions[0].id, escNode);
+  }
+
+  // ── 세션 클릭 ──
+  function clickSession(sessionId, nodeId) {
+    // 모든 active + actions 초기화
+    document.querySelectorAll(".conv-sess-btn").forEach(function (b) {
+      b.classList.remove("active");
+    });
+    document.querySelectorAll(".conv-actions").forEach(function (a) {
+      a.classList.remove("show");
+    });
+
+    // 해당 아이템 active + actions 표시
+    var item = document.querySelector(
+      '.conv-sess-item[data-sid="' + sessionId + '"]',
+    );
+    if (item) {
+      item.querySelector(".conv-sess-btn").classList.add("active");
+      var actions = document.getElementById("actions_" + sessionId);
+      if (actions) actions.classList.add("show");
+    }
+
+    loadConv(sessionId);
+  }
+
+  // ── 대화 로드 ──
+  async function loadConv(sessionId) {
+    var msgArea = document.getElementById("convMessages");
+    if (!msgArea) return;
+    msgArea.innerHTML = '<div class="conv-loading">대화를 불러오는 중...</div>';
+
+    try {
+      var r = await fetch("/test/restore?session_id=" + sessionId);
+      var d = await r.json();
+      var conv = d.conversation || [];
+      if (!conv.length) {
+        msgArea.innerHTML =
+          '<div class="conv-empty" style="padding:20px"><span class="material-symbols-outlined">chat_bubble_outline</span><p style="font-size:12px">대화 기록이 없습니다</p></div>';
+        return;
+      }
+      msgArea.innerHTML = conv
+        .map(function (m) {
+          var isUser = m.role === "user";
+          var text = (m.content || "")
+            .replace(/\[SCORE:.*?\]/g, "")
+            .replace(/\[BRIEF:.*?\]/g, "")
+            .replace(/\[TOPIC_COMPLETE\]/g, "")
+            .replace(/\[CHECKLIST:.*?\]/g, "")
+            .replace(/\[Q\]\s*/g, "")
+            .trim();
+          if (!text) return "";
+          if (text.length > 300) text = text.substring(0, 300) + "…";
+          return (
+            '<div class="conv-msg ' +
+            (isUser ? "user" : "tutor") +
+            '"><div class="msg-role">' +
+            (isUser ? "나" : "튜터") +
+            "</div>" +
+            text.replace(/</g, "&lt;").replace(/>/g, "&gt;") +
+            "</div>"
+          );
+        })
+        .filter(Boolean)
+        .join("");
+      msgArea.scrollTop = 0;
+    } catch (e) {
+      msgArea.innerHTML =
+        '<div class="conv-empty"><p style="font-size:12px;color:var(--text3)">로드 실패</p></div>';
+    }
+  }
+
+  function resumeSession(sessionId, nodeId) {
+    localStorage.setItem("ale_sid", sessionId);
+    localStorage.setItem("ale_node", nodeId);
+    window.location.href = "/student";
+  }
+
+  async function deleteSession(sessionId) {
+    if (!confirm("이 대화를 삭제하시겠습니까?")) return;
+    try {
+      await fetch("/test/delete-session?session_id=" + sessionId, {
+        method: "DELETE",
+      });
+    } catch (e) {}
+    _sessions = _sessions.filter(function (s) {
+      return s.id !== sessionId;
+    });
+    if (_selectedNodeId) {
+      var label = document.getElementById("convNodeTitle").textContent;
+      selectNode(_selectedNodeId, label);
+    }
+  }
+
+  function continueLearning() {
+    if (_lastSession) {
+      localStorage.setItem("ale_sid", _lastSession.id);
+      localStorage.setItem("ale_node", _lastSession.node_id);
+      window.location.href = "/student";
+    }
+  }
+  function back() {
+    document.body.classList.remove("detail-mode");
+    var aside = document.querySelector("aside");
+    if (aside) aside.style.position = "";
+    if (window.showMain) window.showMain();
+  }
+
+  return {
+    init: init,
+    toggleCat: toggleCat,
+    selectNode: selectNode,
+    clickSession: clickSession,
+    loadConv: loadConv,
+    newSession: newSession,
+    resumeSession: resumeSession,
+    deleteSession: deleteSession,
+    continueLearning: continueLearning,
+    back: back,
+    openNote: openNote,
+  };
+})();

@@ -1,0 +1,28 @@
+<svg width="720" viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" style="font-family:'Pretendard Variable',-apple-system,'Malgun Gothic',sans-serif;max-width:100%;">
+<rect width="720" height="230" fill="#ffffff" rx="12"/>
+<rect x="20" y="12" width="160" height="34" rx="6" fill="#f4f3ee"/>
+<text x="100" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#5f5e5a">구분</text>
+<rect x="190" y="12" width="250" height="34" rx="6" fill="#e8f5f1"/>
+<text x="315" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#085041">건망증 (정상 노화)</text>
+<rect x="450" y="12" width="250" height="34" rx="6" fill="#fff4ef"/>
+<text x="575" y="34" text-anchor="middle" font-size="12" font-weight="700" fill="#993c1d">치매</text>
+<text x="100" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#2c2c2a">힌트 반응</text>
+<text x="315" y="72" text-anchor="middle" font-size="12" fill="#0f6e56">"아, 맞다!" — 기억 복구됨</text>
+<text x="575" y="72" text-anchor="middle" font-size="12" fill="#993c1d">힌트 줘도 전혀 기억 못함</text>
+<line x1="20" y1="86" x2="700" y2="86" stroke="#e8e6e0" stroke-width="0.5"/>
+<text x="100" y="110" text-anchor="middle" font-size="12" font-weight="600" fill="#2c2c2a">병식</text>
+<text x="315" y="110" text-anchor="middle" font-size="12" fill="#0f6e56">"요즘 깜빡이 심해" — 자각함</text>
+<text x="575" y="110" text-anchor="middle" font-size="12" fill="#993c1d">인지 저하 자체를 인식 못함</text>
+<line x1="20" y1="124" x2="700" y2="124" stroke="#e8e6e0" stroke-width="0.5"/>
+<text x="100" y="148" text-anchor="middle" font-size="12" font-weight="600" fill="#2c2c2a">일상생활</text>
+<text x="315" y="148" text-anchor="middle" font-size="12" fill="#0f6e56">독립적 수행 가능</text>
+<text x="575" y="148" text-anchor="middle" font-size="12" fill="#993c1d">타인 도움 필수적</text>
+<line x1="20" y1="162" x2="700" y2="162" stroke="#e8e6e0" stroke-width="0.5"/>
+<text x="100" y="186" text-anchor="middle" font-size="12" font-weight="600" fill="#2c2c2a">정보 처리</text>
+<text x="315" y="186" text-anchor="middle" font-size="12" fill="#0f6e56">저장 O, 인출 느림</text>
+<text x="575" y="186" text-anchor="middle" font-size="12" fill="#993c1d">저장 자체 실패</text>
+<line x1="20" y1="200" x2="700" y2="200" stroke="#e8e6e0" stroke-width="0.5"/>
+<text x="100" y="220" text-anchor="middle" font-size="12" font-weight="600" fill="#2c2c2a">경과</text>
+<text x="315" y="220" text-anchor="middle" font-size="12" fill="#0f6e56">비교적 안정적</text>
+<text x="575" y="220" text-anchor="middle" font-size="12" fill="#993c1d">점진적 악화</text>
+</svg>

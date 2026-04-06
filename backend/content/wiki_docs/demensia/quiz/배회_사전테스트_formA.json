@@ -1,0 +1,103 @@
+{
+  "node_id": "배회",
+  "title": "치매 환자의 배회",
+  "form": "A",
+  "description": "사전 평가 — 학습 전 기초 수준 측정",
+  "items": [
+    {
+      "id": "배회_A_01",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "subtype": null,
+      "question": "치매 환자의 배회(Wandering) 유병률은 약 얼마인가?",
+      "options": [
+        "A. 5~10%",
+        "B. 17~63%",
+        "C. 80~90%",
+        "D. 100%"
+      ],
+      "answer": "B",
+      "explanation": "배회는 치매 환자의 약 17%에서 63%가 경험하며, 시설 거주 환자에서는 그 비율이 더 높다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션1"
+    },
+    {
+      "id": "배회_A_02",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "subtype": null,
+      "question": "배회의 4가지 패턴에 해당하지 않는 것은?",
+      "options": [
+        "A. Lapping (순환형)",
+        "B. Pacing (왕복형)",
+        "C. Sleeping (수면형)",
+        "D. Direct (목적지향형)"
+      ],
+      "answer": "C",
+      "explanation": "배회의 4가지 패턴은 Lapping(순환), Pacing(왕복), Random(무작위), Direct(목적지향)이다. 수면형은 배회 패턴이 아니다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "배회_A_03",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "배회하는 치매 환자를 의자에 묶거나 방에 가두면 어떤 결과가 나타나는가?",
+      "options": [
+        "A. 환자가 안정되어 잠이 든다",
+        "B. 갈 곳 없는 에너지가 초조와 공격성으로 폭발한다",
+        "C. 배회 욕구가 영구적으로 사라진다",
+        "D. 인지 기능이 호전된다"
+      ],
+      "answer": "B",
+      "explanation": "배회를 물리적으로 차단하면 환자의 초조와 공격성이 폭발한다. 욕구를 억누르지 말고 안전하게 충족시키는 것이 원칙이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션5.1"
+    },
+    {
+      "id": "배회_A_04",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "배회 대응의 핵심 원칙은?",
+      "options": [
+        "A. 즉시 항정신병 약물을 투여한다",
+        "B. 막지 말고, 안전한 길을 터준다",
+        "C. 환자를 침대에 고정시킨다",
+        "D. 배회할 때마다 큰 소리로 제지한다"
+      ],
+      "answer": "B",
+      "explanation": "핵심 원칙은 '막지 말고, 길을 터라'이다. 배회 욕구를 억누르면 초조와 공격성이 폭발하므로, 안전한 순환 경로를 확보하고 원인을 탐색한다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "배회_A_05",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "74세 여성 환자(MMSE 10/30)가 새벽 3시에 현관문을 열고 나가려 합니다. 낮에는 집 안에서 쉬지 않고 돌아다니며 문을 여닫습니다. 이 환자의 배회 패턴을 분석하고, 원인의 4개 층위(뇌신경·신체적·심리적·환경적) 중 최소 2가지를 적용하여 가능한 원인을 탐색하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "패턴 분석", "description": "집 안 반복 순환 = Lapping, 현관문 직행 = Direct(귀가 욕구) 패턴 식별", "points": 15},
+        {"item": "원인 층위 1", "description": "신체적/심리적/환경적 중 하나를 구체적으로 적용 (예: 야간 배뇨 욕구로 화장실 찾기)", "points": 10},
+        {"item": "원인 층위 2", "description": "다른 층위 하나를 추가 적용 (예: 예전 직업 습관으로 새벽 출근 루틴 재현)", "points": 10},
+        {"item": "대응 제안", "description": "탐색한 원인에 맞는 구체적 대응 전략 하나 이상 제시", "points": 15}
+      ],
+      "points": 50,
+      "related_concept": "섹션3+섹션6"
+    }
+  ]
+}

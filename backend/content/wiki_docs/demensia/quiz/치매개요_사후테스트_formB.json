@@ -1,0 +1,204 @@
+{
+  "node_id": "치매_개요",
+  "unit": 1,
+  "title": "치매는 질병이 아니라 증후군이다",
+  "form": "B",
+  "description": "사후 평가 — 학습 후 이해·적용·분석 수준 측정",
+  "items": [
+    {
+      "id": "post-1-1",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "교재에서 알츠하이머병의 뇌 파괴 방식을 어떤 비유로 설명하는가?",
+      "options": [
+        "A. 수도관이 터지는 것",
+        "B. 집 안에 쓰레기가 20년간 쌓이는 것",
+        "C. 브레이크가 고장나는 것",
+        "D. 전원 플러그가 뽑히는 것"
+      ],
+      "answer": "B",
+      "rubric": null,
+      "explanation": "교재 섹션3: '집 안에 쓰레기가 20년간 조금씩 쌓이다가 어느 순간 생활 자체가 불가능해지는 것에 비유할 수 있다.' 수도관=혈관성, 브레이크=전두측두엽.",
+      "points": 10,
+      "related_concept": "섹션3"
+    },
+    {
+      "id": "post-1-2",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "교재에서 사회인지 영역 손상으로 부적절한 행동을 하는 환자에 대해 어떻게 설명하는가?",
+      "options": [
+        "A. 환자의 도덕성이 타락한 것이다",
+        "B. 뇌의 브레이크 패드가 닳아없어진 물리적 고장이다",
+        "C. 기억을 잃어서 규칙을 잊은 것이다",
+        "D. 약물 부작용이다"
+      ],
+      "answer": "B",
+      "rubric": null,
+      "explanation": "교재 섹션4.2: '이것은 환자의 도덕성이 타락한 것이 아니라, 뇌의 브레이크 패드가 닳아없어진 완전한 물리적 고장이다.'",
+      "points": 10,
+      "related_concept": "섹션4.2"
+    },
+    {
+      "id": "post-1-3",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "교재에서 건망증과 치매의 핵심 차이를 하드디스크 비유로 설명할 때, 치매의 메커니즘은?",
+      "options": [
+        "A. 하드디스크에 저장되어 있으나 검색 엔진이 느린 것",
+        "B. 저장 자체가 되지 않아 원본 파일이 존재하지 않는 것",
+        "C. 하드디스크 용량이 가득 찬 것",
+        "D. 파일이 암호화되어 열 수 없는 것"
+      ],
+      "answer": "B",
+      "rubric": null,
+      "explanation": "교재 섹션5: '저장 자체가 되지 않았으므로, 아무리 검색어를 넣어도 원본 파일 자체가 존재하지 않는다. 인출 실패가 아니라 저장 실패다.'",
+      "points": 10,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "post-1-4",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Apply",
+      "subtype": null,
+      "question": "교재에서 '부모님이 수첩을 사서 아침 약을 스스로 찾아 먹으신다'는 상황은 무엇을 의미하는가?",
+      "options": [
+        "A. 이미 치매가 시작된 것이다",
+        "B. 메타인지가 건강하게 작동 중이며 뇌가 정상이라는 증거이다",
+        "C. 즉시 병원에 가야 한다",
+        "D. 건망증 약을 처방받아야 한다"
+      ],
+      "answer": "B",
+      "rubric": null,
+      "explanation": "교재 섹션5: '당신의 부모님이 수첩을 사서 아차, 아침 약 안 먹었네 하고 스스로 찾아 먹으신다면 뇌가 아주 건강하게 작동 중인 것이다.'",
+      "points": 10,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "post-1-5",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "교재의 박 할머니 사례에서, 의사가 3요건 충족에도 '바로 약을 주지 않는' 이유를 교재 원문에 근거하여 (1) 왜 바로 줄 수 없는지, (2) 어떤 가역적 원인이 가능한지, (3) 어떤 검사를 해야 하는지 서술하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "원인 미확인", "description": "'90여 가지 폭탄 중 진짜 범인이 누구인지는 아직 모른다' (교재 원문)", "points": 10},
+        {"item": "가역적 원인 예시", "description": "정상압 수두증, 갑상선기능저하증 — '수술이나 약물로 100% 완치 가능' (교재 원문)", "points": 10},
+        {"item": "필요 검사", "description": "'인지기능 검사, 뇌 MRI, PET 촬영, 혈액 검사까지 총동원' (교재 원문)", "points": 10},
+        {"item": "비유 활용", "description": "'뇌종양 환자에게 원인도 모른 채 두통약만 먹이는 것과 같다' (교재 원문)", "points": 5},
+        {"item": "결론", "description": "'진짜 범인을 색출한 후에야 적절한 무기를 꺼낼 수 있다'", "points": 5}
+      ],
+      "points": 40,
+      "related_concept": "섹션6"
+    },
+    {
+      "id": "post-1-6",
+      "seq": 6,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "교재에 등장하는 네 가지 원인 질환(알츠하이머, 혈관성, 루이소체, 전두측두엽)의 파괴 메커니즘을 교재에서 사용한 비유를 각각 인용하여 설명하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "알츠하이머", "description": "'집 안에 쓰레기가 20년간 조금씩 쌓이다가 생활 불가능' (교재 섹션3)", "points": 8},
+        {"item": "혈관성", "description": "'쓰레기가 쌓이는 것이 아니라 수도관이 터지는 것' + 혈관 위험인자 관리 (교재 섹션3)", "points": 8},
+        {"item": "루이소체", "description": "도파민 교란→환시+운동장애, '불을 끄겠다고 기름을 들이붓는 격' (교재 섹션3)", "points": 8},
+        {"item": "전두측두엽", "description": "'전두엽의 브레이크가 먼저 망가짐'→기억 유지되나 성격 변화 (교재 섹션3)", "points": 8},
+        {"item": "종합 결론", "description": "'겉으로는 모두 치매로 보이지만 메커니즘이 완전히 다르다' (교재 원문)", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션3"
+    },
+    {
+      "id": "post-1-7",
+      "seq": 7,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "보호자가 묻습니다: '아버지가 물건 둔 곳을 자꾸 깜빡하시는데 치매인가요?' 이 아버지는 힌트를 주면 '아, 맞다!' 하고 기억해내시고, '요즘 왜 이러지' 걱정하시며, 혼자서 약도 챙기고 은행도 다니십니다. 교재 섹션5의 세 가지 감별점을 모두 적용하여 판단하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "힌트 반응", "description": "'힌트라는 검색어를 던져주면 뇌가 경로를 찾아내서 데이터를 로딩' → 저장됨, 인출 지연 (교재 원문)", "points": 10},
+        {"item": "병식", "description": "'걱정 자체가 메타인지가 건강하게 작동하고 있다는 강력한 증거' (교재 원문)", "points": 10},
+        {"item": "ADL 독립", "description": "'스스로 찾아 먹으신다면 뇌가 건강하게 작동 중' (교재 원문)", "points": 10},
+        {"item": "결론", "description": "3가지 모두 건망증(정상 노화) 패턴 → 치매 아님", "points": 5},
+        {"item": "가산", "description": "'인출 실패 vs 저장 실패' 구분 활용", "points": 5}
+      ],
+      "points": 40,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "post-1-8",
+      "seq": 8,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "교재 섹션4.2의 '교향악단' 비유를 활용하여, 다영역 손상 요건의 의미를 설명하고, 박 할머니 사례에서 어떤 '악기 파트'들이 동시에 붕괴하고 있는지 대입하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "교향악단 비유", "description": "'바이올린(기억) 하나만 음을 놓치는 게 아니라, 관악기(언어), 타악기(실행기능), 지휘자(사회인지)까지 동시에 불협화음' (교재 원문)", "points": 10},
+        {"item": "다영역 손상 정의", "description": "DSM-5 6대 영역 중 2개 이상 동시 무너짐 (교재 원문)", "points": 8},
+        {"item": "사례 대입", "description": "약 복용=기억(바이올린), 화장실=시공간, 된장찌개=실행기능(타악기) — 3개 파트 식별", "points": 12},
+        {"item": "브레이크 비유 연결", "description": "사회인지의 '브레이크 패드가 닳아없어진 물리적 고장' 비유 연결 시 가산", "points": 10}
+      ],
+      "points": 40,
+      "related_concept": "섹션4.2+섹션6"
+    },
+    {
+      "id": "post-1-9",
+      "seq": 9,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "application",
+      "question": "교재에서 '치매 증후군 진입 확인'과 '원인 질환 감별'이 서로 다른 단계임을 강조합니다. 이 두 단계가 왜 구분되어야 하는지, 교재의 (1) 발열 비유와 (2) 박 할머니 사례를 모두 활용하여 설명하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "증후군=현상", "description": "'치매 증후군이라는 현상만을 확인했을 뿐' — 3요건 충족=현상 확인 (교재 원문)", "points": 8},
+        {"item": "원인감별=범인색출", "description": "'90여 가지 폭탄 중 진짜 범인' (교재 원문)", "points": 8},
+        {"item": "발열 비유", "description": "열 확인(현상) ≠ 감기/패혈증 확인(원인) → 해열제만 주면 패혈증 놓침 (교재 원문)", "points": 8},
+        {"item": "박 할머니 적용", "description": "3요건 충족(현상)했지만 원인은 알츠하이머/혈관/수두증/갑상선 중 미확인", "points": 8},
+        {"item": "결론", "description": "'원인을 찾기 전에 약을 주는 것은 뇌종양 환자에게 두통약만 먹이는 것과 같다' (교재 원문)", "points": 8}
+      ],
+      "points": 40,
+      "related_concept": "섹션2+섹션6"
+    },
+    {
+      "id": "post-1-10",
+      "seq": 10,
+      "type": "short_answer",
+      "bloom": "Analyze",
+      "subtype": "analysis",
+      "question": "교재 전체를 관통하는 핵심 메시지는 '원인 감별 없는 약물 투여는 환자의 생명을 위협할 수 있다'입니다. 교재에서 이 메시지를 뒷받침하기 위해 사용한 근거를 최소 3가지 찾아 정리하고, 이 근거들이 어떻게 논리적으로 연결되는지 분석하십시오.",
+      "answer": null,
+      "options": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "근거1-증후군", "description": "섹션2: 80~90가지 원인의 묶음이므로 원인마다 치료가 다르다 + 발열/두통 비유", "points": 10},
+        {"item": "근거2-메커니즘차이", "description": "섹션3: 알츠하이머(쓰레기)와 혈관성(수도관)은 메커니즘이 달라 같은 약 불가", "points": 10},
+        {"item": "근거3-루이소체함정", "description": "섹션3: 감별 없이 항정신병약 투여→도파민 셧다운→생명 위협. '불을 끄겠다고 기름'", "points": 10},
+        {"item": "근거4-가역적원인", "description": "섹션6: 수두증/갑상선은 100% 완치 가능→감별 없이 치매약만 주면 완치 기회 상실", "points": 10},
+        {"item": "논리연결", "description": "증후군(원인 다양)→메커니즘 차이(치료 다름)→잘못된 약물의 구체적 위험(루이소체)→가역적 원인 놓칠 위험→'원인 감별이 생명을 살린다' 결론 도출", "points": 10}
+      ],
+      "points": 50,
+      "related_concept": "섹션2+3+6 통합"
+    }
+  ]
+}

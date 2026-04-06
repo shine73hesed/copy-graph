@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CareExpert ALE — 로그인</title>
+        <link
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --primary: #ec5b13;
+                --primary-light: #fff4ed;
+                --primary-dark: #c94a0b;
+                --bg: #f8f6f6;
+                --white: #fff;
+                --text: #1a1a2e;
+                --text2: #64748b;
+                --text3: #94a3b8;
+                --border: #f0eeee;
+                --rose: #f43f5e;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    "Pretendard Variable",
+                    Pretendard,
+                    -apple-system,
+                    sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .login-card {
+                width: 100%;
+                max-width: 400px;
+                background: var(--white);
+                border-radius: 28px;
+                padding: 48px 40px 40px;
+                box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.08);
+                animation: fadeUp 0.5s ease-out;
+            }
+            .logo-wrap {
+                text-align: center;
+                margin-bottom: 36px;
+            }
+            .logo-icon {
+                width: 56px;
+                height: 56px;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+                border-radius: 18px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 16px;
+            }
+            .field {
+                margin-bottom: 16px;
+            }
+            .field label {
+                display: block;
+                font-size: 12px;
+                font-weight: 700;
+                color: var(--text2);
+                margin-bottom: 6px;
+                letter-spacing: 0.3px;
+            }
+            .field input {
+                width: 100%;
+                padding: 14px 16px;
+                border: 1.5px solid var(--border);
+                border-radius: 14px;
+                font-size: 15px;
+                font-family: inherit;
+                outline: none;
+                transition: all 0.2s;
+                background: var(--bg);
+            }
+            .field input:focus {
+                border-color: var(--primary);
+                background: var(--white);
+                box-shadow: 0 0 0 3px rgba(236, 91, 19, 0.08);
+            }
+            .field input::placeholder {
+                color: var(--text3);
+            }
+            .pin-hint {
+                font-size: 11px;
+                color: var(--text3);
+                margin-top: 4px;
+            }
+            .login-btn {
+                width: 100%;
+                padding: 14px;
+                background: linear-gradient(
+                    135deg,
+                    var(--primary),
+                    var(--primary-dark)
+                );
+                color: white;
+                border: none;
+                border-radius: 14px;
+                font-size: 15px;
+                font-weight: 700;
+                font-family: inherit;
+                cursor: pointer;
+                transition: all 0.2s;
+                margin-top: 8px;
+            }
+            .login-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 8px 24px rgba(236, 91, 19, 0.25);
+            }
+            .login-btn:active {
+                transform: translateY(0);
+            }
+            .login-btn:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                transform: none;
+                box-shadow: none;
+            }
+            .error-msg {
+                display: none;
+                background: #fff1f2;
+                border: 1px solid #fecdd3;
+                color: var(--rose);
+                padding: 10px 14px;
+                border-radius: 12px;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 16px;
+                text-align: center;
+            }
+            .error-msg.show {
+                display: block;
+                animation: fadeUp 0.2s ease-out;
+            }
+            .footer-text {
+                text-align: center;
+                margin-top: 20px;
+                font-size: 12px;
+                color: var(--text3);
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="login-card">
+            <div class="logo-wrap">
+                <div class="logo-icon">
+                    <span
+                        class="material-symbols-outlined"
+                        style="color: white; font-size: 28px"
+                        >school</span
+                    >
+                </div>
+                <h1
+                    style="
+                        font-size: 22px;
+                        font-weight: 800;
+                        letter-spacing: -0.3px;
+                    "
+                >
+                    CareExpert ALE
+                </h1>
+                <p
+                    style="
+                        font-size: 13px;
+                        color: var(--text3);
+                        margin-top: 4px;
+                    "
+                >
+                    치매 케어 간호 교육 플랫폼
+                </p>
+            </div>
+
+            <div class="error-msg" id="errorMsg"></div>
+
+            <form id="loginForm" onsubmit="doLogin(event)">
+                <div class="field">
+                    <label>학습자 ID</label>
+                    <input
+                        type="text"
+                        id="userId"
+                        placeholder="예: user01"
+                        autocomplete="username"
+                        maxlength="20"
+                        required
+                    />
+                </div>
+                <div class="field">
+                    <label>PIN (6자리)</label>
+                    <input
+                        type="text"
+                        id="pinInput"
+                        placeholder="예: 1578Rn"
+                        maxlength="6"
+                        required
+                        autocomplete="current-password"
+                    />
+                    <div class="pin-hint">
+                        숫자 4자리 + 영문 2자리 (예: 1578Rn)
+                    </div>
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn">
+                    로그인 / 시작
+                </button>
+            </form>
+
+            <div class="footer-text">
+                처음이라면 자동으로 계정이 만들어집니다
+            </div>
+        </div>
+
+        <script>
+            async function doLogin(e) {
+                e.preventDefault();
+                var uid = document.getElementById("userId").value.trim();
+                var pin = document.getElementById("pinInput").value.trim();
+                var btn = document.getElementById("loginBtn");
+                var err = document.getElementById("errorMsg");
+
+                err.classList.remove("show");
+
+                if (
+                    !uid ||
+                    uid.length < 2 ||
+                    !/^[a-zA-Z0-9_]{2,20}$/.test(uid)
+                ) {
+                    showError("ID는 영문/숫자/밑줄 2~20자");
+                    return;
+                }
+                if (!/^[0-9]{4}[A-Za-z]{2}$/.test(pin)) {
+                    showError("PIN: 숫자4자리 + 영문2자리 (예: 1578Rn)");
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = "로그인 중...";
+
+                try {
+                    var r = await fetch("/auth/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ user_id: uid, pin: pin }),
+                    });
+                    var d = await r.json();
+
+                    if (!r.ok) {
+                        showError(d.error || "로그인 실패");
+                        btn.disabled = false;
+                        btn.textContent = "로그인 / 시작";
+                        return;
+                    }
+
+                    // 성공 → 대시보드로
+                    if (d.is_new) {
+                        btn.textContent = "계정 생성 완료!";
+                    } else {
+                        btn.textContent = "환영합니다!";
+                    }
+                    setTimeout(function () {
+                        location.href = "/";
+                    }, 300);
+                } catch (ex) {
+                    showError("서버 연결 실패");
+                    btn.disabled = false;
+                    btn.textContent = "로그인 / 시작";
+                }
+            }
+
+            function showError(msg) {
+                var el = document.getElementById("errorMsg");
+                el.textContent = msg;
+                el.classList.add("show");
+            }
+
+            // 이미 로그인 상태면 리다이렉트 (서버에서도 하지만 UX용)
+            if (document.cookie.indexOf("ale_user=") >= 0) {
+                location.href = "/";
+            }
+        </script>
+    </body>
+</html>

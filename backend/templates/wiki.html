@@ -1,0 +1,1532 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Agentic-ALE | 교재 열람</title>
+        <link
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+        <style>
+            :root {
+                --primary: #ec5b13;
+                --primary-light: #fff4ed;
+                --primary-dark: #c94a0b;
+                --yellow: #ffd54f;
+                --yellow-bg: #fff8e1;
+                --bg: #f8f6f6;
+                --white: #fff;
+                --text: #1a1a2e;
+                --text2: #64748b;
+                --text3: #94a3b8;
+                --border: #f0eeee;
+                --teal: #14b8a6;
+                --teal-bg: #ecfdf5;
+                --blue: #4f6af6;
+                --blue-bg: #eef1fe;
+                --rose: #f43f5e;
+                --rose-bg: #fff1f2;
+                --violet: #7c5cfc;
+                --violet-bg: #f3efff;
+                --r2: 1.5rem;
+                --r3: 2rem;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    "Pretendard Variable",
+                    Pretendard,
+                    -apple-system,
+                    sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                height: 100vh;
+                display: flex;
+                overflow: hidden;
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #e2e8f0;
+                border-radius: 10px;
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .fade {
+                animation: fadeIn 0.35s ease-out both;
+            }
+            .toc-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 10px 14px;
+                border-radius: 14px;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-size: 13px;
+                font-weight: 500;
+                color: var(--text2);
+            }
+            .toc-item:hover {
+                background: rgba(0, 0, 0, 0.025);
+            }
+            .toc-item.active {
+                background: var(--primary-light);
+                color: var(--primary);
+                font-weight: 700;
+            }
+            .toc-item .num {
+                width: 26px;
+                height: 26px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 11px;
+                font-weight: 800;
+                background: var(--bg);
+                color: var(--text3);
+                flex-shrink: 0;
+                transition: all 0.2s;
+            }
+            .toc-item.active .num {
+                background: var(--primary);
+                color: white;
+            }
+            .prose {
+                font-size: 15.5px;
+                line-height: 1.85;
+                color: #334155;
+            }
+            .prose h1 {
+                font-size: 28px;
+                font-weight: 800;
+                color: var(--text);
+                margin: 0 0 16px;
+                letter-spacing: -0.3px;
+            }
+            .prose h2 {
+                font-size: 20px;
+                font-weight: 800;
+                color: var(--text);
+                margin: 36px 0 14px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid var(--border);
+                letter-spacing: -0.2px;
+            }
+            .prose h3 {
+                font-size: 17px;
+                font-weight: 700;
+                color: var(--text);
+                margin: 28px 0 10px;
+            }
+            .prose p {
+                margin: 0 0 16px;
+            }
+            .prose ul,
+            .prose ol {
+                margin: 0 0 16px;
+                padding-left: 24px;
+            }
+            .prose li {
+                margin-bottom: 6px;
+            }
+            .prose strong {
+                color: var(--text);
+                font-weight: 700;
+            }
+            .prose blockquote {
+                margin: 20px 0;
+                padding: 16px 20px;
+                background: var(--primary-light);
+                border-left: 4px solid var(--primary);
+                border-radius: 0 var(--r2) var(--r2) 0;
+                font-style: italic;
+                color: #92400e;
+            }
+            .prose table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 16px 0;
+                font-size: 14px;
+            }
+            .prose th {
+                background: var(--bg);
+                padding: 10px 14px;
+                text-align: left;
+                font-weight: 700;
+                font-size: 12px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: var(--text3);
+                border-bottom: 2px solid var(--border);
+            }
+            .prose td {
+                padding: 10px 14px;
+                border-bottom: 1px solid var(--border);
+            }
+            .rel-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                padding: 7px 14px;
+                border-radius: 12px;
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s;
+                border: 1px solid var(--border);
+                background: var(--white);
+                color: var(--text2);
+            }
+            .rel-chip:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+                background: var(--primary-light);
+                transform: translateY(-1px);
+            }
+            .read-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 3px;
+                background: linear-gradient(
+                    90deg,
+                    var(--primary),
+                    var(--yellow)
+                );
+                z-index: 999;
+                transition: width 0.15s ease-out;
+                border-radius: 0 2px 2px 0;
+            }
+            .outline-link {
+                font-size: 12px;
+                font-weight: 500;
+                color: var(--text2);
+                padding: 5px 10px;
+                border-left: 2px solid var(--border);
+                cursor: pointer;
+                display: block;
+                transition: all 0.15s;
+                text-decoration: none;
+            }
+            .outline-link:hover {
+                border-color: var(--primary);
+                color: var(--primary);
+            }
+        </style>
+    </head>
+    <body>
+        <div id="readBar" class="read-bar" style="width: 0%"></div>
+
+        <!-- Slim sidebar -->
+        <aside
+            style="
+                width: 72px;
+                flex-shrink: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 24px 0;
+                border-right: 1px solid var(--border);
+                background: var(--white);
+            "
+        >
+            <div
+                style="
+                    width: 38px;
+                    height: 38px;
+                    background: var(--primary);
+                    border-radius: var(--r2);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-bottom: 36px;
+                "
+            >
+                <span
+                    class="material-symbols-outlined"
+                    style="color: white; font-size: 20px"
+                    >school</span
+                >
+            </div>
+            <nav
+                style="
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    color: var(--text3);
+                "
+            >
+                <a
+                    href="student_dashboard.html"
+                    style="color: var(--text3); text-decoration: none"
+                    title="홈"
+                    ><span class="material-symbols-outlined">home</span></a
+                >
+                <a
+                    href="student.html"
+                    style="color: var(--text3); text-decoration: none"
+                    title="학습"
+                    ><span class="material-symbols-outlined">chat</span></a
+                >
+                <a href="#" style="color: var(--primary)" title="교재"
+                    ><span class="material-symbols-outlined">menu_book</span></a
+                >
+            </nav>
+            <div style="margin-top: auto">
+                <div
+                    style="
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        background: linear-gradient(
+                            135deg,
+                            var(--primary-light),
+                            var(--yellow-bg)
+                        );
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    "
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        style="color: var(--primary); font-size: 18px"
+                        title="로그아웃"
+                        onclick="ALE.logout()"
+                        style="cursor: pointer"
+                        >person</span
+                    >
+                </div>
+            </div>
+        </aside>
+
+        <!-- TOC -->
+        <aside
+            style="
+                width: 280px;
+                flex-shrink: 0;
+                border-right: 1px solid var(--border);
+                background: var(--white);
+                display: flex;
+                flex-direction: column;
+            "
+        >
+            <div
+                style="
+                    padding: 20px 16px;
+                    border-bottom: 1px solid var(--border);
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        margin-bottom: 14px;
+                    "
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        style="font-size: 22px; color: var(--primary)"
+                        >auto_stories</span
+                    >
+                    <h2 style="font-size: 16px; font-weight: 800">교재 목차</h2>
+                </div>
+                <div style="position: relative">
+                    <span
+                        class="material-symbols-outlined"
+                        style="
+                            position: absolute;
+                            left: 12px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            color: var(--text3);
+                            font-size: 18px;
+                        "
+                        >search</span
+                    ><input
+                        id="tocSearch"
+                        type="text"
+                        placeholder="교재 검색..."
+                        oninput="filterToc()"
+                        style="
+                            width: 100%;
+                            padding: 10px 14px 10px 38px;
+                            border: 1.5px solid var(--border);
+                            border-radius: 14px;
+                            font-size: 13px;
+                            font-family: inherit;
+                            outline: none;
+                            background: var(--bg);
+                        "
+                        onfocus="this.style.borderColor = 'var(--primary)'"
+                        onblur="this.style.borderColor = 'var(--border)'"
+                    />
+                </div>
+            </div>
+            <div
+                id="tocList"
+                style="flex: 1; overflow-y: auto; padding: 10px"
+            ></div>
+            <div
+                style="
+                    padding: 14px 16px;
+                    border-top: 1px solid var(--border);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                "
+            >
+                <span
+                    id="tocCnt"
+                    style="
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: var(--text3);
+                    "
+                    >0개 교재</span
+                ><span
+                    id="tocRead"
+                    style="
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: var(--teal);
+                    "
+                    >0개 읽음</span
+                >
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main
+            style="
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            "
+        >
+            <header
+                style="
+                    height: 60px;
+                    flex-shrink: 0;
+                    background: var(--white);
+                    border-bottom: 1px solid var(--border);
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0 28px;
+                "
+            >
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 6px;
+                        font-size: 13px;
+                        color: var(--text3);
+                    "
+                >
+                    <span style="font-weight: 600">교재</span
+                    ><span
+                        class="material-symbols-outlined"
+                        style="font-size: 14px"
+                        >chevron_right</span
+                    ><span
+                        id="bcTitle"
+                        style="font-weight: 700; color: var(--text)"
+                        >선택하세요</span
+                    >
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px">
+                    <button
+                        id="prevBtn"
+                        onclick="nav(-1)"
+                        disabled
+                        style="
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 10px;
+                            border: 1px solid var(--border);
+                            background: var(--white);
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: var(--text3);
+                            opacity: 0.4;
+                        "
+                    >
+                        <span
+                            class="material-symbols-outlined"
+                            style="font-size: 20px"
+                            >chevron_left</span
+                        >
+                    </button>
+                    <span
+                        id="navCtr"
+                        style="
+                            font-size: 12px;
+                            font-weight: 700;
+                            color: var(--text3);
+                        "
+                        >-/-</span
+                    >
+                    <button
+                        id="nextBtn"
+                        onclick="nav(1)"
+                        disabled
+                        style="
+                            width: 36px;
+                            height: 36px;
+                            border-radius: 10px;
+                            border: 1px solid var(--border);
+                            background: var(--white);
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: var(--text3);
+                            opacity: 0.4;
+                        "
+                    >
+                        <span
+                            class="material-symbols-outlined"
+                            style="font-size: 20px"
+                            >chevron_right</span
+                        >
+                    </button>
+                    <div
+                        style="
+                            width: 1px;
+                            height: 24px;
+                            background: var(--border);
+                            margin: 0 4px;
+                        "
+                    ></div>
+                    <button
+                        onclick="fSize(-1)"
+                        style="
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 8px;
+                            border: none;
+                            background: var(--bg);
+                            cursor: pointer;
+                            font-size: 13px;
+                            font-weight: 800;
+                            color: var(--text2);
+                        "
+                    >
+                        A-
+                    </button>
+                    <button
+                        onclick="fSize(1)"
+                        style="
+                            width: 32px;
+                            height: 32px;
+                            border-radius: 8px;
+                            border: none;
+                            background: var(--bg);
+                            cursor: pointer;
+                            font-size: 15px;
+                            font-weight: 800;
+                            color: var(--text2);
+                        "
+                    >
+                        A+
+                    </button>
+                </div>
+            </header>
+            <div style="flex: 1; display: flex; overflow: hidden">
+                <article
+                    id="artWrap"
+                    style="flex: 1; overflow-y: auto; padding: 40px 48px 80px"
+                    onscroll="onScroll()"
+                >
+                    <div
+                        id="empty"
+                        style="
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: center;
+                            height: 100%;
+                            text-align: center;
+                        "
+                        class="fade"
+                    >
+                        <div
+                            style="
+                                width: 80px;
+                                height: 80px;
+                                background: var(--primary-light);
+                                border-radius: var(--r3);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                margin-bottom: 20px;
+                            "
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                style="font-size: 36px; color: var(--primary)"
+                                >menu_book</span
+                            >
+                        </div>
+                        <h3
+                            style="
+                                font-size: 20px;
+                                font-weight: 800;
+                                margin-bottom: 8px;
+                            "
+                        >
+                            교재를 선택하세요
+                        </h3>
+                        <p
+                            style="
+                                font-size: 14px;
+                                color: var(--text3);
+                                max-width: 300px;
+                                line-height: 1.6;
+                            "
+                        >
+                            왼쪽 목차에서 읽고 싶은 교재를 선택하면 여기에
+                            내용이 표시됩니다.
+                        </p>
+                    </div>
+                    <div
+                        id="artBody"
+                        class="prose"
+                        style="max-width: 720px; margin: 0 auto; display: none"
+                    ></div>
+                </article>
+                <aside
+                    id="metaP"
+                    style="
+                        width: 280px;
+                        flex-shrink: 0;
+                        border-left: 1px solid var(--border);
+                        background: var(--white);
+                        overflow-y: auto;
+                        padding: 24px;
+                        display: none;
+                        flex-direction: column;
+                        gap: 20px;
+                    "
+                >
+                    <div>
+                        <h4
+                            style="
+                                font-size: 10px;
+                                font-weight: 800;
+                                color: var(--text3);
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            문서 정보
+                        </h4>
+                        <div
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 6px;
+                            "
+                        >
+                            <div
+                                style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-size: 12px;
+                                "
+                            >
+                                <span style="color: var(--text3)">분량</span
+                                ><span id="mSize" style="font-weight: 700"
+                                    >-</span
+                                >
+                            </div>
+                            <div
+                                style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-size: 12px;
+                                "
+                            >
+                                <span style="color: var(--text3)">섹션</span
+                                ><span id="mSec" style="font-weight: 700"
+                                    >-</span
+                                >
+                            </div>
+                            <div
+                                style="
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-size: 12px;
+                                "
+                            >
+                                <span style="color: var(--text3)"
+                                    >읽기 시간</span
+                                ><span id="mTime" style="font-weight: 700"
+                                    >-</span
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4
+                            style="
+                                font-size: 10px;
+                                font-weight: 800;
+                                color: var(--text3);
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            목차
+                        </h4>
+                        <div id="outl"></div>
+                    </div>
+                    <div>
+                        <h4
+                            style="
+                                font-size: 10px;
+                                font-weight: 800;
+                                color: var(--text3);
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                margin-bottom: 10px;
+                            "
+                        >
+                            관련 개념
+                        </h4>
+                        <div
+                            id="relC"
+                            style="display: flex; flex-wrap: wrap; gap: 6px"
+                        ></div>
+                    </div>
+                    <div
+                        style="
+                            background: linear-gradient(
+                                135deg,
+                                var(--primary),
+                                var(--primary-dark)
+                            );
+                            color: white;
+                            padding: 20px;
+                            border-radius: var(--r3);
+                            position: relative;
+                            overflow: hidden;
+                        "
+                    >
+                        <div
+                            style="
+                                position: absolute;
+                                right: -30px;
+                                bottom: -30px;
+                                width: 100px;
+                                height: 100px;
+                                background: rgba(255, 255, 255, 0.08);
+                                border-radius: 50%;
+                                filter: blur(20px);
+                            "
+                        ></div>
+                        <h4
+                            style="
+                                font-size: 14px;
+                                font-weight: 800;
+                                position: relative;
+                                z-index: 1;
+                            "
+                        >
+                            이 개념 학습하기
+                        </h4>
+                        <p
+                            style="
+                                font-size: 11px;
+                                color: rgba(255, 255, 255, 0.6);
+                                margin: 6px 0 12px;
+                                position: relative;
+                                z-index: 1;
+                            "
+                        >
+                            AI 튜터와 소크라테스식 문답
+                        </p>
+                        <a
+                            href="student.html"
+                            style="
+                                display: inline-block;
+                                padding: 8px 18px;
+                                background: rgba(255, 255, 255, 0.2);
+                                border: 1px solid rgba(255, 255, 255, 0.25);
+                                color: white;
+                                border-radius: 12px;
+                                font-size: 12px;
+                                font-weight: 700;
+                                text-decoration: none;
+                                position: relative;
+                                z-index: 1;
+                            "
+                            >학습 시작 →</a
+                        >
+                    </div>
+                </aside>
+            </div>
+        </main>
+
+        <script src="common.js"></script>
+        <script>
+            // ═══════════════════════════════════
+            // 하드코딩 교재 데이터
+            // ═══════════════════════════════════
+            const DOCS = [
+                {
+                    id: "치매",
+                    title: "치매 (Dementia)",
+                    related: ["알츠하이머병", "혈관성 치매", "기억장애"],
+                    content: `# 치매 (Dementia)
+
+## 정의
+
+치매(Dementia)는 후천적으로 뇌의 기질적 병변에 의해 **기억력, 판단력, 언어 능력** 등 여러 인지 기능이 저하되어 일상생활에 지장을 초래하는 임상 증후군이다. 단일 질병이 아니라 다양한 원인 질환에 의해 발생하는 **증상의 집합**이다.
+
+## 원인 및 분류
+
+치매의 원인은 매우 다양하며, 크게 **퇴행성 치매**와 **비퇴행성 치매**로 분류된다.
+
+- **퇴행성 치매**: 알츠하이머병(60~70%), 루이소체 치매, 전두측두엽 치매
+- **혈관성 치매**: 뇌졸중, 소혈관 질환에 의한 치매 (20~30%)
+- **기타**: 갑상선 기능 저하, 비타민 B12 결핍, 정상압 수두증 등 (일부 가역적)
+
+## 주요 증상
+
+| 영역 | 증상 |
+|------|------|
+| 기억력 | 최근 일을 잊음, 반복 질문 |
+| 지남력 | 시간, 장소, 사람 혼동 |
+| 언어 | 단어를 찾지 못함, 대화 이해 어려움 |
+| 판단력 | 의사결정 장애, 금전 관리 어려움 |
+| 행동 | 배회, 공격성, 일몰증후군 |
+
+## 진단
+
+- **MMSE** (간이정신상태검사): 30점 만점, 24점 이하 의심
+- **MoCA** (몬트리올 인지평가): 경도인지장애 선별에 더 민감
+- **뇌 영상**: MRI (뇌 위축 확인), PET-CT (아밀로이드 침착)
+
+## 간호 중재
+
+> 치매 환자 간호의 핵심은 **안전한 환경 조성**과 **잔존 능력 유지**이다.
+
+1. **안전 관리**: 낙상 방지, 배회 감지 시스템, 약물 관리
+2. **의사소통**: 천천히 명확하게, 예/아니오 질문 사용
+3. **일상생활 지원**: 구조화된 일과, 익숙한 환경 유지
+4. **행동심리증상(BPSD) 관리**: 비약물적 중재 우선 (음악치료, 회상치료)
+5. **가족 교육**: 질병 이해, 돌봄 기술, 소진 예방`,
+                },
+
+                {
+                    id: "알츠하이머병",
+                    title: "알츠하이머병 (Alzheimer's Disease)",
+                    related: ["치매", "아밀로이드", "콜린에스테라제 억제제"],
+                    content: `# 알츠하이머병 (Alzheimer's Disease)
+
+## 정의
+
+알츠하이머병(AD)은 가장 흔한 퇴행성 치매로, 전체 치매의 **60~70%**를 차지한다. 뇌에 **베타 아밀로이드 단백질(Aβ)**이 비정상적으로 축적되고, **타우 단백질**의 과인산화로 신경세포가 점진적으로 손상된다.
+
+## 병태생리
+
+1. **아밀로이드 가설**: Aβ 단백질이 뇌에 플라크(plaque)를 형성 → 신경세포 독성
+2. **타우 병리**: 과인산화된 타우가 신경섬유매듭(NFT) 형성 → 세포 내 수송 장애
+3. **콜린성 결핍**: 아세틸콜린(ACh) 생성 감소 → 기억력, 학습 능력 저하
+
+## 임상 단계
+
+| 단계 | 특징 | 기간 |
+|------|------|------|
+| 경도 | 기억력 저하, 단어 찾기 어려움 | 2~4년 |
+| 중등도 | 일상생활 의존, 배회, BPSD | 2~10년 |
+| 중증 | 전면적 의존, 연하 곤란, 와상 | 1~3년 |
+
+## 약물 치료
+
+- **콜린에스테라제 억제제**: 도네페질(Donepezil), 리바스티그민(Rivastigmine) — ACh 분해 억제
+- **NMDA 수용체 길항제**: 메만틴(Memantine) — 글루타메이트 독성 차단, 중등~중증 사용
+- **최신 치료**: 레카네맙(Lecanemab) — 아밀로이드 제거 항체 (2023 FDA 승인)
+
+## 간호 포인트
+
+> 알츠하이머병은 **비가역적** 진행을 하므로, 조기 진단과 증상 진행 지연이 핵심이다.
+
+- 규칙적인 인지 자극 활동 제공
+- 약물 복용 관리 (도네페질: 취침 전 1회)
+- 영양 상태 모니터링 (체중 감소 주의)
+- 가족에게 질병 경과 설명 및 사전의료의향서 논의`,
+                },
+
+                {
+                    id: "혈관성 치매",
+                    title: "혈관성 치매 (Vascular Dementia)",
+                    related: ["치매", "뇌졸중", "고혈압"],
+                    content: `# 혈관성 치매 (Vascular Dementia)
+
+## 정의
+
+혈관성 치매(VD)는 뇌혈관 질환으로 인해 발생하는 치매로, 전체 치매의 **20~30%**를 차지한다. 뇌졸중 후 3개월 이내에 발생하는 경우가 많으며, **계단식 악화**가 특징적이다.
+
+## 원인
+
+- **다발성 뇌경색**: 큰 혈관의 반복적 경색
+- **소혈관 질환**: 뇌 백질의 미세혈관 손상 (Binswanger's disease)
+- **전략적 단일 경색**: 시상, 해마 등 중요 부위의 단일 경색
+
+## 알츠하이머병과의 감별
+
+| 특징 | 알츠하이머병 | 혈관성 치매 |
+|------|------------|------------|
+| 진행 | 서서히 진행 | 계단식 악화 |
+| 초기 증상 | 기억력 저하 | 실행 기능 장애 |
+| 신경학적 소견 | 초기에 없음 | 편마비, 보행장애 |
+| 위험 인자 | 나이, 유전 | 고혈압, 당뇨, 흡연 |
+
+## 관리
+
+> 혈관성 치매는 **위험 인자 관리**로 예방과 진행 지연이 가능한 유일한 치매 유형이다.
+
+1. **혈압 관리**: 목표 140/90 mmHg 이하
+2. **혈당 관리**: HbA1c 7% 이하
+3. **항혈전 치료**: 아스피린 등 항혈소판제
+4. **생활 습관**: 금연, 규칙적 운동, 지중해식 식단`,
+                },
+
+                {
+                    id: "BPSD",
+                    title: "행동심리증상 (BPSD)",
+                    related: ["치매", "일몰증후군", "비약물적 중재"],
+                    content: `# 행동심리증상 (BPSD)
+
+## 정의
+
+BPSD(Behavioral and Psychological Symptoms of Dementia)는 치매 환자에서 나타나는 **행동 장애**와 **심리 증상**의 총칭이다. 치매 환자의 **90% 이상**이 경과 중 한 번 이상 BPSD를 경험한다.
+
+## 주요 증상
+
+**행동 증상:**
+- 배회(Wandering): 목적 없이 돌아다님
+- 공격성(Aggression): 신체적/언어적 공격
+- 초조(Agitation): 불안정한 행동, 반복 행동
+- 일몰증후군(Sundowning): 해질녘에 증상 악화
+
+**심리 증상:**
+- 우울(Depression): 치매 환자 40~50%에서 동반
+- 불안(Anxiety): 낯선 환경, 분리 불안
+- 망상(Delusion): 도둑 망상이 가장 흔함
+- 환각(Hallucination): 루이소체 치매에서 흔함
+
+## 비약물적 중재 (1차 선택)
+
+> BPSD 관리에서 **비약물적 중재가 항상 1차 선택**이다. 약물은 비약물적 중재가 실패한 경우에만 고려한다.
+
+1. **회상치료(Reminiscence Therapy)**: 과거 사진, 음악으로 기억 자극
+2. **음악치료**: 친숙한 노래, 리듬 활동
+3. **아로마테라피**: 라벤더 오일 (진정 효과)
+4. **환경 조정**: 조명 조절, 소음 최소화, 일관된 일과
+
+## 약물적 중재 (2차)
+
+- **항정신병약물**: 리스페리돈(Risperidone) — 공격성, 망상에 사용
+- **항우울제**: SSRI (시탈로프람) — 우울, 불안에 사용
+- ⚠ **벤조디아제핀**: 낙상 위험 증가로 가급적 회피`,
+                },
+
+                {
+                    id: "기억장애",
+                    title: "기억장애 (Memory Impairment)",
+                    related: ["치매", "알츠하이머병", "경도인지장애"],
+                    content: `# 기억장애 (Memory Impairment)
+
+## 정의
+
+기억장애는 새로운 정보를 **등록(encoding)**, **저장(storage)**, **인출(retrieval)**하는 능력이 손상된 상태이다. 치매의 가장 대표적인 초기 증상이며, 특히 **일화기억(episodic memory)**의 저하가 특징적이다.
+
+## 기억의 유형
+
+| 유형 | 설명 | 치매에서의 변화 |
+|------|------|----------------|
+| 일화기억 | 개인적 경험의 기억 | 조기에 저하 (해마 손상) |
+| 의미기억 | 일반적 지식, 단어 의미 | 중기에 저하 |
+| 절차기억 | 자전거 타기 등 운동 기억 | 비교적 보존 |
+| 작업기억 | 일시적 정보 보유/처리 | 조기에 저하 |
+
+## 경도인지장애 (MCI)
+
+- 정상 노화와 치매의 중간 단계
+- 본인 또는 보호자가 인지 저하를 인식
+- 일상생활은 독립적으로 수행 가능
+- **연간 10~15%가 치매로 진행**
+- 선별 검사: MoCA (Montreal Cognitive Assessment)
+
+## 간호 사정
+
+> 기억장애 사정 시 **본인 보고**와 **보호자 보고**를 함께 확인하는 것이 중요하다.
+
+- 최근 기억 vs 원격 기억 비교
+- 일상생활 수행능력(ADL) 평가
+- 인지 선별 검사 (MMSE, MoCA) 정기적 시행
+- 우울증 감별 (가성 치매 배제)`,
+                },
+
+                {
+                    id: "콜린에스테라제 억제제",
+                    title: "콜린에스테라제 억제제",
+                    related: ["알츠하이머병", "도네페질", "약물 관리"],
+                    content: `# 콜린에스테라제 억제제 (Cholinesterase Inhibitors)
+
+## 작용 기전
+
+콜린에스테라제 억제제는 아세틸콜린(ACh)을 분해하는 **아세틸콜린에스테라제(AChE)**를 억제하여 시냅스 틈에서 ACh 농도를 증가시킨다. 이를 통해 **콜린성 신경전달을 강화**하여 인지 기능 저하를 지연시킨다.
+
+## 주요 약물
+
+| 약물 | 투여 | 특징 |
+|------|------|------|
+| 도네페질 (Donepezil) | 경구 1일 1회 (취침 전) | 가장 널리 사용, 경도~중증 |
+| 리바스티그민 (Rivastigmine) | 경구 또는 패치 | 패치형은 위장관 부작용↓ |
+| 갈란타민 (Galantamine) | 경구 1일 2회 | 니코틴 수용체도 자극 |
+
+## 주요 부작용
+
+- **위장관**: 오심, 구토, 설사, 식욕 감소
+- **심혈관**: 서맥(bradycardia) — 맥박 모니터링 필요
+- **수면**: 불면, 악몽 (특히 도네페질)
+- **기타**: 근육 경련, 피로
+
+## 간호 시 주의사항
+
+> 도네페질은 **취침 전** 투여하되, 악몽이 심하면 아침으로 변경할 수 있다.
+
+1. 투약 전 **맥박 확인** (60회/분 이하 시 보고)
+2. 식사와 함께 투여 (위장관 부작용 감소)
+3. 패치형 리바스티그민: 매일 부착 위치 변경
+4. 효과 판정: 최소 3~6개월 복용 후 평가
+5. 갑자기 중단 금지 (리바운드 인지 저하 위험)`,
+                },
+
+                {
+                    id: "일몰증후군",
+                    title: "일몰증후군 (Sundowning)",
+                    related: ["BPSD", "치매", "환경 조정"],
+                    content: `# 일몰증후군 (Sundowning)
+
+## 정의
+
+일몰증후군은 치매 환자에서 **해질녘~밤 시간**에 초조, 혼란, 불안, 공격성 등의 행동심리증상이 악화되는 현상이다. 치매 환자의 약 **20~45%**에서 관찰된다.
+
+## 원인 가설
+
+- **일주기 리듬 장애**: 시상하부 시교차상핵(SCN)의 퇴행 → 멜라토닌 분비 이상
+- **감각 저하**: 어두워지면서 시각적 단서 감소 → 지남력 저하
+- **피로 축적**: 하루 동안의 인지적 부담 누적
+- **환경적 요인**: 교대근무, 간병인 교대 시간
+
+## 주요 증상
+
+- 해질녘에 갑자기 초조해짐
+- 배회, 소리 지르기, 울기
+- 간병인에 대한 거부, 공격성
+- 옷을 벗으려 하거나 집을 나가려는 행동
+
+## 간호 중재
+
+> 일몰증후군 관리의 핵심은 **예방적 환경 조정**이다.
+
+1. **조명 관리**: 해질녘 전에 밝은 조명 켜기, 점진적 어두워짐 방지
+2. **일과 구조화**: 오후에 가벼운 활동, 낮잠 제한
+3. **광선치료(Light Therapy)**: 아침 밝은 빛 노출 (2,500~10,000 lux)
+4. **카페인 제한**: 오후 이후 카페인 음료 금지
+5. **안정 제공**: 익숙한 물건, 음악, 따뜻한 음료 제공`,
+                },
+
+                {
+                    id: "간호 의사소통",
+                    title: "치매 환자 의사소통 전략",
+                    related: ["치매", "간호 중재", "BPSD"],
+                    content: `# 치매 환자 의사소통 전략
+
+## 개요
+
+치매가 진행되면 **언어 표현과 이해 능력**이 모두 저하된다. 효과적인 의사소통은 치매 환자의 불안을 줄이고, BPSD를 예방하며, **잔존하는 의사소통 능력을 최대한 활용**하는 것이 목표이다.
+
+## 단계별 의사소통 변화
+
+| 단계 | 변화 | 대응 |
+|------|------|------|
+| 경도 | 단어 찾기 어려움, 대화 이탈 | 시간을 주고 기다리기 |
+| 중등도 | 반복 질문, 이해력 저하 | 간단한 문장, 선택지 제공 |
+| 중증 | 언어 거의 소실 | 비언어적 소통, 터치 |
+
+## 핵심 원칙
+
+1. **눈높이 맞추기**: 앉아서 눈을 맞추고 대화
+2. **천천히, 명확하게**: 짧은 문장, 한 번에 하나의 지시
+3. **예/아니오 질문**: 개방형 질문보다 선택형 질문 사용
+4. **비언어적 신호 활용**: 표정, 제스처, 터치
+5. **교정하지 않기**: 잘못된 말을 직접 고치지 않고 자연스럽게 대화 유도
+
+## 금지 사항
+
+> "기억 안 나세요?", "방금 말했잖아요" 등 **기억력을 시험하는 표현은 절대 사용하지 않는다.**
+
+- ❌ "기억나세요?"
+- ❌ "아까 말했잖아요"
+- ❌ "왜 그러세요?"
+- ✅ "제가 도와드릴게요"
+- ✅ "맞아요, 같이 해봐요"`,
+                },
+            ];
+
+            // ═══ STATE ═══
+            let curIdx = -1,
+                readSet = new Set(),
+                baseFSize = 15.5;
+            try {
+                readSet = new Set(
+                    JSON.parse(localStorage.getItem("ale_read") || "[]"),
+                );
+            } catch (e) {}
+
+            // ═══ DOMAINS (same as instructor.html) ═══
+            const DOMAINS_WIKI = [
+                {
+                    id: "overview",
+                    label: "질환 개론",
+                    icon: "psychology",
+                    color: "#ec5b13",
+                    bg: "#fff4ed",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return (
+                            [
+                                "치매",
+                                "인지",
+                                "기억",
+                                "경도인지장애",
+                                "dementia",
+                            ].some((k) => l.includes(k)) &&
+                            !["bpsd", "증후군", "의사소통"].some((k) =>
+                                l.includes(k),
+                            )
+                        );
+                    },
+                },
+                {
+                    id: "symptoms",
+                    label: "증상·평가",
+                    icon: "warning",
+                    color: "#F59E0B",
+                    bg: "#FFF8E1",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return [
+                            "bpsd",
+                            "일몰",
+                            "배회",
+                            "공격",
+                            "망상",
+                            "우울",
+                            "불안",
+                            "초조",
+                            "환각",
+                            "증상",
+                            "증후",
+                            "행동심리",
+                        ].some((k) => l.includes(k));
+                    },
+                },
+                {
+                    id: "medications",
+                    label: "약물 치료",
+                    icon: "medication",
+                    color: "#14B8A6",
+                    bg: "#ECFDF5",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return [
+                            "도네페질",
+                            "리바스티그민",
+                            "메만틴",
+                            "콜린",
+                            "약물",
+                            "항정신",
+                            "억제제",
+                        ].some((k) => l.includes(k));
+                    },
+                },
+                {
+                    id: "nursing",
+                    label: "간호 중재",
+                    icon: "health_and_safety",
+                    color: "#4F6AF6",
+                    bg: "#EEF1FE",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return [
+                            "간호",
+                            "중재",
+                            "의사소통",
+                            "환경",
+                            "비약물",
+                            "돌봄",
+                            "케어",
+                            "전략",
+                        ].some((k) => l.includes(k));
+                    },
+                },
+                {
+                    id: "diagnostics",
+                    label: "진단·검사",
+                    icon: "biotech",
+                    color: "#F43F5E",
+                    bg: "#FFF1F2",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return [
+                            "mmse",
+                            "moca",
+                            "pet",
+                            "mri",
+                            "진단",
+                            "검사",
+                            "선별",
+                            "평가도구",
+                        ].some((k) => l.includes(k));
+                    },
+                },
+                {
+                    id: "pathology",
+                    label: "병태·기전",
+                    icon: "science",
+                    color: "#7C5CFC",
+                    bg: "#F3EFFF",
+                    match: (t) => {
+                        const l = (t.title || t.id).toLowerCase();
+                        return [
+                            "아밀로이드",
+                            "타우",
+                            "신경",
+                            "뇌",
+                            "해마",
+                            "시냅스",
+                            "퇴행",
+                            "단백질",
+                            "세포",
+                            "병태",
+                        ].some((k) => l.includes(k));
+                    },
+                },
+            ];
+            function categorizeTocDoc(doc) {
+                for (const d of DOMAINS_WIKI) if (d.match(doc)) return d.id;
+                return "overview";
+            }
+            let _tocFolderOpen = {};
+            DOMAINS_WIKI.forEach((d) => (_tocFolderOpen[d.id] = true));
+
+            // ═══ INIT ═══
+            function init() {
+                document.getElementById("tocCnt").textContent =
+                    DOCS.length + "개 교재";
+                document.getElementById("tocRead").textContent =
+                    readSet.size + "개 읽음";
+                renderToc(DOCS);
+
+                // Try loading from API too (append if available)
+                tryLoadAPI();
+            }
+
+            async function tryLoadAPI() {
+                try {
+                    const API = ALE.API,
+                        TOKEN = ALE.TOKEN;
+                    const r = await fetch(API + "/textbook/list", {
+                        headers: { Authorization: "Bearer " + TOKEN },
+                    });
+                    const d = await r.json();
+                    const apiDocs = (d.textbooks || []).filter(
+                        (t) => !DOCS.find((x) => x.id === t.node_id),
+                    );
+                    for (const t of apiDocs) {
+                        try {
+                            const cr = await fetch(
+                                API +
+                                    "/textbook/content/" +
+                                    encodeURIComponent(t.node_id),
+                                {
+                                    headers: {
+                                        Authorization: "Bearer " + TOKEN,
+                                    },
+                                },
+                            );
+                            const cd = await cr.json();
+                            if (cd.content)
+                                DOCS.push({
+                                    id: t.node_id,
+                                    title: t.title || t.node_id,
+                                    related: [],
+                                    content: cd.content,
+                                });
+                        } catch (e) {}
+                    }
+                    if (apiDocs.length) {
+                        document.getElementById("tocCnt").textContent =
+                            DOCS.length + "개 교재";
+                        renderToc(DOCS);
+                    }
+                } catch (e) {
+                    /* API not available, use hardcoded only */
+                }
+            }
+
+            function renderToc(items, forceOpenDomains) {
+                // Group by domain
+                const groups = {};
+                DOMAINS_WIKI.forEach((d) => (groups[d.id] = []));
+                items.forEach((t) => {
+                    const did = categorizeTocDoc(t);
+                    if (groups[did]) groups[did].push(t);
+                    else groups["overview"].push(t);
+                });
+
+                if (forceOpenDomains) {
+                    DOMAINS_WIKI.forEach(
+                        (d) =>
+                            (_tocFolderOpen[d.id] = forceOpenDomains.has(d.id)),
+                    );
+                }
+
+                let html = "";
+                let globalNum = 0;
+                DOMAINS_WIKI.forEach((d) => {
+                    const list = groups[d.id];
+                    if (!list.length && !forceOpenDomains) return;
+                    const isOpen = _tocFolderOpen[d.id] !== false;
+                    const chevron = isOpen ? "expand_more" : "chevron_right";
+
+                    html += `<div style="margin-bottom:4px">
+      <div onclick="toggleTocFolder('${d.id}')" style="display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:14px;cursor:pointer;transition:all .15s;user-select:none" onmouseover="this.style.background='rgba(0,0,0,.025)'" onmouseout="this.style.background=''">
+        <span class="material-symbols-outlined" style="font-size:18px;color:${d.color}">${d.icon}</span>
+        <span style="font-size:12px;font-weight:800;flex:1;color:var(--text)">${d.label}</span>
+        <span style="font-size:10px;font-weight:700;color:${d.color};background:${d.bg};padding:2px 8px;border-radius:6px">${list.length}</span>
+        <span class="material-symbols-outlined" style="font-size:16px;color:var(--text3);transition:transform .2s">${chevron}</span>
+      </div>
+      <div style="overflow:hidden;max-height:${isOpen ? list.length * 44 + "px" : "0"};transition:max-height .25s ease;padding-left:6px">`;
+
+                    list.forEach((t) => {
+                        globalNum++;
+                        const realIdx = DOCS.indexOf(t);
+                        const isActive = realIdx === curIdx;
+                        const isRead = readSet.has(t.id);
+                        html += `<div class="toc-item${isActive ? " active" : ""}" onclick="sel(${realIdx})" style="border-left:2px solid ${isActive ? d.color : "transparent"};margin-left:8px;transition:all .15s">
+        <div class="num" style="${isActive ? "background:" + d.color + ";color:white" : isRead ? "background:" + d.bg + ";color:" + d.color : ""}">${isRead && !isActive ? '<span class="material-symbols-outlined" style="font-size:14px;color:' + d.color + '">check</span>' : globalNum}</div>
+        <span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.title}</span>
+      </div>`;
+                    });
+                    html += `</div></div>`;
+                });
+
+                document.getElementById("tocList").innerHTML = html;
+            }
+
+            function toggleTocFolder(domainId) {
+                _tocFolderOpen[domainId] = !(
+                    _tocFolderOpen[domainId] !== false
+                );
+                renderToc(DOCS);
+            }
+
+            function filterToc() {
+                const q = document
+                    .getElementById("tocSearch")
+                    .value.toLowerCase();
+                if (!q) {
+                    renderToc(DOCS);
+                    return;
+                }
+                const filtered = DOCS.filter(
+                    (t) =>
+                        t.title.toLowerCase().includes(q) ||
+                        t.id.toLowerCase().includes(q),
+                );
+                const openDomains = new Set();
+                filtered.forEach((t) => openDomains.add(categorizeTocDoc(t)));
+                renderToc(filtered, openDomains);
+            }
+
+            // ═══ SELECT ═══
+            function sel(idx) {
+                if (idx < 0 || idx >= DOCS.length) return;
+                curIdx = idx;
+                const doc = DOCS[idx];
+                readSet.add(doc.id);
+                try {
+                    localStorage.setItem(
+                        "ale_read",
+                        JSON.stringify([...readSet]),
+                    );
+                } catch (e) {}
+                document.getElementById("tocRead").textContent =
+                    readSet.size + "개 읽음";
+                renderToc(DOCS);
+
+                document.getElementById("bcTitle").textContent = doc.title;
+                document.getElementById("navCtr").textContent =
+                    idx + 1 + "/" + DOCS.length;
+                updNav();
+
+                document.getElementById("empty").style.display = "none";
+                const body = document.getElementById("artBody");
+                body.style.display = "block";
+                body.innerHTML = marked.parse(doc.content);
+                body.className = "prose fade";
+                document.getElementById("artWrap").scrollTop = 0;
+                document.getElementById("readBar").style.width = "0%";
+
+                showMeta(doc);
+            }
+
+            function showMeta(doc) {
+                document.getElementById("metaP").style.display = "flex";
+                document.getElementById("mSize").textContent =
+                    doc.content.length.toLocaleString() + "자";
+                const heads = doc.content.match(/^##\s+.+/gm) || [];
+                document.getElementById("mSec").textContent =
+                    heads.length + "개";
+                document.getElementById("mTime").textContent =
+                    "약 " +
+                    Math.max(1, Math.round(doc.content.length / 400)) +
+                    "분";
+
+                document.getElementById("outl").innerHTML = heads.length
+                    ? heads
+                          .map((h) => {
+                              const t = h.replace(/^#{2,3}\s+/, "");
+                              return `<a class="outline-link" onclick="scrollH('${t.replace(/'/g, "\\'")}')"> ${t}</a>`;
+                          })
+                          .join("")
+                    : '<span style="font-size:12px;color:var(--text3)">섹션 없음</span>';
+
+                const rc = document.getElementById("relC");
+                const rels = doc.related || [];
+                if (rels.length) {
+                    rc.innerHTML = rels
+                        .map((r) => {
+                            const ri = DOCS.findIndex(
+                                (d) => d.id === r || d.title.includes(r),
+                            );
+                            return ri >= 0
+                                ? `<span class="rel-chip" onclick="sel(${ri})">${r}</span>`
+                                : `<span class="rel-chip" style="opacity:.5;cursor:default">${r}</span>`;
+                        })
+                        .join("");
+                } else {
+                    const nearby = DOCS.filter(
+                        (d, i) => Math.abs(i - curIdx) <= 2 && i !== curIdx,
+                    ).slice(0, 3);
+                    rc.innerHTML = nearby
+                        .map(
+                            (d) =>
+                                `<span class="rel-chip" onclick="sel(${DOCS.indexOf(d)})">${d.title.split("(")[0].trim()}</span>`,
+                        )
+                        .join("");
+                }
+            }
+
+            function scrollH(title) {
+                const hs = document
+                    .getElementById("artBody")
+                    .querySelectorAll("h2,h3");
+                for (const h of hs) {
+                    if (h.textContent.trim() === title) {
+                        h.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                        h.style.background = "var(--yellow-bg)";
+                        h.style.borderRadius = "8px";
+                        h.style.padding = "4px 8px";
+                        h.style.transition = "all .3s";
+                        setTimeout(() => {
+                            h.style.background = "";
+                            h.style.padding = "";
+                        }, 1500);
+                        break;
+                    }
+                }
+            }
+
+            function nav(d) {
+                sel(curIdx + d);
+            }
+            function updNav() {
+                const p = document.getElementById("prevBtn"),
+                    n = document.getElementById("nextBtn");
+                p.disabled = curIdx <= 0;
+                p.style.opacity = curIdx <= 0 ? ".4" : "1";
+                n.disabled = curIdx >= DOCS.length - 1;
+                n.style.opacity = curIdx >= DOCS.length - 1 ? ".4" : "1";
+            }
+            function onScroll() {
+                const el = document.getElementById("artWrap");
+                const pct =
+                    (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+                document.getElementById("readBar").style.width =
+                    Math.min(100, pct || 0) + "%";
+            }
+            function fSize(d) {
+                baseFSize = Math.max(12, Math.min(22, baseFSize + d));
+                document.getElementById("artBody").style.fontSize =
+                    baseFSize + "px";
+            }
+            document.addEventListener("keydown", (e) => {
+                if (e.key === "ArrowLeft") nav(-1);
+                if (e.key === "ArrowRight") nav(1);
+            });
+
+            init();
+        </script>
+    </body>
+</html>

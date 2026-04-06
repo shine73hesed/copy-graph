@@ -1,0 +1,1034 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <title>Agentic-ALE | 나의 학습</title>
+        <link
+            rel="stylesheet"
+            as="style"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --bg: #fafafc;
+                --white: #fff;
+                --text: #1a1a2e;
+                --text2: #64748b;
+                --text3: #94a3b8;
+                --border: #f0f0f5;
+                --teal: #14b8a6;
+                --teal-bg: #ecfdf5;
+                --primary: #ec5b13;
+                --primary-light: #fff4ed;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family:
+                    "Pretendard Variable",
+                    Pretendard,
+                    -apple-system,
+                    sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                height: 100vh;
+                display: flex;
+                overflow: hidden;
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #e2e8f0;
+                border-radius: 10px;
+            }
+            .card {
+                background: var(--white);
+                border-radius: 24px;
+                box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+                transition: all 0.3s;
+            }
+            .card:hover {
+                box-shadow: 0 14px 40px -8px rgba(0, 0, 0, 0.08);
+            }
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .anim {
+                animation: fadeUp 0.5s ease-out both;
+            }
+            .a1 {
+                animation-delay: 0.05s;
+            }
+            .a2 {
+                animation-delay: 0.1s;
+            }
+            .a3 {
+                animation-delay: 0.15s;
+            }
+            .a4 {
+                animation-delay: 0.2s;
+            }
+            .a5 {
+                animation-delay: 0.25s;
+            }
+            .sess-row {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                padding: 14px 16px;
+                border-radius: 16px;
+                transition: all 0.2s;
+                cursor: pointer;
+            }
+            .sess-row:hover {
+                background: #fef9f5;
+            }
+            .nav-link {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                font-size: 14px;
+                font-weight: 600;
+                cursor: pointer;
+                border-radius: 1.5rem;
+                transition: all 0.2s;
+                color: var(--text2);
+                text-decoration: none;
+            }
+            .nav-link:hover {
+                background: rgba(0, 0, 0, 0.03);
+            }
+            .nav-link.active {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+            .course-card {
+                position: relative;
+                border-radius: 24px;
+                overflow: hidden;
+                padding: 28px;
+                height: 200px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                cursor: pointer;
+                border: none;
+                transition: all 0.3s;
+            }
+            .course-card:hover {
+                transform: scale(1.03);
+                box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.15);
+            }
+            .view {
+                display: none;
+            }
+            .view.on {
+                display: block;
+            }
+            /* detail.js에서 사용하는 공통 CSS */
+            .continue-card {
+                background: linear-gradient(135deg, var(--primary), #ff8b5a);
+                border-radius: 20px;
+                padding: 24px;
+                color: white;
+                cursor: pointer;
+                transition: all 0.3s;
+                position: relative;
+                overflow: hidden;
+                margin-bottom: 28px;
+            }
+            .continue-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 20px 40px -10px rgba(236, 91, 19, 0.3);
+            }
+            .continue-card .blob-bg {
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 50%;
+                right: -60px;
+                top: -60px;
+            }
+            .cat-section {
+                margin-bottom: 16px;
+            }
+            .cat-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 18px;
+                background: var(--white);
+                border-radius: 16px;
+                cursor: pointer;
+                transition: all 0.15s;
+                border: 1px solid var(--border);
+            }
+            .cat-header:hover {
+                border-color: var(--primary);
+                background: var(--primary-light);
+            }
+            .cat-header.open {
+                border-radius: 16px 16px 0 0;
+                border-bottom: none;
+            }
+            .cat-nodes {
+                display: none;
+                border: 1px solid var(--border);
+                border-top: none;
+                border-radius: 0 0 16px 16px;
+                background: var(--white);
+                overflow: hidden;
+            }
+            .cat-nodes.open {
+                display: block;
+            }
+            .node-row {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 18px;
+                cursor: pointer;
+                transition: all 0.12s;
+                border-bottom: 1px solid var(--border);
+            }
+            .node-row:last-child {
+                border-bottom: none;
+            }
+            .node-row:hover {
+                background: var(--primary-light);
+            }
+            .node-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            .node-dot.done {
+                background: var(--teal);
+            }
+            .node-dot.progress {
+                background: var(--primary);
+            }
+            .node-dot.pending {
+                background: var(--border);
+            }
+            .node-badge {
+                font-size: 9px;
+                font-weight: 700;
+                padding: 3px 8px;
+                border-radius: 6px;
+                margin-left: auto;
+            }
+            .back-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--text3);
+                cursor: pointer;
+                margin-bottom: 20px;
+                transition: color 0.15s;
+            }
+            .back-btn:hover {
+                color: var(--primary);
+            }
+            @media (max-width: 768px) {
+                nav {
+                    display: none !important;
+                }
+                aside {
+                    display: none !important;
+                }
+                section {
+                    padding: 20px 16px !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <nav
+            style="
+                width: 220px;
+                flex-shrink: 0;
+                display: flex;
+                flex-direction: column;
+                border-right: 1px solid var(--border);
+                background: var(--white);
+            "
+        >
+            <div style="padding: 20px; border-bottom: 1px solid var(--border)">
+                <div style="display: flex; align-items: center; gap: 10px">
+                    <div
+                        style="
+                            width: 36px;
+                            height: 36px;
+                            background: var(--primary);
+                            border-radius: 12px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        "
+                    >
+                        <span
+                            class="material-symbols-outlined"
+                            style="color: white; font-size: 20px"
+                            >school</span
+                        >
+                    </div>
+                    <div>
+                        <div style="font-size: 15px; font-weight: 800">
+                            Agentic-ALE
+                        </div>
+                        <div
+                            style="
+                                font-size: 10px;
+                                color: var(--text3);
+                                font-weight: 600;
+                            "
+                        >
+                            Student
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="
+                    flex: 1;
+                    padding: 12px;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2px;
+                "
+            >
+                <a href="/dashboard" class="nav-link active"
+                    ><span
+                        class="material-symbols-outlined"
+                        style="font-size: 20px"
+                        >home</span
+                    >나의 학습</a
+                >
+            </div>
+            <div style="padding: 12px; border-top: 1px solid var(--border)">
+                <div
+                    style="
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 8px 10px;
+                    "
+                >
+                    <div
+                        style="
+                            width: 28px;
+                            height: 28px;
+                            background: var(--bg);
+                            border-radius: 50%;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        "
+                    >
+                        <span
+                            class="material-symbols-outlined"
+                            style="font-size: 16px; color: var(--text3)"
+                            >person</span
+                        >
+                    </div>
+                    <span
+                        id="sideUser"
+                        style="
+                            font-size: 12px;
+                            font-weight: 700;
+                            color: var(--text2);
+                        "
+                        >—</span
+                    ><span
+                        onclick="doLogout()"
+                        style="
+                            margin-left: auto;
+                            cursor: pointer;
+                            color: var(--text3);
+                        "
+                        class="material-symbols-outlined"
+                        title="로그아웃"
+                        >logout</span
+                    >
+                </div>
+            </div>
+        </nav>
+
+        <main style="flex: 1; display: flex; overflow: hidden">
+            <section style="flex: 1; padding: 36px 48px; overflow-y: auto">
+                <!-- ═══ VIEW 1: 메인 대시보드 ═══ -->
+                <div class="view on" id="viewMain">
+                    <div style="margin-bottom: 36px" class="anim a1">
+                        <h1
+                            id="greeting"
+                            style="
+                                font-size: 32px;
+                                font-weight: 800;
+                                letter-spacing: -0.5px;
+                                line-height: 1.3;
+                            "
+                        >
+                            안녕하세요 👋
+                        </h1>
+                        <p
+                            style="
+                                font-size: 15px;
+                                color: var(--text2);
+                                margin-top: 6px;
+                            "
+                        >
+                            학습할 코스를 선택하고 AI 튜터와 함께 공부해보세요.
+                        </p>
+                    </div>
+                    <div class="anim a2">
+                        <div
+                            style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 16px;
+                            "
+                        >
+                            <h2 style="font-size: 18px; font-weight: 700">
+                                학습 영역
+                            </h2>
+                        </div>
+                        <div
+                            id="courseGrid"
+                            style="
+                                display: grid;
+                                grid-template-columns: 1fr;
+                                gap: 16px;
+                                max-width: 480px;
+                            "
+                        ></div>
+                    </div>
+                    <div class="anim a3" style="margin-top: 36px">
+                        <div
+                            style="
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 12px;
+                            "
+                        >
+                            <h2 style="font-size: 18px; font-weight: 700">
+                                학습한 개념
+                            </h2>
+                        </div>
+                        <div
+                            class="card"
+                            style="padding: 48px 24px; text-align: center"
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                style="
+                                    font-size: 48px;
+                                    color: var(--border);
+                                    margin-bottom: 12px;
+                                    display: block;
+                                "
+                                >menu_book</span
+                            >
+                            <p
+                                style="
+                                    font-size: 14px;
+                                    color: var(--text3);
+                                    line-height: 1.6;
+                                "
+                            >
+                                학습을 시작하면 완료한 개념이 여기에 표시됩니다
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ═══ VIEW 2: 코스 상세 (detail.js가 채움) ═══ -->
+                <div class="view" id="viewCourse"></div>
+            </section>
+
+            <!-- ═══ RIGHT SIDEBAR ═══ -->
+            <aside
+                id="sidebar"
+                style="
+                    width: 360px;
+                    border-left: 1px solid var(--border);
+                    background: var(--white);
+                    display: flex;
+                    flex-direction: column;
+                    flex-shrink: 0;
+                    overflow: hidden;
+                "
+            >
+                <div
+                    id="sidebarMain"
+                    style="padding: 28px 24px; flex: 1; overflow-y: auto"
+                >
+                    <div
+                        style="text-align: center; margin-bottom: 20px"
+                        class="anim a2"
+                    >
+                        <img
+                            src="/static/images/avatar_m_1.svg"
+                            alt="avatar"
+                            style="width: 100px; height: 100px"
+                        />
+                    </div>
+                    <div
+                        style="
+                            display: grid;
+                            grid-template-columns: 1fr 1fr;
+                            gap: 12px;
+                            margin-bottom: 28px;
+                        "
+                        class="anim a3"
+                    >
+                        <div
+                            style="
+                                background: var(--primary-light);
+                                border-radius: 16px;
+                                padding: 16px;
+                                text-align: center;
+                            "
+                        >
+                            <div
+                                id="sM"
+                                style="
+                                    font-size: 22px;
+                                    font-weight: 800;
+                                    color: var(--primary);
+                                "
+                            >
+                                0/0
+                            </div>
+                            <div
+                                style="
+                                    font-size: 11px;
+                                    color: var(--primary);
+                                    font-weight: 600;
+                                    margin-top: 2px;
+                                "
+                            >
+                                완료
+                            </div>
+                        </div>
+                        <div
+                            style="
+                                background: var(--primary-light);
+                                border-radius: 16px;
+                                padding: 16px;
+                                text-align: center;
+                            "
+                        >
+                            <div
+                                id="sT"
+                                style="
+                                    font-size: 22px;
+                                    font-weight: 800;
+                                    color: var(--primary);
+                                "
+                            >
+                                0
+                            </div>
+                            <div
+                                style="
+                                    font-size: 11px;
+                                    color: var(--primary);
+                                    font-weight: 600;
+                                    margin-top: 2px;
+                                "
+                            >
+                                총 턴
+                            </div>
+                        </div>
+                        <div
+                            style="
+                                background: var(--primary-light);
+                                border-radius: 16px;
+                                padding: 16px;
+                                text-align: center;
+                            "
+                        >
+                            <div
+                                id="sA"
+                                style="
+                                    font-size: 22px;
+                                    font-weight: 800;
+                                    color: var(--primary);
+                                "
+                            >
+                                —
+                            </div>
+                            <div
+                                style="
+                                    font-size: 11px;
+                                    color: var(--primary);
+                                    font-weight: 600;
+                                    margin-top: 2px;
+                                "
+                            >
+                                평균 세션 시간
+                            </div>
+                        </div>
+                        <div
+                            style="
+                                background: var(--primary-light);
+                                border-radius: 16px;
+                                padding: 16px;
+                                text-align: center;
+                            "
+                        >
+                            <div
+                                id="sK"
+                                style="
+                                    font-size: 22px;
+                                    font-weight: 800;
+                                    color: var(--primary);
+                                "
+                            >
+                                $0
+                            </div>
+                            <div
+                                style="
+                                    font-size: 11px;
+                                    color: var(--primary);
+                                    font-weight: 600;
+                                    margin-top: 2px;
+                                "
+                            >
+                                비용
+                            </div>
+                        </div>
+                    </div>
+                    <div class="anim a4">
+                        <h3
+                            style="
+                                font-size: 14px;
+                                font-weight: 700;
+                                color: var(--text2);
+                                margin-bottom: 12px;
+                            "
+                        >
+                            최근 학습 기록
+                        </h3>
+                        <div
+                            id="sess"
+                            style="
+                                display: flex;
+                                flex-direction: column;
+                                gap: 2px;
+                                max-height: 260px;
+                                overflow-y: auto;
+                            "
+                        >
+                            <div
+                                style="
+                                    padding: 16px;
+                                    text-align: center;
+                                    font-size: 12px;
+                                    color: var(--text3);
+                                "
+                            >
+                                기록 없음
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        style="
+                            margin-top: 24px;
+                            background: linear-gradient(
+                                135deg,
+                                #ec5b13,
+                                #ff8b5a
+                            );
+                            border-radius: 20px;
+                            padding: 22px;
+                            color: white;
+                        "
+                        class="anim a5"
+                    >
+                        <div
+                            style="
+                                display: flex;
+                                align-items: center;
+                                gap: 6px;
+                                margin-bottom: 8px;
+                            "
+                        >
+                            <span
+                                class="material-symbols-outlined"
+                                style="font-size: 18px"
+                                >trending_up</span
+                            >
+                            <h3
+                                style="
+                                    font-size: 13px;
+                                    font-weight: 700;
+                                    opacity: 0.9;
+                                "
+                            >
+                                다음 추천
+                            </h3>
+                        </div>
+                        <p
+                            id="nRec"
+                            style="
+                                font-size: 14px;
+                                font-weight: 600;
+                                line-height: 1.5;
+                                margin-bottom: 14px;
+                            "
+                        >
+                            학습을 시작하면 맞춤 추천을 받을 수 있어요
+                        </p>
+                        <button
+                            onclick="startRecommended()"
+                            style="
+                                padding: 10px 20px;
+                                background: rgba(255, 255, 255, 0.2);
+                                border: 1px solid rgba(255, 255, 255, 0.3);
+                                color: white;
+                                border-radius: 12px;
+                                font-size: 13px;
+                                font-weight: 700;
+                                cursor: pointer;
+                                font-family: inherit;
+                                backdrop-filter: blur(4px);
+                            "
+                        >
+                            바로 시작 →
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- detail.js 컴포넌트 로드 -->
+        <script src="/static/detail.js"></script>
+
+        <script>
+            var kgData = null,
+                userId = "",
+                nextNode = null,
+                lastSession = null,
+                allSessions = [];
+            var sidebarMainHTML = "";
+            var $ = function (id) {
+                return document.getElementById(id);
+            };
+
+            async function init() {
+                try {
+                    var r = await fetch("/auth/me");
+                    if (!r.ok) {
+                        window.location.href = "/login";
+                        return;
+                    }
+                    var u = await r.json();
+                    userId = u.user_id;
+                    $("sideUser").textContent = u.display_name || u.user_id;
+                    $("greeting").innerHTML =
+                        "안녕하세요, " +
+                        (u.display_name || u.user_id) +
+                        "님 👋";
+                } catch (e) {
+                    window.location.href = "/login";
+                    return;
+                }
+                try {
+                    var r2 = await fetch("/test/kg");
+                    kgData = await r2.json();
+                    renderCourseCard();
+                    renderProgress();
+                } catch (e) {
+                    console.error(e);
+                }
+                try {
+                    var r3 = await fetch("/test/sessions");
+                    var d3 = await r3.json();
+                    allSessions = d3.sessions || [];
+                    renderSessionsSidebar(allSessions);
+                    calcAvgSessionTime(allSessions);
+                } catch (e) {}
+                try {
+                    var r4 = await fetch("/test/cost");
+                    var d4 = await r4.json();
+                    $("sK").textContent = "$" + d4.total_cost_usd.toFixed(2);
+                } catch (e) {}
+                // 사이드바 원본 저장
+                sidebarMainHTML = $("sidebarMain").outerHTML;
+
+                // student에서 나가기/항목이동으로 돌아온 경우 → 바로 코스 상세 뷰 열기
+                if (sessionStorage.getItem("ale_show_detail")) {
+                    var focusNode = sessionStorage.getItem("ale_focus_node");
+                    var focusSession =
+                        sessionStorage.getItem("ale_focus_session");
+                    sessionStorage.removeItem("ale_show_detail");
+                    sessionStorage.removeItem("ale_focus_node");
+                    sessionStorage.removeItem("ale_focus_session");
+                    showCourseDetail();
+                    // 특정 노드 포커스 요청이 있으면 해당 노드 자동 선택
+                    if (focusNode) {
+                        setTimeout(function () {
+                            var nodeRow = document.querySelector(
+                                '.node-row[data-node="' + focusNode + '"]',
+                            );
+                            if (nodeRow) {
+                                var catNodes = nodeRow.closest(".cat-nodes");
+                                if (
+                                    catNodes &&
+                                    !catNodes.classList.contains("open")
+                                ) {
+                                    catNodes.classList.add("open");
+                                    var catHeader =
+                                        catNodes.previousElementSibling;
+                                    if (catHeader) {
+                                        catHeader.classList.add("open");
+                                        var icon = catHeader.querySelector(
+                                            ".material-symbols-outlined",
+                                        );
+                                        if (icon)
+                                            icon.style.transform =
+                                                "rotate(180deg)";
+                                    }
+                                }
+                                var label = focusNode;
+                                if (kgData && kgData.nodes) {
+                                    var found = kgData.nodes.find(function (n) {
+                                        return n.id === focusNode;
+                                    });
+                                    if (found) label = found.label || found.id;
+                                }
+                                Detail.selectNode(focusNode, label);
+                                nodeRow.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "center",
+                                });
+                                // 특정 세션 포커스 (나가기 시 학습 중이던 세션)
+                                if (focusSession) {
+                                    setTimeout(function () {
+                                        Detail.clickSession(
+                                            focusSession,
+                                            focusNode,
+                                        );
+                                        var sessItem = document.querySelector(
+                                            '.conv-sess-item[data-sid="' +
+                                                focusSession +
+                                                '"]',
+                                        );
+                                        if (sessItem)
+                                            sessItem.scrollIntoView({
+                                                behavior: "smooth",
+                                                block: "nearest",
+                                            });
+                                    }, 400);
+                                }
+                            }
+                        }, 300);
+                    }
+                }
+
+                // 새로고침 시 detail 뷰 상태 복원
+                if (
+                    !sessionStorage.getItem("ale_show_detail") &&
+                    sessionStorage.getItem("ale_view") === "detail"
+                ) {
+                    showCourseDetail();
+                }
+            }
+
+            function renderCourseCard() {
+                if (!kgData) return;
+                var nodes = kgData.nodes || [];
+                var completed = nodes.filter(function (n) {
+                    return (n.progress || {}).status === "completed";
+                }).length;
+                $("courseGrid").innerHTML =
+                    '<div class="course-card" onclick="showCourseDetail()" style="background:#FFCC4D">' +
+                    '<div style="position:absolute;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.18);top:-30px;right:-20px"></div>' +
+                    '<div style="position:absolute;width:70px;height:70px;border-radius:50%;background:rgba(255,139,148,.25);top:40px;right:80px"></div>' +
+                    '<div style="position:absolute;width:100px;height:100px;border-radius:24px;background:rgba(255,255,255,.12);bottom:-20px;right:120px;transform:rotate(35deg)"></div>' +
+                    '<div style="position:absolute;width:50px;height:50px;border-radius:50%;background:rgba(236,91,19,.1);bottom:30px;left:30px"></div>' +
+                    '<div style="position:absolute;width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.2);top:20px;left:60%;transform:rotate(15deg)"></div>' +
+                    '<div style="position:relative;z-index:1">' +
+                    '<div style="font-size:32px;font-weight:800;color:#92400e;margin-bottom:4px">' +
+                    completed +
+                    "/" +
+                    nodes.length +
+                    "</div>" +
+                    '<h3 style="font-size:20px;font-weight:700;color:#92400e">치매 케어 간호 교육</h3>' +
+                    '<p style="font-size:12px;color:#92400e;margin-top:6px;font-weight:500;opacity:.7">10개 카테고리 · ' +
+                    nodes.length +
+                    "개 노드</p>" +
+                    "</div></div>";
+            }
+
+            function showCourseDetail() {
+                if (!kgData) {
+                    console.error("kgData not loaded");
+                    return;
+                }
+                $("viewMain").classList.remove("on");
+                $("viewCourse").classList.add("on");
+                sessionStorage.setItem("ale_view", "detail");
+                Detail.init(kgData, allSessions, lastSession);
+            }
+
+            function showMain() {
+                $("viewCourse").classList.remove("on");
+                $("viewMain").classList.add("on");
+                sessionStorage.removeItem("ale_view");
+                // 사이드바 복구
+                var aside = document.querySelector("aside");
+                aside.innerHTML = sidebarMainHTML;
+            }
+
+            function renderProgress() {
+                if (!kgData) return;
+                var nodes = kgData.nodes || [],
+                    completed = 0,
+                    totalTurns = 0;
+                nodes.forEach(function (n) {
+                    var p = n.progress || {};
+                    if (p.status === "completed") completed++;
+                    if (p.turns) totalTurns += p.turns;
+                });
+                $("sM").textContent = completed + "/" + nodes.length;
+                $("sT").textContent = totalTurns;
+                var next = nodes.find(function (n) {
+                    return (n.progress || {}).status !== "completed";
+                });
+                if (next) {
+                    nextNode = next;
+                    $("nRec").innerHTML =
+                        "다음 주제: <strong>" +
+                        (next.label || next.id) +
+                        '</strong><br><span style="font-size:12px;opacity:.8">' +
+                        (nodes.length - completed) +
+                        "개 과목 남음</span>";
+                }
+            }
+
+            function calcAvgSessionTime(sessions) {
+                if (!sessions.length) {
+                    $("sA").textContent = "—";
+                    return;
+                }
+                var t = 0,
+                    c = 0;
+                sessions.forEach(function (s) {
+                    if (s.created_at && s.updated_at) {
+                        var d = s.updated_at - s.created_at;
+                        if (d > 0 && d < 7200) {
+                            t += d;
+                            c++;
+                        }
+                    }
+                });
+                if (!c) {
+                    $("sA").textContent = "—";
+                    return;
+                }
+                var a = t / c;
+                $("sA").textContent =
+                    a < 60 ? Math.round(a) + "초" : Math.round(a / 60) + "분";
+            }
+
+            function renderSessionsSidebar(sessions) {
+                var el = $("sess");
+                if (!el) return;
+                if (!sessions.length) {
+                    el.innerHTML =
+                        '<div style="padding:16px;text-align:center;font-size:12px;color:var(--text3)">기록 없음</div>';
+                    return;
+                }
+                lastSession =
+                    sessions.find(function (s) {
+                        return !s.completed;
+                    }) || sessions[0];
+                el.innerHTML = sessions
+                    .slice(0, 6)
+                    .map(function (s) {
+                        var done = s.completed,
+                            co = done ? "#14b8a6" : "var(--primary)",
+                            bg = done ? "#ecfdf5" : "var(--primary-light)";
+                        return (
+                            '<div class="sess-row" onclick="restoreSession(\'' +
+                            s.id +
+                            "','" +
+                            s.node_id +
+                            '\')"><div style="width:36px;height:36px;border-radius:10px;background:' +
+                            bg +
+                            ';display:flex;align-items:center;justify-content:center;flex-shrink:0"><span class="material-symbols-outlined" style="color:' +
+                            co +
+                            ';font-size:18px">' +
+                            (done ? "check_circle" : "chat") +
+                            '</span></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' +
+                            s.node_id +
+                            '</div><div style="font-size:10px;color:var(--text3)">' +
+                            (s.total_turns || 0) +
+                            "턴</div></div></div>"
+                        );
+                    })
+                    .join("");
+            }
+
+            function restoreSession(sid, nid) {
+                localStorage.setItem("ale_sid", sid);
+                localStorage.setItem("ale_node", nid);
+                window.location.href = "/student";
+            }
+            function startRecommended() {
+                if (!nextNode) {
+                    alert("추천할 주제가 없습니다.");
+                    return;
+                }
+                if (!kgData) {
+                    alert("데이터 로딩 중입니다.");
+                    return;
+                }
+                // detail 뷰에서 해당 노드 포커싱 (student에서 나가기와 동일한 방식)
+                sessionStorage.setItem("ale_show_detail", "1");
+                sessionStorage.setItem("ale_focus_node", nextNode.id);
+                sessionStorage.setItem("ale_last_node", nextNode.id);
+                // 페이지 리로드로 init()에서 감지
+                window.location.reload();
+            }
+            async function doLogout() {
+                await fetch("/auth/logout", { method: "POST" });
+                window.location.href = "/login";
+            }
+            init();
+        </script>
+    </body>
+</html>

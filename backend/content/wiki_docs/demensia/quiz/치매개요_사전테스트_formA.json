@@ -1,0 +1,95 @@
+{
+  "node_id": "치매_개요",
+  "unit": 1,
+  "title": "치매는 질병이 아니라 증후군이다",
+  "form": "A",
+  "description": "사전 평가 — 학습 전 기초 수준 측정",
+  "items": [
+    {
+      "id": "pre-1-1",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "question": "의학적으로 치매는 어떻게 분류되는가?",
+      "options": [
+        "A. 단일 질병(Disease)",
+        "B. 증후군(Syndrome)",
+        "C. 감염병",
+        "D. 유전 질환"
+      ],
+      "answer": "B",
+      "explanation": "교재: '의학적으로 치매는 질병(Disease)이 아니라 증후군(Syndrome)이다.' 증후군이란 다양한 원인 질환들이 만들어내는 공통된 결과적 상태, 즉 증상들의 묶음이다.",
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "pre-1-2",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "question": "치매 진단의 3대 절대 요건에 해당하지 않는 것은?",
+      "options": [
+        "A. 후천적 변화",
+        "B. 다영역 인지 손상",
+        "C. 뇌 MRI에서 위축 소견 확인",
+        "D. 일상생활 기능 상실(ADL Loss)"
+      ],
+      "answer": "C",
+      "explanation": "교재 섹션4: 3대 요건은 ①후천적 변화, ②다영역 손상, ③ADL 상실. MRI는 원인 감별 도구이지 진단 요건이 아니다.",
+      "points": 10,
+      "related_concept": "섹션4"
+    },
+    {
+      "id": "pre-1-3",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "question": "교재에서 '패혈증 환자에게 타이레놀을 먹인 셈'이라는 표현이 비유하는 상황은?",
+      "options": [
+        "A. 치매약의 부작용이 심하다는 뜻",
+        "B. 원인도 모른 채 치매약부터 투여하는 것의 위험성",
+        "C. 해열제가 치매에 효과가 있다는 뜻",
+        "D. 치매와 패혈증이 같은 원인이라는 뜻"
+      ],
+      "answer": "B",
+      "explanation": "교재: '열이 난다고 해서 원인도 모른 채 해열제부터 들이킨다면? 패혈증 환자에게 타이레놀을 먹인 셈이 된다.' 치매도 80~90가지 원인 중 감별 없이 약을 주면 동일한 오류.",
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "pre-1-4",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "question": "교재에서 루이소체 치매 환자에게 항정신병 약물 투여 시 결과로 제시한 것은?",
+      "options": [
+        "A. 기억력이 급격히 향상된다",
+        "B. 전신 근육이 굳거나 의식이 떨어지거나 생명을 잃을 수 있다",
+        "C. 환시 증상만 사라지고 나머지는 호전된다",
+        "D. 혈관성 치매로 전환된다"
+      ],
+      "answer": "B",
+      "explanation": "교재: '결과는 전신 근육이 돌처럼 굳어버리거나, 의식이 떨어지거나, 최악의 경우 생명을 잃는 것이다. 불을 끄겠다고 기름을 들이붓는 격이다.'",
+      "points": 10,
+      "related_concept": "섹션3"
+    },
+    {
+      "id": "pre-1-5",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "교재의 박 할머니 사례: 며느리가 '어머니가 요즘 약 복용을 잊고, 집에서 화장실을 못 찾고, 된장찌개 간도 엉망'이라고 호소합니다. 교재에서 배운 3대 요건을 적용하여 치매 증후군 해당 여부를 판단하십시오.",
+      "answer": null,
+      "rubric": [
+        {"item": "후천적 변화 확인", "description": "'요즘'+'예전에는' 시간부사 → 과거 정상→현재 저하 패턴 (교재 원문)", "points": 10},
+        {"item": "다영역 손상 식별", "description": "약 복용(기억)+화장실(시공간)+된장찌개(실행기능) 3개 영역 식별 (교재 원문)", "points": 15},
+        {"item": "ADL 상실 판단", "description": "독립적 약 복용·공간 이동 불가 (교재 원문)", "points": 10},
+        {"item": "종합 판단", "description": "3요건 충족 → 치매 증후군 진입으로 결론", "points": 5},
+        {"item": "가산: 원인 감별", "description": "바로 약을 줄 수 없는 이유 — 90가지 원인 중 범인 미확인", "points": 10}
+      ],
+      "points": 50,
+      "related_concept": "섹션6"
+    }
+  ]
+}

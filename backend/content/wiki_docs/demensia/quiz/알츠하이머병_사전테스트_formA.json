@@ -1,0 +1,104 @@
+{
+  "node_id": "알츠하이머병",
+  "title": "뇌의 붕괴, 20년의 카운트다운",
+  "form": "A",
+  "description": "사전 평가 — 학습 전 기초 수준 측정",
+  "items": [
+    {
+      "id": "알츠하이머_A_01",
+      "seq": 1,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "subtype": null,
+      "question": "알츠하이머병에서 뇌세포를 직접 파괴하는 '총알' 역할을 하는 것은?",
+      "options": [
+        "A. 베타 아밀로이드 플라크",
+        "B. 과인산화된 타우 단백질",
+        "C. 아세틸콜린",
+        "D. 도파민"
+      ],
+      "answer": "B",
+      "explanation": "아밀로이드는 방아쇠(trigger)이고, 실제로 뉴런을 사멸시키는 총알(bullet)은 과인산화된 타우 단백질이다. 타우가 미세소관에서 이탈하면서 세포가 굶어 죽는다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션2"
+    },
+    {
+      "id": "알츠하이머_A_02",
+      "seq": 2,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "subtype": null,
+      "question": "알츠하이머병의 아밀로이드 병리는 증상 발현보다 약 몇 년 전에 시작되는가?",
+      "options": [
+        "A. 1~2년",
+        "B. 5~7년",
+        "C. 15~20년",
+        "D. 30~40년"
+      ],
+      "answer": "C",
+      "explanation": "70대에 증상이 나타났다면 50대부터 이미 뇌 속에서 아밀로이드가 축적되기 시작한 것이다. 15~20년의 전임상 기간이 있다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션1"
+    },
+    {
+      "id": "알츠하이머_A_03",
+      "seq": 3,
+      "type": "multiple_choice",
+      "bloom": "Understand",
+      "subtype": null,
+      "question": "아밀로이드를 제거하는 약을 만들었는데도 인지 저하를 막지 못한 이유는?",
+      "options": [
+        "A. 약물이 뇌에 도달하지 못해서",
+        "B. 이미 폭주한 별아교세포가 과산화수소를 뿜어내 정상 뇌세포까지 파괴하기 때문",
+        "C. 아밀로이드가 다시 재생되기 때문",
+        "D. 타우 단백질이 약물에 내성이 있어서"
+      ],
+      "answer": "B",
+      "explanation": "방아쇠(아밀로이드)를 치워도 이미 폭주한 청소부(별아교세포)가 표백제(과산화수소)를 뿜어내며 정상 뇌세포를 파괴하는 독립적 파괴 경로가 작동하고 있기 때문이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션4"
+    },
+    {
+      "id": "알츠하이머_A_04",
+      "seq": 4,
+      "type": "multiple_choice",
+      "bloom": "Remember",
+      "subtype": null,
+      "question": "도네페질(콜린에스터라제 억제제)의 작동 원리는?",
+      "options": [
+        "A. 아밀로이드 플라크를 분해한다",
+        "B. 타우 단백질의 과인산화를 막는다",
+        "C. 아세틸콜린 분해 효소를 억제하여 남은 아세틸콜린을 오래 유지시킨다",
+        "D. 새로운 뉴런을 생성한다"
+      ],
+      "answer": "C",
+      "explanation": "마이네르트 기저핵(아세틸콜린 공장)이 파괴되어 생산이 중단된 상태에서, 남은 극소량의 아세틸콜린이 분해되지 않도록 분해 효소를 차단하는 전략이다.",
+      "rubric": null,
+      "points": 10,
+      "related_concept": "섹션5"
+    },
+    {
+      "id": "알츠하이머_A_05",
+      "seq": 5,
+      "type": "short_answer",
+      "bloom": "Apply",
+      "subtype": "case",
+      "question": "70대 환자가 최근 2년간 단기 기억 상실이 서서히 진행되었습니다. 그런데 어릴 적 추억은 비교적 잘 기억합니다. 이 증상 패턴이 나타나는 이유를 '뇌의 동네별 붕괴 순서'와 연결하여 설명하십시오.",
+      "options": null,
+      "answer": null,
+      "explanation": null,
+      "rubric": [
+        {"item": "1차 타격 영역", "description": "해마가 가장 먼저 파괴됨 — '기억의 하드디스크'", "points": 15},
+        {"item": "단기 기억 상실 이유", "description": "해마는 새로운 기억을 저장하는 역할 → 파괴되면 최근 기억부터 상실", "points": 10},
+        {"item": "어릴 적 추억 보존 이유", "description": "오래된 기억은 이미 대뇌피질 곳곳에 분산 저장되어 있으므로 비교적 보존", "points": 10},
+        {"item": "진행 패턴", "description": "'서서히 진행'은 알츠하이머의 완만한 비탈길 패턴과 일치", "points": 5},
+        {"item": "가산: 전임상 기간", "description": "증상 발현 15~20년 전부터 이미 병리적 변화가 진행 중이었다는 점 언급", "points": 10}
+      ],
+      "points": 50,
+      "related_concept": "섹션6.1"
+    }
+  ]
+}

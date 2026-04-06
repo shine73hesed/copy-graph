@@ -1,0 +1,1828 @@
+{
+  "subject": "치매 케어 간호 교육",
+  "icon": "🏥",
+  "description": "치매의 정의, 분류, 병태생리, 임상증상, 진단, 약물/비약물 치료, 간호 중재를 포괄하는 통합 교육과정",
+  "nodes": [
+    {
+      "id": "치매_개요",
+      "label": "치매 개요",
+      "depth": 0,
+      "category": "질환개요",
+      "prerequisites": [],
+      "wiki_doc": "치매_개요.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 0.5,
+        "p_init": 0.1,
+        "p_transit": 0.06,
+        "p_guess": 0.25,
+        "p_slip": 0.15
+      },
+      "unit_id": "u01"
+    },
+    {
+      "id": "인지기능_연속체",
+      "label": "인지기능의 연속체",
+      "depth": 1,
+      "category": "질환개요",
+      "prerequisites": [
+        "치매_개요"
+      ],
+      "wiki_doc": "인지기능_연속체.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u02"
+    },
+    {
+      "id": "알츠하이머병",
+      "label": "알츠하이머병",
+      "depth": 1,
+      "category": "질환개요",
+      "prerequisites": [
+        "치매_개요"
+      ],
+      "wiki_doc": "알츠하이머병.md",
+      "case_ids": [
+        "case_020_mr_lai",
+        "case_031_mrs_ko",
+        "case_033_mrs_hung"
+      ],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u07"
+    },
+    {
+      "id": "혈관성_치매",
+      "label": "혈관성 치매",
+      "depth": 1,
+      "category": "질환개요",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "혈관성_치매.md",
+      "case_ids": [
+        "case_038_mr_ho"
+      ],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u08"
+    },
+    {
+      "id": "혼합형_치매",
+      "label": "혼합형 치매",
+      "depth": 2,
+      "category": "질환개요",
+      "prerequisites": [
+        "알츠하이머병",
+        "혈관성_치매"
+      ],
+      "wiki_doc": "혼합형_치매.md",
+      "case_ids": [
+        "case_038_mr_ho",
+        "case_048_mrs_cheung"
+      ],
+      "bkt": {
+        "difficulty": 1.8,
+        "p_init": 0.0703,
+        "p_transit": 0.0433,
+        "p_guess": 0.3429,
+        "p_slip": 0.2243
+      },
+      "unit_id": "u11"
+    },
+    {
+      "id": "루이소체_치매",
+      "label": "루이소체 치매",
+      "depth": 1,
+      "category": "질환개요",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "루이소체_치매.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u09"
+    },
+    {
+      "id": "전두측두엽_치매",
+      "label": "전두측두엽 치매",
+      "depth": 1,
+      "category": "질환개요",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "전두측두엽_치매.md",
+      "case_ids": [
+        "case_047_mrs_lam"
+      ],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u10"
+    },
+    {
+      "id": "파킨슨병_치매",
+      "label": "파킨슨병 치매",
+      "depth": 2,
+      "category": "질환개요",
+      "prerequisites": [
+        "루이소체_치매"
+      ],
+      "wiki_doc": "파킨슨병_치매.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u12"
+    },
+    {
+      "id": "아밀로이드_플라크",
+      "label": "아밀로이드 플라크",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "아밀로이드_플라크.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u61"
+    },
+    {
+      "id": "타우_단백질",
+      "label": "타우 단백질",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "타우_단백질.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u62"
+    },
+    {
+      "id": "신경염증",
+      "label": "신경염증 가설",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "아밀로이드_플라크"
+      ],
+      "wiki_doc": "신경염증.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u63"
+    },
+    {
+      "id": "아세틸콜린_감소",
+      "label": "아세틸콜린 감소",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "아세틸콜린_감소.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u52"
+    },
+    {
+      "id": "해마_위축",
+      "label": "해마 위축",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "해마_위축.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u64"
+    },
+    {
+      "id": "신경전달물질_불균형",
+      "label": "신경전달물질 불균형",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "아세틸콜린_감소"
+      ],
+      "wiki_doc": "신경전달물질_불균형.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u58"
+    },
+    {
+      "id": "ApoE4_위험인자",
+      "label": "ApoE4 유전자 위험인자",
+      "depth": 2,
+      "category": "병태생리",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "ApoE4_위험인자.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u65"
+    },
+    {
+      "id": "BPSD_원인모델",
+      "label": "BPSD 원인 모델",
+      "depth": 1,
+      "category": "병태생리",
+      "prerequisites": [
+        "치매_개요"
+      ],
+      "wiki_doc": "BPSD_원인모델.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.15,
+        "p_init": 0.0623,
+        "p_transit": 0.0388,
+        "p_guess": 0.3679,
+        "p_slip": 0.2443
+      },
+      "unit_id": "u13"
+    },
+    {
+      "id": "MMSE",
+      "label": "간이정신상태검사",
+      "depth": 1,
+      "category": "진단평가",
+      "prerequisites": [
+        "치매_개요"
+      ],
+      "wiki_doc": "MMSE.md",
+      "case_ids": [
+        "case_020_mr_lai",
+        "case_028_ms_cheung",
+        "case_031_mrs_ko"
+      ],
+      "bkt": {
+        "difficulty": 1.35,
+        "p_init": 0.0806,
+        "p_transit": 0.0491,
+        "p_guess": 0.3107,
+        "p_slip": 0.1986
+      },
+      "unit_id": "u06"
+    },
+    {
+      "id": "CDT_시계그리기",
+      "label": "시계 그리기 검사",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "MMSE"
+      ],
+      "wiki_doc": "CDT_시계그리기.md",
+      "case_ids": [
+        "case_020_mr_lai",
+        "case_031_mrs_ko"
+      ],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u21"
+    },
+    {
+      "id": "CDR_GDS",
+      "label": "CDR/GDS 척도",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "MMSE"
+      ],
+      "wiki_doc": "CDR_GDS.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u21"
+    },
+    {
+      "id": "GPCOG",
+      "label": "GPCOG",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "MMSE"
+      ],
+      "wiki_doc": "GPCOG.md",
+      "case_ids": [
+        "case_033_mrs_hung",
+        "case_045_ms_wong"
+      ],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u22"
+    },
+    {
+      "id": "NPI",
+      "label": "신경정신행동검사",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "NPI.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u23"
+    },
+    {
+      "id": "우울증_척도",
+      "label": "우울증 평가 척도",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "NPI"
+      ],
+      "wiki_doc": "우울증_척도.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u23"
+    },
+    {
+      "id": "뇌영상검사",
+      "label": "뇌영상검사",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "알츠하이머병"
+      ],
+      "wiki_doc": "뇌영상검사.md",
+      "case_ids": [
+        "case_032_mrs_lau"
+      ],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u24"
+    },
+    {
+      "id": "혈액검사_감별",
+      "label": "혈액검사와 감별진단",
+      "depth": 2,
+      "category": "진단평가",
+      "prerequisites": [
+        "MMSE"
+      ],
+      "wiki_doc": "혈액검사_감별.md",
+      "case_ids": [
+        "case_032_mrs_lau"
+      ],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u25"
+    },
+    {
+      "id": "망상",
+      "label": "망상",
+      "depth": 2,
+      "category": "정신병증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "망상.md",
+      "case_ids": [
+        "case_045_ms_wong"
+      ],
+      "bkt": {
+        "difficulty": 2.4,
+        "p_init": 0.0566,
+        "p_transit": 0.0356,
+        "p_guess": 0.3857,
+        "p_slip": 0.2586
+      },
+      "unit_id": "u37"
+    },
+    {
+      "id": "착오망상",
+      "label": "착오망상 증후군",
+      "depth": 3,
+      "category": "정신병증상",
+      "prerequisites": [
+        "망상"
+      ],
+      "wiki_doc": "착오망상.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u37b"
+    },
+    {
+      "id": "환각",
+      "label": "환각",
+      "depth": 2,
+      "category": "정신병증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "환각.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.4,
+        "p_init": 0.0566,
+        "p_transit": 0.0356,
+        "p_guess": 0.3857,
+        "p_slip": 0.2586
+      },
+      "unit_id": "u38"
+    },
+    {
+      "id": "작화증",
+      "label": "작화증",
+      "depth": 2,
+      "category": "정신병증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "작화증.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.4,
+        "p_init": 0.0566,
+        "p_transit": 0.0356,
+        "p_guess": 0.3857,
+        "p_slip": 0.2586
+      },
+      "unit_id": "u39"
+    },
+    {
+      "id": "병식결여",
+      "label": "병식인식불능증",
+      "depth": 3,
+      "category": "정신병증상",
+      "prerequisites": [
+        "망상"
+      ],
+      "wiki_doc": "병식결여.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.15,
+        "p_init": 0.0394,
+        "p_transit": 0.0259,
+        "p_guess": 0.4393,
+        "p_slip": 0.3014
+      },
+      "unit_id": "u37b"
+    },
+    {
+      "id": "경도행동장애_MBI",
+      "label": "경도행동장애",
+      "depth": 1,
+      "category": "정신병증상",
+      "prerequisites": [
+        "인지기능_연속체"
+      ],
+      "wiki_doc": "경도행동장애_MBI.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u39"
+    },
+    {
+      "id": "초조_공격성",
+      "label": "초조와 공격성",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "초조_공격성.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u27"
+    },
+    {
+      "id": "배회",
+      "label": "배회",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "배회.md",
+      "case_ids": [
+        "case_038_mr_ho"
+      ],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u28"
+    },
+    {
+      "id": "반복행동",
+      "label": "반복행동",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "반복행동.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u29"
+    },
+    {
+      "id": "탈억제_행동",
+      "label": "탈억제",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델",
+        "전두측두엽_치매"
+      ],
+      "wiki_doc": "탈억제_행동.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.25,
+        "p_init": 0.06,
+        "p_transit": 0.0375,
+        "p_guess": 0.375,
+        "p_slip": 0.25
+      },
+      "unit_id": "u30"
+    },
+    {
+      "id": "음성문제행동",
+      "label": "음성문제행동",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "음성문제행동.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u31"
+    },
+    {
+      "id": "환경의존증후군",
+      "label": "환경의존증후군",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "환경의존증후군.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u29"
+    },
+    {
+      "id": "일몰증후군",
+      "label": "일몰증후군",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "수면장애"
+      ],
+      "wiki_doc": "일몰증후군.md",
+      "case_ids": [
+        "case_048_mrs_cheung"
+      ],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u32"
+    },
+    {
+      "id": "ISB_성적행동",
+      "label": "부적절한 성적 행동",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "탈억제_행동"
+      ],
+      "wiki_doc": "ISB_성적행동.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u30"
+    },
+    {
+      "id": "배뇨장애",
+      "label": "배뇨장애",
+      "depth": 2,
+      "category": "행동증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "배뇨장애.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.1,
+        "p_init": 0.0634,
+        "p_transit": 0.0394,
+        "p_guess": 0.3643,
+        "p_slip": 0.2414
+      },
+      "unit_id": "u31"
+    },
+    {
+      "id": "우울증_치매",
+      "label": "치매에서의 우울증",
+      "depth": 2,
+      "category": "정서증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "우울증_치매.md",
+      "case_ids": [
+        "case_028_ms_cheung",
+        "case_042_ms_szeto",
+        "case_036_mrs_lam"
+      ],
+      "bkt": {
+        "difficulty": 2.25,
+        "p_init": 0.06,
+        "p_transit": 0.0375,
+        "p_guess": 0.375,
+        "p_slip": 0.25
+      },
+      "unit_id": "u40"
+    },
+    {
+      "id": "불안_치매",
+      "label": "치매에서의 불안",
+      "depth": 2,
+      "category": "정서증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "불안_치매.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.25,
+        "p_init": 0.06,
+        "p_transit": 0.0375,
+        "p_guess": 0.375,
+        "p_slip": 0.25
+      },
+      "unit_id": "u41"
+    },
+    {
+      "id": "과민_불안정",
+      "label": "과민과 정서불안정",
+      "depth": 2,
+      "category": "정서증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "과민_불안정.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.25,
+        "p_init": 0.06,
+        "p_transit": 0.0375,
+        "p_guess": 0.375,
+        "p_slip": 0.25
+      },
+      "unit_id": "u41"
+    },
+    {
+      "id": "무감동",
+      "label": "무감동",
+      "depth": 2,
+      "category": "정서증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "무감동.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.25,
+        "p_init": 0.06,
+        "p_transit": 0.0375,
+        "p_guess": 0.375,
+        "p_slip": 0.25
+      },
+      "unit_id": "u42"
+    },
+    {
+      "id": "수면장애",
+      "label": "수면장애",
+      "depth": 2,
+      "category": "기타증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "수면장애.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u32"
+    },
+    {
+      "id": "섭식장애",
+      "label": "섭식장애",
+      "depth": 2,
+      "category": "기타증상",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "섭식장애.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.95,
+        "p_init": 0.0669,
+        "p_transit": 0.0414,
+        "p_guess": 0.3536,
+        "p_slip": 0.2329
+      },
+      "unit_id": "u43"
+    },
+    {
+      "id": "섬망",
+      "label": "섬망",
+      "depth": 1,
+      "category": "기타증상",
+      "prerequisites": [
+        "치매_개요"
+      ],
+      "wiki_doc": "섬망.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.35,
+        "p_init": 0.0806,
+        "p_transit": 0.0491,
+        "p_guess": 0.3107,
+        "p_slip": 0.1986
+      },
+      "unit_id": "u03"
+    },
+    {
+      "id": "콜린에스터라제_억제제",
+      "label": "콜린에스터라제 억제제",
+      "depth": 2,
+      "category": "약물치료",
+      "prerequisites": [
+        "아세틸콜린_감소"
+      ],
+      "wiki_doc": "콜린에스터라제_억제제.md",
+      "case_ids": [
+        "case_031_mrs_ko",
+        "case_037_ms_law",
+        "case_038_mr_ho"
+      ],
+      "bkt": {
+        "difficulty": 2.85,
+        "p_init": 0.0463,
+        "p_transit": 0.0298,
+        "p_guess": 0.4179,
+        "p_slip": 0.2843
+      },
+      "unit_id": "u53"
+    },
+    {
+      "id": "메만틴",
+      "label": "메만틴",
+      "depth": 2,
+      "category": "약물치료",
+      "prerequisites": [
+        "콜린에스터라제_억제제"
+      ],
+      "wiki_doc": "메만틴.md",
+      "case_ids": [
+        "case_048_mrs_cheung"
+      ],
+      "bkt": {
+        "difficulty": 2.85,
+        "p_init": 0.0463,
+        "p_transit": 0.0298,
+        "p_guess": 0.4179,
+        "p_slip": 0.2843
+      },
+      "unit_id": "u53b"
+    },
+    {
+      "id": "항정신병약",
+      "label": "항정신병약물",
+      "depth": 2,
+      "category": "약물치료",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "항정신병약.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.85,
+        "p_init": 0.0463,
+        "p_transit": 0.0298,
+        "p_guess": 0.4179,
+        "p_slip": 0.2843
+      },
+      "unit_id": "u51"
+    },
+    {
+      "id": "항우울제",
+      "label": "항우울제",
+      "depth": 2,
+      "category": "약물치료",
+      "prerequisites": [
+        "우울증_치매"
+      ],
+      "wiki_doc": "항우울제.md",
+      "case_ids": [
+        "case_042_ms_szeto"
+      ],
+      "bkt": {
+        "difficulty": 2.85,
+        "p_init": 0.0463,
+        "p_transit": 0.0298,
+        "p_guess": 0.4179,
+        "p_slip": 0.2843
+      },
+      "unit_id": "u54"
+    },
+    {
+      "id": "정신작용제_부작용",
+      "label": "정신작용제의 부작용",
+      "depth": 3,
+      "category": "약물치료",
+      "prerequisites": [
+        "항정신병약",
+        "항우울제"
+      ],
+      "wiki_doc": "정신작용제_부작용.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 3.9,
+        "p_init": 0.0223,
+        "p_transit": 0.0163,
+        "p_guess": 0.4929,
+        "p_slip": 0.3443
+      },
+      "unit_id": "u55"
+    },
+    {
+      "id": "약물요법_원칙",
+      "label": "약물요법 6대 원칙",
+      "depth": 2,
+      "category": "약물치료",
+      "prerequisites": [
+        "항정신병약"
+      ],
+      "wiki_doc": "약물요법_원칙.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.85,
+        "p_init": 0.0463,
+        "p_transit": 0.0298,
+        "p_guess": 0.4179,
+        "p_slip": 0.2843
+      },
+      "unit_id": "u56"
+    },
+    {
+      "id": "비약물적_치료_개요",
+      "label": "비약물적 치료 개요",
+      "depth": 2,
+      "category": "비약물치료",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "비약물적_치료_개요.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.8,
+        "p_init": 0.0703,
+        "p_transit": 0.0433,
+        "p_guess": 0.3429,
+        "p_slip": 0.2243
+      },
+      "unit_id": "u44"
+    },
+    {
+      "id": "인지자극치료",
+      "label": "인지자극치료",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "인지자극치료.md",
+      "case_ids": [
+        "case_031_mrs_ko"
+      ],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44a"
+    },
+    {
+      "id": "회상요법",
+      "label": "회상요법",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "회상요법.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44b"
+    },
+    {
+      "id": "음악치료",
+      "label": "음악치료",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "음악치료.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44b"
+    },
+    {
+      "id": "광치료",
+      "label": "광치료",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요",
+        "수면장애"
+      ],
+      "wiki_doc": "광치료.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.5,
+        "p_init": 0.0543,
+        "p_transit": 0.0343,
+        "p_guess": 0.3929,
+        "p_slip": 0.2643
+      },
+      "unit_id": "u44c"
+    },
+    {
+      "id": "스누젤렌",
+      "label": "스누젤렌",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "스누젤렌.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44d"
+    },
+    {
+      "id": "가상현실치료_SPT",
+      "label": "가상현실치료",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "가상현실치료_SPT.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44d"
+    },
+    {
+      "id": "운동_치매예방",
+      "label": "운동과 치매 예방",
+      "depth": 3,
+      "category": "비약물치료",
+      "prerequisites": [
+        "비약물적_치료_개요"
+      ],
+      "wiki_doc": "운동_치매예방.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.35,
+        "p_init": 0.0577,
+        "p_transit": 0.0362,
+        "p_guess": 0.3821,
+        "p_slip": 0.2557
+      },
+      "unit_id": "u44e"
+    },
+    {
+      "id": "의사소통기법",
+      "label": "의사소통 기법",
+      "depth": 2,
+      "category": "간호실무",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "의사소통기법.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u04"
+    },
+    {
+      "id": "배회관리",
+      "label": "배회 관리",
+      "depth": 3,
+      "category": "간호실무",
+      "prerequisites": [
+        "배회"
+      ],
+      "wiki_doc": "배회관리.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 2.15,
+        "p_init": 0.0623,
+        "p_transit": 0.0388,
+        "p_guess": 0.3679,
+        "p_slip": 0.2443
+      },
+      "unit_id": "u28b"
+    },
+    {
+      "id": "낙상예방",
+      "label": "낙상 예방",
+      "depth": 2,
+      "category": "간호실무",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "낙상예방.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u33"
+    },
+    {
+      "id": "식사_영양관리",
+      "label": "식사와 영양 관리",
+      "depth": 2,
+      "category": "간호실무",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "식사_영양관리.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u43"
+    },
+    {
+      "id": "환경수정_안전관리",
+      "label": "환경수정과 안전관리",
+      "depth": 2,
+      "category": "간호실무",
+      "prerequisites": [
+        "BPSD_원인모델"
+      ],
+      "wiki_doc": "환경수정_안전관리.md",
+      "case_ids": [],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u33"
+    },
+    {
+      "id": "보호자_부담",
+      "label": "보호자 부담",
+      "depth": 1,
+      "category": "간호실무",
+      "prerequisites": [
+        "의사소통기법"
+      ],
+      "wiki_doc": "보호자_부담.md",
+      "case_ids": [
+        "case_046_ms_ng"
+      ],
+      "bkt": {
+        "difficulty": 1.15,
+        "p_init": 0.0851,
+        "p_transit": 0.0516,
+        "p_guess": 0.2964,
+        "p_slip": 0.1871
+      },
+      "unit_id": "u05"
+    },
+    {
+      "id": "지역사회_자원",
+      "label": "지역사회 자원",
+      "depth": 2,
+      "category": "간호실무",
+      "prerequisites": [
+        "보호자_부담"
+      ],
+      "wiki_doc": "지역사회_자원.md",
+      "case_ids": [
+        "case_046_ms_ng",
+        "case_048_mrs_cheung"
+      ],
+      "bkt": {
+        "difficulty": 1.65,
+        "p_init": 0.0737,
+        "p_transit": 0.0452,
+        "p_guess": 0.3321,
+        "p_slip": 0.2157
+      },
+      "unit_id": "u05"
+    }
+  ],
+  "edges": [
+    {
+      "source": "치매_개요",
+      "target": "인지기능_연속체",
+      "weight": 0.9,
+      "relation": "하위개념"
+    },
+    {
+      "source": "치매_개요",
+      "target": "알츠하이머병",
+      "weight": 0.9,
+      "relation": "원인질환"
+    },
+    {
+      "source": "치매_개요",
+      "target": "혈관성_치매",
+      "weight": 0.8,
+      "relation": "원인질환"
+    },
+    {
+      "source": "치매_개요",
+      "target": "루이소체_치매",
+      "weight": 0.7,
+      "relation": "원인질환"
+    },
+    {
+      "source": "치매_개요",
+      "target": "전두측두엽_치매",
+      "weight": 0.7,
+      "relation": "원인질환"
+    },
+    {
+      "source": "치매_개요",
+      "target": "섬망",
+      "weight": 0.6,
+      "relation": "감별진단"
+    },
+    {
+      "source": "치매_개요",
+      "target": "MMSE",
+      "weight": 0.8,
+      "relation": "진단도구"
+    },
+    {
+      "source": "치매_개요",
+      "target": "BPSD_원인모델",
+      "weight": 0.8,
+      "relation": "하위개념"
+    },
+    {
+      "source": "치매_개요",
+      "target": "혈액검사_감별",
+      "weight": 0.6,
+      "relation": "진단"
+    },
+    {
+      "source": "치매_개요",
+      "target": "의사소통기법",
+      "weight": 0.5,
+      "relation": "간호"
+    },
+    {
+      "source": "치매_개요",
+      "target": "낙상예방",
+      "weight": 0.5,
+      "relation": "간호"
+    },
+    {
+      "source": "치매_개요",
+      "target": "환경수정_안전관리",
+      "weight": 0.5,
+      "relation": "간호"
+    },
+    {
+      "source": "치매_개요",
+      "target": "보호자_부담",
+      "weight": 0.6,
+      "relation": "사회적"
+    },
+    {
+      "source": "인지기능_연속체",
+      "target": "경도행동장애_MBI",
+      "weight": 0.7,
+      "relation": "행동축"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "혼합형_치매",
+      "weight": 0.7,
+      "relation": "하위유형"
+    },
+    {
+      "source": "혈관성_치매",
+      "target": "혼합형_치매",
+      "weight": 0.7,
+      "relation": "하위유형"
+    },
+    {
+      "source": "루이소체_치매",
+      "target": "파킨슨병_치매",
+      "weight": 0.8,
+      "relation": "감별"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "아밀로이드_플라크",
+      "weight": 0.9,
+      "relation": "병태생리"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "타우_단백질",
+      "weight": 0.9,
+      "relation": "병태생리"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "아세틸콜린_감소",
+      "weight": 0.8,
+      "relation": "병태생리"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "해마_위축",
+      "weight": 0.8,
+      "relation": "병태생리"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "ApoE4_위험인자",
+      "weight": 0.6,
+      "relation": "위험인자"
+    },
+    {
+      "source": "알츠하이머병",
+      "target": "뇌영상검사",
+      "weight": 0.7,
+      "relation": "진단"
+    },
+    {
+      "source": "아밀로이드_플라크",
+      "target": "신경염증",
+      "weight": 0.8,
+      "relation": "트리거"
+    },
+    {
+      "source": "아세틸콜린_감소",
+      "target": "신경전달물질_불균형",
+      "weight": 0.7,
+      "relation": "상위개념"
+    },
+    {
+      "source": "아세틸콜린_감소",
+      "target": "콜린에스터라제_억제제",
+      "weight": 0.9,
+      "relation": "치료근거"
+    },
+    {
+      "source": "MMSE",
+      "target": "CDT_시계그리기",
+      "weight": 0.8,
+      "relation": "보완검사"
+    },
+    {
+      "source": "MMSE",
+      "target": "CDR_GDS",
+      "weight": 0.7,
+      "relation": "보완검사"
+    },
+    {
+      "source": "MMSE",
+      "target": "GPCOG",
+      "weight": 0.6,
+      "relation": "보완검사"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "NPI",
+      "weight": 0.8,
+      "relation": "평가도구"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "망상",
+      "weight": 0.7,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "환각",
+      "weight": 0.7,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "초조_공격성",
+      "weight": 0.8,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "배회",
+      "weight": 0.7,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "반복행동",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "탈억제_행동",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "음성문제행동",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "환경의존증후군",
+      "weight": 0.5,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "우울증_치매",
+      "weight": 0.7,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "불안_치매",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "과민_불안정",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "무감동",
+      "weight": 0.7,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "수면장애",
+      "weight": 0.6,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "섭식장애",
+      "weight": 0.5,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "배뇨장애",
+      "weight": 0.5,
+      "relation": "증상"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "비약물적_치료_개요",
+      "weight": 0.8,
+      "relation": "치료"
+    },
+    {
+      "source": "BPSD_원인모델",
+      "target": "항정신병약",
+      "weight": 0.7,
+      "relation": "치료"
+    },
+    {
+      "source": "망상",
+      "target": "착오망상",
+      "weight": 0.9,
+      "relation": "하위유형"
+    },
+    {
+      "source": "망상",
+      "target": "병식결여",
+      "weight": 0.5,
+      "relation": "관련개념"
+    },
+    {
+      "source": "망상",
+      "target": "항정신병약",
+      "weight": 0.7,
+      "relation": "치료"
+    },
+    {
+      "source": "환각",
+      "target": "항정신병약",
+      "weight": 0.7,
+      "relation": "치료"
+    },
+    {
+      "source": "환각",
+      "target": "루이소체_치매",
+      "weight": 0.8,
+      "relation": "핵심증상"
+    },
+    {
+      "source": "전두측두엽_치매",
+      "target": "탈억제_행동",
+      "weight": 0.9,
+      "relation": "특징적증상"
+    },
+    {
+      "source": "탈억제_행동",
+      "target": "ISB_성적행동",
+      "weight": 0.7,
+      "relation": "하위유형"
+    },
+    {
+      "source": "수면장애",
+      "target": "일몰증후군",
+      "weight": 0.7,
+      "relation": "관련"
+    },
+    {
+      "source": "수면장애",
+      "target": "광치료",
+      "weight": 0.7,
+      "relation": "치료"
+    },
+    {
+      "source": "우울증_치매",
+      "target": "항우울제",
+      "weight": 0.8,
+      "relation": "치료"
+    },
+    {
+      "source": "우울증_치매",
+      "target": "무감동",
+      "weight": 0.6,
+      "relation": "감별진단"
+    },
+    {
+      "source": "우울증_치매",
+      "target": "우울증_척도",
+      "weight": 0.7,
+      "relation": "평가도구"
+    },
+    {
+      "source": "NPI",
+      "target": "우울증_척도",
+      "weight": 0.6,
+      "relation": "하위척도"
+    },
+    {
+      "source": "콜린에스터라제_억제제",
+      "target": "메만틴",
+      "weight": 0.7,
+      "relation": "병용"
+    },
+    {
+      "source": "항정신병약",
+      "target": "정신작용제_부작용",
+      "weight": 0.8,
+      "relation": "부작용"
+    },
+    {
+      "source": "항우울제",
+      "target": "정신작용제_부작용",
+      "weight": 0.7,
+      "relation": "부작용"
+    },
+    {
+      "source": "항정신병약",
+      "target": "약물요법_원칙",
+      "weight": 0.8,
+      "relation": "원칙"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "인지자극치료",
+      "weight": 0.8,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "회상요법",
+      "weight": 0.7,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "음악치료",
+      "weight": 0.7,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "광치료",
+      "weight": 0.6,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "스누젤렌",
+      "weight": 0.5,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "가상현실치료_SPT",
+      "weight": 0.5,
+      "relation": "세부중재"
+    },
+    {
+      "source": "비약물적_치료_개요",
+      "target": "운동_치매예방",
+      "weight": 0.7,
+      "relation": "세부중재"
+    },
+    {
+      "source": "초조_공격성",
+      "target": "비약물적_치료_개요",
+      "weight": 0.7,
+      "relation": "치료"
+    },
+    {
+      "source": "배회",
+      "target": "배회관리",
+      "weight": 0.9,
+      "relation": "간호중재"
+    },
+    {
+      "source": "보호자_부담",
+      "target": "지역사회_자원",
+      "weight": 0.8,
+      "relation": "지원"
+    },
+    {
+      "source": "식사_영양관리",
+      "target": "섭식장애",
+      "weight": 0.5,
+      "relation": "관련"
+    }
+  ],
+  "reverse_propagation": {
+    "아밀로이드_플라크 → 알츠하이머병": 0.3,
+    "타우_단백질 → 알츠하이머병": 0.3,
+    "해마_위축 → 알츠하이머병": 0.2,
+    "아세틸콜린_감소 → 알츠하이머병": 0.2,
+    "착오망상 → 망상": 0.3,
+    "ISB_성적행동 → 탈억제_행동": 0.2,
+    "일몰증후군 → 수면장애": 0.2,
+    "우울증_척도 → 우울증_치매": 0.2,
+    "정신작용제_부작용 → 항정신병약": 0.2,
+    "인지자극치료 → 비약물적_치료_개요": 0.15,
+    "배회관리 → 배회": 0.2,
+    "지역사회_자원 → 보호자_부담": 0.15
+  },
+  "difficulty_params": {
+    "cat_weight": {
+      "질환개요": 1.0,
+      "진단평가": 1.2,
+      "간호실무": 1.0,
+      "정신병증상": 1.5,
+      "행동증상": 1.3,
+      "정서증상": 1.4,
+      "기타증상": 1.2,
+      "병태생리": 2.0,
+      "약물치료": 1.8,
+      "비약물치료": 1.1
+    },
+    "depth_weight": {
+      "0": 0.5,
+      "1": 1.0,
+      "2": 1.5,
+      "3": 2.0
+    },
+    "prereq_bonus": 0.15,
+    "range": [
+      0.5,
+      4.0
+    ],
+    "mastery_threshold": 0.8,
+    "min_streak": 3,
+    "min_meaningful_turns": 4,
+    "smoothing_window": 3
+  },
+  "version": "2.0"
+}

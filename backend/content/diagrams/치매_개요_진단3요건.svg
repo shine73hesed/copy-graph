@@ -1,0 +1,15 @@
+<svg width="720" viewBox="0 0 720 120" xmlns="http://www.w3.org/2000/svg" style="font-family:'Pretendard Variable',-apple-system,'Malgun Gothic',sans-serif;max-width:100%;">
+<rect width="720" height="120" fill="#ffffff" rx="12"/>
+<rect x="20" y="16" width="216" height="88" rx="12" fill="#fff4ef" stroke="#d85a30" stroke-width="1.2"/>
+<text x="128" y="44" text-anchor="middle" font-size="26" font-weight="800" fill="#d85a30">①</text>
+<text x="128" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#993c1d">후천적 변화</text>
+<text x="128" y="88" text-anchor="middle" font-size="11" fill="#d85a30">이전에는 정상 → 현재 저하</text>
+<rect x="252" y="16" width="216" height="88" rx="12" fill="#fff4ef" stroke="#d85a30" stroke-width="1.2"/>
+<text x="360" y="44" text-anchor="middle" font-size="26" font-weight="800" fill="#d85a30">②</text>
+<text x="360" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#993c1d">다영역 손상</text>
+<text x="360" y="88" text-anchor="middle" font-size="11" fill="#d85a30">6대 인지 영역 중 2개↑ 동시 저하</text>
+<rect x="484" y="16" width="216" height="88" rx="12" fill="#fff4ef" stroke="#d85a30" stroke-width="1.2"/>
+<text x="592" y="44" text-anchor="middle" font-size="26" font-weight="800" fill="#d85a30">③</text>
+<text x="592" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#993c1d">ADL 상실</text>
+<text x="592" y="88" text-anchor="middle" font-size="11" fill="#d85a30">독립적 일상생활 수행 불가</text>
+</svg>

@@ -1,0 +1,2170 @@
+<!doctype html>
+<html lang="ko">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>ALE — 학습</title>
+        <link
+            rel="stylesheet"
+            crossorigin
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+        <style>
+            :root {
+                --ink: #1a1a1a;
+                --ink2: #555;
+                --ink3: #999;
+                --ink4: #c4c4c4;
+                --paper: #fbfaf8;
+                --paper2: #f4f2ef;
+                --cream: #edeae4;
+                --accent: #c0582e;
+                --accent-light: #f8f0eb;
+                --teal: #14b8a6;
+                --teal-bg: #ecfdf5;
+                --primary: #ec5b13;
+                --primary-light: #fff4ed;
+                --serif: "Cormorant Garamond", Georgia, serif;
+                --sans:
+                    "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+                --mono: "DM Mono", monospace;
+            }
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: var(--sans);
+                background: var(--paper);
+                color: var(--ink);
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                -webkit-font-smoothing: antialiased;
+            }
+            ::selection {
+                background: var(--accent-light);
+                color: var(--accent);
+            }
+            ::-webkit-scrollbar {
+                width: 3px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background: var(--cream);
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            @keyframes rise {
+                from {
+                    opacity: 0;
+                    transform: translateY(16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-8px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes breathe {
+                0%,
+                100% {
+                    opacity: 0.8;
+                }
+                50% {
+                    opacity: 0.2;
+                }
+            }
+
+            /* ── 헤더 ── */
+            header {
+                height: 56px;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                border-bottom: 1px solid var(--cream);
+                flex-shrink: 0;
+                position: relative;
+                z-index: 100;
+                background: var(--paper);
+                gap: 12px;
+            }
+            .menu-btn {
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border: none;
+                background: var(--primary-light);
+                border-radius: 12px;
+                color: var(--primary);
+                transition: all 0.15s;
+                flex-shrink: 0;
+            }
+            .menu-btn:hover {
+                background: var(--primary);
+                color: white;
+            }
+
+            /* ── 메뉴 드롭다운 — 대시보드 스타일 ── */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                z-index: 150;
+                background: rgba(0, 0, 0, 0.08);
+            }
+            .menu-overlay.open {
+                display: block;
+            }
+            .menu-dd {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 16px;
+                width: 260px;
+                background: var(--paper);
+                border: 1px solid var(--cream);
+                z-index: 200;
+                border-radius: 16px;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+                padding: 8px;
+            }
+            .menu-dd.open {
+                display: block;
+                animation: slideDown 0.15s ease-out;
+            }
+            .menu-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 14px 16px;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--ink2);
+                cursor: pointer;
+                transition: all 0.15s;
+                border-radius: 12px;
+                margin-bottom: 2px;
+            }
+            .menu-item:last-child {
+                margin-bottom: 0;
+            }
+            .menu-item:hover {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+            .menu-item .material-symbols-outlined {
+                font-size: 20px;
+                color: var(--ink3);
+            }
+            .menu-item:hover .material-symbols-outlined {
+                color: var(--primary);
+            }
+
+            /* ── 주제 + 진행바 (가운데 배치) ── */
+            .h-topic {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .h-subject {
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--ink);
+                white-space: nowrap;
+                cursor: pointer;
+            }
+            .h-subject:hover {
+                color: var(--primary);
+            }
+            .h-progress-bar {
+                width: 120px;
+                height: 8px;
+                background: var(--cream);
+                border-radius: 4px;
+                overflow: hidden;
+            }
+            .h-progress-fill {
+                height: 100%;
+                border-radius: 4px;
+                background: linear-gradient(90deg, var(--primary), #ff8b5a);
+                transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+            .h-progress-label {
+                font-family: var(--mono);
+                font-size: 11px;
+                font-weight: 700;
+                color: var(--ink3);
+                flex-shrink: 0;
+            }
+            .h-right {
+                position: absolute;
+                right: 20px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            /* ── 노드 드롭다운 ── */
+            .node-dd {
+                display: none;
+                position: fixed;
+                top: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--paper);
+                border: 1px solid var(--cream);
+                z-index: 200;
+                min-width: 260px;
+                max-height: 400px;
+                overflow-y: auto;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+                padding: 8px;
+            }
+            .node-dd.open {
+                display: block;
+                animation: slideDown 0.15s ease-out;
+            }
+            .nd-cat {
+                padding: 10px 12px 4px;
+                font-size: 9px;
+                font-weight: 600;
+                color: var(--ink4);
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            .nd-item {
+                padding: 9px 12px;
+                font-size: 13px;
+                color: var(--ink2);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.12s;
+                border-radius: 8px;
+            }
+            .nd-item:hover {
+                background: var(--primary-light);
+                color: var(--primary);
+            }
+            .nd-item.active {
+                color: var(--accent);
+                font-weight: 700;
+            }
+            .nd-dot {
+                width: 5px;
+                height: 5px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            .nd-dot.done {
+                background: var(--teal);
+            }
+            .nd-dot.cur {
+                background: var(--accent);
+            }
+            .nd-dot.ready {
+                background: var(--ink4);
+            }
+
+            /* ── 대화 영역 ── */
+            .scroll {
+                flex: 1;
+                overflow-y: auto;
+            }
+            .thread {
+                max-width: 620px;
+                margin: 0 auto;
+                padding: 48px 28px 120px;
+            }
+            .t-msg {
+                margin-bottom: 44px;
+                animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+            }
+            .t-dot {
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: var(--accent);
+                display: inline-block;
+                margin-right: 6px;
+                vertical-align: middle;
+                position: relative;
+                top: -2px;
+                flex-shrink: 0;
+            }
+            .prose {
+                font-size: 15px;
+                line-height: 2.05;
+                color: var(--ink2);
+                font-weight: 400;
+                letter-spacing: -0.01em;
+            }
+            .prose strong {
+                color: var(--ink);
+                font-weight: 600;
+            }
+            .prose p {
+                margin-bottom: 14px;
+            }
+            .prose p:last-child {
+                margin-bottom: 0;
+            }
+            .prose blockquote {
+                margin: 24px 0;
+                padding: 20px 24px;
+                border-left: 2px solid var(--accent);
+                background: var(--accent-light);
+                font-family: var(--serif);
+                font-style: italic;
+                font-size: 15px;
+                line-height: 1.9;
+                color: var(--accent);
+            }
+            .prose ul,
+            .prose ol {
+                margin: 12px 0;
+                padding-left: 24px;
+            }
+            .prose li {
+                margin-bottom: 6px;
+            }
+            .prose h3,
+            .prose h4 {
+                color: var(--ink);
+                margin: 20px 0 8px;
+            }
+            .t-question {
+                margin-top: 20px;
+                padding: 20px 0;
+                border-top: 1px solid var(--cream);
+                font-size: 15px;
+                line-height: 1.9;
+                color: var(--ink);
+                font-weight: 400;
+            }
+            .t-question::before {
+                content: "Q";
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 22px;
+                height: 22px;
+                border-radius: 50%;
+                background: var(--accent);
+                color: #fff;
+                font-family: var(--serif);
+                font-size: 12px;
+                font-weight: 600;
+                margin-right: 10px;
+                vertical-align: middle;
+                position: relative;
+                top: -1px;
+            }
+            .t-question strong {
+                color: var(--accent);
+                font-weight: 600;
+            }
+            .mmd-wrap {
+                margin: 28px 0;
+                padding: 24px;
+                background: var(--paper);
+                border: 1px solid var(--cream);
+                position: relative;
+                border-radius: 12px;
+            }
+            .mmd-wrap::before {
+                content: "DIAGRAM";
+                position: absolute;
+                top: -8px;
+                left: 16px;
+                font-size: 8px;
+                font-weight: 600;
+                letter-spacing: 0.15em;
+                color: var(--ink4);
+                background: var(--paper);
+                padding: 0 8px;
+            }
+            .mmd-wrap svg {
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+            .mmd-wrap .nodeLabel {
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: unset !important;
+                line-height: 1.4 !important;
+            }
+            .mmd-wrap .node rect,
+            .mmd-wrap .node polygon {
+                rx: 4;
+                ry: 4;
+            }
+            .mmd-wrap foreignObject {
+                overflow: visible !important;
+            }
+            .mmd-wrap foreignObject div {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-align: center !important;
+                padding: 4px 8px !important;
+                white-space: normal !important;
+                word-break: keep-all !important;
+            }
+            .info-card {
+                margin: 28px 0;
+                border: 1px solid var(--cream);
+                background: var(--paper);
+                position: relative;
+                border-radius: 12px;
+            }
+            .info-card::before {
+                position: absolute;
+                top: -8px;
+                left: 16px;
+                font-size: 8px;
+                font-weight: 600;
+                letter-spacing: 0.15em;
+                color: var(--ink4);
+                background: var(--paper);
+                padding: 0 8px;
+            }
+            .info-card.ref::before {
+                content: "REFERENCE";
+            }
+            .info-card.clinical::before {
+                content: "CLINICAL POINT";
+            }
+            .info-card.tip::before {
+                content: "STUDY TIP";
+            }
+            .info-card-body {
+                padding: 20px 24px;
+                font-size: 13.5px;
+                line-height: 1.9;
+                color: var(--ink2);
+            }
+            .info-card-body strong {
+                color: var(--ink);
+            }
+            .info-card-body table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 13px;
+            }
+            .info-card-body th {
+                text-align: left;
+                padding: 10px 16px;
+                font-size: 9px;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--ink3);
+                border-bottom: 2px solid var(--ink);
+            }
+            .info-card-body td {
+                padding: 10px 16px;
+                border-bottom: 1px solid var(--cream);
+                color: var(--ink2);
+            }
+            .s-msg {
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 44px;
+                animation: rise 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+            }
+            .s-bubble {
+                max-width: 460px;
+                padding: 16px 22px;
+                background: var(--ink);
+                color: rgba(255, 255, 255, 0.88);
+                font-size: 14px;
+                line-height: 1.8;
+                letter-spacing: -0.01em;
+                border-radius: 18px 18px 4px 18px;
+            }
+            .typing {
+                margin-bottom: 44px;
+                animation: rise 0.3s both;
+            }
+            .typ-dots {
+                display: flex;
+                gap: 6px;
+                padding: 8px 0;
+            }
+            .typ-dots span {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--ink4);
+                animation: breathe 1.2s ease-in-out infinite;
+            }
+            .typ-dots span:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .typ-dots span:nth-child(3) {
+                animation-delay: 0.4s;
+            }
+            .done-card {
+                margin: 44px 0;
+                padding: 32px;
+                text-align: center;
+                border: none;
+                background: var(--ink);
+                border-radius: 16px;
+            }
+            .done-card h3 {
+                font-size: 18px;
+                font-weight: 800;
+                color: #14b8a6;
+                margin-bottom: 8px;
+            }
+            .done-card .done-stats {
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.6);
+                margin-bottom: 20px;
+            }
+            .done-btns {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .done-btn {
+                padding: 12px 28px;
+                border: none;
+                font-size: 13px;
+                font-weight: 700;
+                cursor: pointer;
+                font-family: var(--sans);
+                border-radius: 12px;
+                transition: all 0.15s;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .done-btn.primary {
+                background: var(--primary);
+                color: white;
+            }
+            .done-btn.primary:hover {
+                background: #d4510f;
+            }
+            .done-btn.secondary {
+                background: rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.15);
+            }
+            .done-btn.secondary:hover {
+                background: rgba(255, 255, 255, 0.18);
+                color: white;
+            }
+
+            /* ── 입력 영역 ── */
+            .input-area {
+                padding: 16px 28px 22px;
+                border-top: 1px solid var(--cream);
+                background: var(--paper);
+            }
+            .input-wrap {
+                max-width: 620px;
+                margin: 0 auto;
+                display: flex;
+                align-items: flex-end;
+                gap: 10px;
+            }
+            .input-area textarea {
+                flex: 1;
+                padding: 14px 18px;
+                border: 1.5px solid var(--ink4);
+                background: var(--paper);
+                font-family: var(--sans);
+                font-size: 14px;
+                outline: none;
+                resize: none;
+                min-height: 48px;
+                max-height: 100px;
+                line-height: 1.55;
+                transition: border-color 0.2s;
+                border-radius: 24px;
+            }
+            .input-area textarea:focus {
+                border-color: var(--ink);
+            }
+            .input-area textarea::placeholder {
+                color: var(--ink4);
+            }
+            .send-btn {
+                width: 48px;
+                height: 48px;
+                border: none;
+                background: var(--ink);
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+                transition: all 0.2s;
+                color: white;
+                border-radius: 50%;
+            }
+            .send-btn:hover {
+                background: #333;
+                transform: scale(1.05);
+            }
+            .send-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* ── 디버그 패널 ── */
+            .dbg-panel {
+                display: none;
+                position: fixed;
+                top: 56px;
+                right: 0;
+                width: 340px;
+                height: calc(100vh - 56px);
+                background: var(--paper);
+                border-left: 1px solid var(--cream);
+                z-index: 100;
+                overflow-y: auto;
+                padding: 16px;
+                font-size: 12px;
+                animation: slideDown 0.15s ease-out;
+            }
+            .dbg-panel.open {
+                display: block;
+            }
+            .dbg-section {
+                margin-bottom: 16px;
+                padding: 12px;
+                border: 1px solid var(--cream);
+                background: var(--paper);
+                border-radius: 10px;
+            }
+            .dbg-section-title {
+                font-size: 9px;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--ink3);
+                margin-bottom: 8px;
+            }
+            .dbg-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 3px 0;
+                font-size: 11px;
+            }
+            .dbg-row .k {
+                color: var(--ink3);
+            }
+            .dbg-row .v {
+                font-weight: 700;
+                color: var(--ink);
+                font-family: var(--mono);
+            }
+            .dbg-cl-item {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 0;
+                font-size: 11px;
+            }
+            .dbg-cl-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+            .dbg-cl-dot.done {
+                background: #14b8a6;
+            }
+            .dbg-cl-dot.not {
+                background: var(--cream);
+            }
+            .dbg-sb {
+                display: flex;
+                align-items: flex-end;
+                gap: 2px;
+                height: 40px;
+                margin-top: 6px;
+            }
+            .dbg-sb div {
+                flex: 1;
+                min-width: 6px;
+                border-radius: 2px;
+                transition: height 0.3s;
+            }
+            .dbg-scores {
+                margin-top: 6px;
+                font-size: 10px;
+                color: var(--ink3);
+                line-height: 1.5;
+            }
+            .str-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 3px;
+                font-size: 10px;
+                font-weight: 700;
+                padding: 3px 8px;
+                border-radius: 6px;
+            }
+            .str-badge.up {
+                background: #fff1f2;
+                color: #f43f5e;
+            }
+            .str-badge.pr {
+                background: #eef1fe;
+                color: #4f6af6;
+            }
+            .str-badge.bt {
+                background: #ecfdf5;
+                color: #14b8a6;
+            }
+            .str-badge.co {
+                background: #f3efff;
+                color: #7c5cfc;
+            }
+            .str-badge.te {
+                background: var(--paper2);
+                color: var(--ink3);
+            }
+            .dbg-json {
+                font-family: var(--mono);
+                font-size: 10px;
+                line-height: 1.6;
+                color: var(--ink3);
+                white-space: pre-wrap;
+                word-break: break-all;
+                max-height: 200px;
+                overflow-y: auto;
+                padding: 8px;
+                background: var(--paper);
+                border: 1px solid var(--cream);
+                border-radius: 8px;
+            }
+            @media (max-width: 768px) {
+                header {
+                    padding: 0 12px;
+                }
+                .thread {
+                    padding: 28px 16px 100px;
+                }
+                .input-area {
+                    padding: 10px 12px 14px;
+                }
+                .h-subject {
+                    font-size: 10px;
+                }
+            }
+            /* editorial header — collapsible */
+            .ed-header {
+                padding: 0;
+                border-bottom: 1px solid var(--cream);
+                display: none;
+                text-align: center;
+                overflow: hidden;
+                transition:
+                    max-height 0.3s ease,
+                    padding 0.3s ease;
+            }
+            .ed-header.open {
+                padding: 24px 32px 20px;
+                max-height: 300px;
+            }
+            .ed-header.closed {
+                padding: 0 32px;
+                max-height: 0;
+                border-bottom: none;
+            }
+            .ed-header-inner {
+                max-width: 520px;
+                margin: 0 auto;
+            }
+            .ed-header .ed-cat {
+                font-size: 10px;
+                font-weight: 600;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--primary);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+            }
+            .ed-header .ed-cat::before,
+            .ed-header .ed-cat::after {
+                content: "";
+                display: block;
+                width: 20px;
+                height: 1px;
+                background: var(--primary);
+            }
+            .ed-header h2 {
+                font-family: "Pretendard Variable", sans-serif;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1.4;
+                color: var(--ink);
+                margin-bottom: 8px;
+            }
+            .ed-header .ed-desc {
+                font-size: 13px;
+                line-height: 1.8;
+                color: var(--ink3);
+            }
+            .ed-toggle {
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: var(--ink3);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 28px;
+                height: 28px;
+                border-radius: 8px;
+                transition: all 0.15s;
+                vertical-align: middle;
+                margin-right: 4px;
+            }
+            .ed-toggle:hover {
+                background: var(--cream);
+                color: var(--ink);
+            }
+            .ed-toggle .material-symbols-outlined {
+                font-size: 18px;
+                transition: transform 0.25s;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+        <div class="menu-dd" id="menuDD">
+            <div
+                class="menu-item"
+                onclick="
+                    toggleMenu();
+                    showWikiDoc();
+                "
+            >
+                <span class="material-symbols-outlined">menu_book</span>교재
+                보기
+            </div>
+            <div
+                class="menu-item"
+                onclick="
+                    toggleMenu();
+                    showNotes();
+                "
+            >
+                <span class="material-symbols-outlined">edit_note</span>노트
+                보기
+            </div>
+            <div
+                class="menu-item"
+                onclick="
+                    toggleMenu();
+                    toggleNodeList();
+                "
+            >
+                <span class="material-symbols-outlined">swap_horiz</span>다른
+                항목으로 이동
+            </div>
+            <div
+                class="menu-item"
+                onclick="
+                    toggleMenu();
+                    goBackToDetail();
+                "
+            >
+                <span class="material-symbols-outlined">logout</span>나가기
+            </div>
+        </div>
+        <div class="node-dd" id="nodeDD"></div>
+        <header>
+            <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+                <span class="material-symbols-outlined" style="font-size: 22px"
+                    >widgets</span
+                >
+            </button>
+            <div class="h-topic">
+                <button
+                    class="ed-toggle"
+                    id="edToggle"
+                    onclick="toggleEdHeader()"
+                    title="학습 목표 보기/접기"
+                    style="display: none"
+                >
+                    <span class="material-symbols-outlined"
+                        >keyboard_arrow_down</span
+                    >
+                </button>
+                <span class="h-subject" id="hSubject" onclick="toggleNodeList()"
+                    >—</span
+                >
+                <div class="h-progress-bar">
+                    <div
+                        class="h-progress-fill"
+                        id="hBar"
+                        style="width: 0%"
+                    ></div>
+                </div>
+                <span class="h-progress-label" id="hLabel">0/0</span>
+            </div>
+            <div class="h-right">
+                <button
+                    class="menu-btn"
+                    onclick="toggleDebug()"
+                    title="디버그"
+                    style="background: transparent; color: var(--ink4)"
+                >
+                    <span
+                        class="material-symbols-outlined"
+                        style="font-size: 20px"
+                        >tune</span
+                    >
+                </button>
+            </div>
+        </header>
+        <div class="dbg-panel" id="dbgPanel">
+            <div
+                style="
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 12px;
+                "
+            >
+                <span
+                    style="
+                        font-size: 11px;
+                        font-weight: 800;
+                        color: var(--ink3);
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    "
+                    >Debug Panel</span
+                >
+                <button
+                    onclick="toggleDebug()"
+                    style="
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        color: var(--ink3);
+                        font-size: 16px;
+                    "
+                >
+                    ✕
+                </button>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Analyst</div>
+                <div class="dbg-row">
+                    <span class="k">score:</span
+                    ><span class="v" id="dbgScore">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">brief:</span
+                    ><span class="v" id="dbgBrief">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">moving_avg:</span
+                    ><span class="v" id="dbgAvg">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">trend:</span
+                    ><span class="v" id="dbgTrend">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">turn:</span
+                    ><span class="v" id="dbgTurn">0</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">struggle:</span
+                    ><span class="v" id="dbgStruggle">—</span>
+                </div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Checklist</div>
+                <div id="dbgChecklist">—</div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Score History</div>
+                <div class="dbg-sb" id="dbgScoreBar"></div>
+                <div class="dbg-scores" id="dbgScoreList"></div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Struggle</div>
+                <div class="dbg-row">
+                    <span class="k">상태</span
+                    ><span id="dbgStrBadge" class="str-badge te">… 대기</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">moving_avg</span
+                    ><span class="v" id="dbgAvg2">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">trend</span
+                    ><span class="v" id="dbgTrend2">—</span>
+                </div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Gate</div>
+                <div class="dbg-row">
+                    <span class="k">gate_a:</span
+                    ><span class="v" id="dbgGateA">✗</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">gate_b:</span
+                    ><span class="v" id="dbgGateB">✗</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">completed:</span
+                    ><span class="v" id="dbgCompleted">✗</span>
+                </div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">BKT</div>
+                <div class="dbg-row">
+                    <span class="k">mastery:</span
+                    ><span class="v" id="dbgBkt">—</span>
+                </div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Usage</div>
+                <div class="dbg-row">
+                    <span class="k">cost:</span
+                    ><span class="v" id="dbgCost">—</span>
+                </div>
+                <div class="dbg-row">
+                    <span class="k">tokens:</span
+                    ><span class="v" id="dbgTokens">—</span>
+                </div>
+            </div>
+            <div class="dbg-section">
+                <div class="dbg-section-title">Raw JSON</div>
+                <div class="dbg-json" id="dbgJson">{}</div>
+            </div>
+        </div>
+        <div class="ed-header" id="edHeader">
+            <div class="ed-header-inner">
+                <div class="ed-cat">Socratic Tutoring Session</div>
+                <h2 id="edTitle">—</h2>
+                <p class="ed-desc" id="edDesc"></p>
+            </div>
+        </div>
+        <div class="scroll" id="scr">
+            <div class="thread" id="thread"></div>
+        </div>
+        <div class="input-area">
+            <div class="input-wrap">
+                <textarea
+                    id="uI"
+                    rows="1"
+                    placeholder="답변을 입력하세요..."
+                    onkeydown="
+                        if (event.key === 'Enter' && !event.shiftKey) {
+                            event.preventDefault();
+                            send();
+                        }
+                    "
+                    oninput="autoResize(this)"
+                ></textarea>
+                <button class="send-btn" onclick="send()">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <script>
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: "base",
+                themeVariables: {
+                    primaryColor: "#fbfaf8",
+                    primaryBorderColor: "#c0582e",
+                    primaryTextColor: "#1a1a1a",
+                    lineColor: "#c4c4c4",
+                    secondaryColor: "#f8f0eb",
+                    tertiaryColor: "#f4f2ef",
+                    fontFamily: "Pretendard Variable,sans-serif",
+                    fontSize: "13px",
+                },
+                flowchart: {
+                    curve: "basis",
+                    padding: 24,
+                    nodeSpacing: 40,
+                    rankSpacing: 50,
+                    useMaxWidth: false,
+                    htmlLabels: true,
+                },
+            });
+            let mmdC = 0,
+                sid = null,
+                currentNodeId = "",
+                clItems = [],
+                clState = {},
+                scores = [],
+                nextNodes = [],
+                nodeListCache = null;
+            const $ = (id) => document.getElementById(id);
+            const scrl = () => {
+                const e = $("scr");
+                setTimeout(() => (e.scrollTop = e.scrollHeight), 80);
+            };
+
+            function clean(m) {
+                return m
+                    ? m
+                          .replace(/\[SCORE:.*?\]/g, "")
+                          .replace(/\[BRIEF:.*?\]/g, "")
+                          .replace(/\[TOPIC_COMPLETE\]/g, "")
+                          .replace(/\[CHECKLIST:.*?\]/g, "")
+                          .trim()
+                    : "";
+            }
+
+            function addT(md) {
+                var el = document.createElement("div");
+                el.className = "t-msg";
+                var processed = md
+                    .replace(
+                        /```clinical\n([\s\S]*?)```/g,
+                        '<div class="info-card clinical"><div class="info-card-body">$1</div></div>',
+                    )
+                    .replace(
+                        /```tip\n([\s\S]*?)```/g,
+                        '<div class="info-card tip"><div class="info-card-body">$1</div></div>',
+                    )
+                    .replace(
+                        /```ref\n([\s\S]*?)```/g,
+                        '<div class="info-card ref"><div class="info-card-body">$1</div></div>',
+                    );
+                var html = marked.parse(processed);
+                var qParts = html.split(/(<p>\[Q\][\s\S]*?<\/p>)/g);
+                var lastQIdx = -1;
+                for (var qi = qParts.length - 1; qi >= 0; qi--) {
+                    if (qParts[qi].match(/^<p>\[Q\]/)) {
+                        lastQIdx = qi;
+                        break;
+                    }
+                }
+                if (lastQIdx >= 0) {
+                    for (var qi2 = 0; qi2 < qParts.length; qi2++) {
+                        if (qParts[qi2].match(/^<p>\[Q\]/)) {
+                            if (qi2 === lastQIdx)
+                                qParts[qi2] = qParts[qi2].replace(
+                                    /<p>\[Q\]\s*([\s\S]*?)<\/p>/,
+                                    '<div class="t-question">$1</div>',
+                                );
+                            else
+                                qParts[qi2] = qParts[qi2].replace(
+                                    /\[Q\]\s*/g,
+                                    "",
+                                );
+                        }
+                    }
+                    html = qParts.join("");
+                } else {
+                    html = html.replace(
+                        /<p>([\s\S]*?\?)\s*<\/p>\s*$/,
+                        '<div class="t-question">$1</div>',
+                    );
+                }
+                html = html.replace(/^<p>/, '<p><span class="t-dot"></span>');
+                el.innerHTML = '<div class="prose">' + html + "</div>";
+                $("thread").appendChild(el);
+                el.querySelectorAll("pre code.language-mermaid").forEach(
+                    async function (block) {
+                        var id = "mmd_" + mmdC++;
+                        var wrap = document.createElement("div");
+                        wrap.className = "mmd-wrap";
+                        wrap.id = id;
+                        block.parentElement.replaceWith(wrap);
+                        try {
+                            var res = await mermaid.render(
+                                "svg_" + id,
+                                block.textContent,
+                            );
+                            wrap.innerHTML = res.svg;
+                        } catch (e) {
+                            wrap.innerHTML =
+                                '<pre style="color:#999;font-size:11px">diagram</pre>';
+                        }
+                    },
+                );
+                scrl();
+            }
+            function addU(tx) {
+                var el = document.createElement("div");
+                el.className = "s-msg";
+                el.innerHTML = '<div class="s-bubble">' + tx + "</div>";
+                $("thread").appendChild(el);
+                scrl();
+            }
+            function showTyping() {
+                var el = document.createElement("div");
+                el.className = "typing";
+                el.id = "typingEl";
+                el.innerHTML =
+                    '<div class="typ-dots" style="padding-left:14px"><span></span><span></span><span></span></div>';
+                $("thread").appendChild(el);
+                scrl();
+            }
+            function hideTyping() {
+                var e = $("typingEl");
+                if (e) e.remove();
+            }
+            function addDone(label, confirmed, total, turn) {
+                var el = document.createElement("div");
+                el.className = "done-card";
+                var btns =
+                    '<div class="done-btns" style="flex-direction:column;align-items:center;gap:8px">';
+                // 추천 노드들 (최대 3개)
+                var showNodes = nextNodes.slice(0, 3);
+                if (showNodes.length) {
+                    btns +=
+                        '<div style="font-size:12px;color:rgba(255,255,255,.4);margin-bottom:4px">다음 추천 강의</div>';
+                    showNodes.forEach(function (n, i) {
+                        var rel = n.relation ? " · " + n.relation : "";
+                        var cls =
+                            i === 0 ? "done-btn primary" : "done-btn secondary";
+                        btns +=
+                            '<button class="' +
+                            cls +
+                            '" onclick="startNode(\'' +
+                            n.id +
+                            "')\">" +
+                            (n.label || n.id) +
+                            rel +
+                            " →</button>";
+                    });
+                }
+                btns +=
+                    '<button class="done-btn secondary" onclick="goBackToDetail()" style="margin-top:4px">← 돌아가기</button>';
+                btns += "</div>";
+                el.innerHTML =
+                    '<h3>✓ 학습 완료</h3><div class="done-stats">' +
+                    label +
+                    " · 체크리스트 " +
+                    confirmed +
+                    "/" +
+                    total +
+                    " · " +
+                    turn +
+                    " turns</div>" +
+                    btns;
+                $("thread").appendChild(el);
+                scrl();
+            }
+            function updateCL(state) {
+                if (!state || !Object.keys(state).length) return;
+                clState = state;
+                updateHeader();
+            }
+            function updateHeader() {
+                var confirmed = Object.values(clState).filter(function (v) {
+                    return v === "confirmed";
+                }).length;
+                var total = Object.keys(clState).length || clItems.length || 0;
+                $("hLabel").textContent = confirmed + "/" + total;
+                $("hBar").style.width = total
+                    ? Math.round((confirmed / total) * 100) + "%"
+                    : "0%";
+            }
+
+            // ── 나가기: detail 페이지(코스 상세)로 돌아가기 ──
+            function goBackToDetail() {
+                sessionStorage.setItem("ale_show_detail", "1");
+                if (currentNodeId)
+                    sessionStorage.setItem("ale_focus_node", currentNodeId);
+                var currentSid = localStorage.getItem("ale_sid");
+                if (currentSid)
+                    sessionStorage.setItem("ale_focus_session", currentSid);
+                window.location.href = "/dashboard";
+            }
+
+            // ── 메뉴 기능 ──
+            async function showWikiDoc() {
+                if (!currentNodeId) {
+                    alert("학습 중인 주제가 없습니다.");
+                    return;
+                }
+                // 모달 생성
+                var existing = document.getElementById("wikiModal");
+                if (existing) existing.remove();
+                var modal = document.createElement("div");
+                modal.id = "wikiModal";
+                modal.style.cssText =
+                    "position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease-out";
+                modal.innerHTML =
+                    '<div style="width:90%;max-width:720px;max-height:85vh;background:var(--paper);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)">' +
+                    '<div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--cream);flex-shrink:0">' +
+                    '<div style="display:flex;align-items:center;gap:10px"><span class="material-symbols-outlined" style="color:var(--primary);font-size:22px">menu_book</span><span id="wikiTitle" style="font-size:16px;font-weight:800">로딩 중...</span></div>' +
+                    '<button onclick="document.getElementById(\'wikiModal\').remove()" style="width:32px;height:32px;border:none;background:var(--cream);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">close</span></button>' +
+                    "</div>" +
+                    '<div id="wikiBody" style="flex:1;overflow-y:auto;padding:28px 32px" class="prose"><div style="text-align:center;padding:40px;color:var(--ink3)">교재를 불러오는 중...</div></div>' +
+                    '<div id="wikiRelated" style="padding:14px 24px;border-top:1px solid var(--cream);flex-shrink:0;display:none"></div>' +
+                    "</div>";
+                modal.addEventListener("click", function (e) {
+                    if (e.target === modal) modal.remove();
+                });
+                document.body.appendChild(modal);
+
+                // API 호출
+                try {
+                    var r = await fetch(
+                        "/test/wiki/" + encodeURIComponent(currentNodeId),
+                    );
+                    var d = await r.json();
+                    if (d.error) {
+                        document.getElementById("wikiBody").innerHTML =
+                            '<p style="color:var(--ink3)">' + d.error + "</p>";
+                        return;
+                    }
+                    document.getElementById("wikiTitle").textContent =
+                        d.label || d.node_id;
+                    document.getElementById("wikiBody").innerHTML =
+                        marked.parse(d.content);
+                    // 관련 노드
+                    if (d.related && d.related.length) {
+                        var relDiv = document.getElementById("wikiRelated");
+                        relDiv.style.display = "block";
+                        relDiv.innerHTML =
+                            '<div style="font-size:10px;font-weight:700;color:var(--ink3);margin-bottom:8px">관련 개념</div><div style="display:flex;flex-wrap:wrap;gap:6px">' +
+                            d.related
+                                .map(function (r) {
+                                    return (
+                                        "<span style=\"padding:6px 12px;border-radius:10px;font-size:11px;font-weight:600;background:var(--primary-light);color:var(--primary);cursor:pointer\" onclick=\"document.getElementById('wikiModal').remove();loadWikiNode('" +
+                                        r.id +
+                                        "')\">" +
+                                        (r.label || r.id) +
+                                        (r.relation ? " · " + r.relation : "") +
+                                        "</span>"
+                                    );
+                                })
+                                .join("") +
+                            "</div>";
+                    }
+                } catch (e) {
+                    document.getElementById("wikiBody").innerHTML =
+                        '<p style="color:var(--ink3)">교재를 불러올 수 없습니다.</p>';
+                }
+            }
+            function loadWikiNode(nodeId) {
+                var prev = currentNodeId;
+                currentNodeId = nodeId;
+                showWikiDoc();
+                currentNodeId = prev;
+            }
+            function showNotes() {
+                if (!currentNodeId) {
+                    alert("학습 중인 주제가 없습니다.");
+                    return;
+                }
+                var existing = document.getElementById("noteModal");
+                if (existing) existing.remove();
+                var modal = document.createElement("div");
+                modal.id = "noteModal";
+                modal.style.cssText =
+                    "position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease-out";
+                modal.innerHTML =
+                    '<div style="width:90%;max-width:680px;max-height:85vh;background:var(--paper);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.15)">' +
+                    '<div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--cream);flex-shrink:0">' +
+                    '<div style="display:flex;align-items:center;gap:10px"><span class="material-symbols-outlined" style="color:var(--primary);font-size:22px">note_alt</span><span style="font-size:16px;font-weight:800">학습 노트</span><span style="font-size:12px;color:var(--ink3);font-weight:600">' +
+                    currentNodeId +
+                    "</span></div>" +
+                    '<button onclick="document.getElementById(\'noteModal\').remove()" style="width:32px;height:32px;border:none;background:var(--cream);border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center"><span class="material-symbols-outlined" style="font-size:18px">close</span></button>' +
+                    "</div>" +
+                    '<div id="noteBody" style="flex:1;overflow-y:auto;padding:24px 28px"><div style="text-align:center;padding:40px;color:var(--ink3)">노트를 불러오는 중...</div></div>' +
+                    "</div>";
+                modal.addEventListener("click", function (e) {
+                    if (e.target === modal) modal.remove();
+                });
+                document.body.appendChild(modal);
+
+                fetch("/test/note/" + encodeURIComponent(currentNodeId))
+                    .then(function (r) {
+                        return r.json();
+                    })
+                    .then(function (d) {
+                        var body = document.getElementById("noteBody");
+                        if (!d.exists) {
+                            body.innerHTML =
+                                '<div style="text-align:center;padding:60px 20px">' +
+                                '<span class="material-symbols-outlined" style="font-size:48px;color:var(--cream);margin-bottom:12px">note_alt</span>' +
+                                '<p style="font-size:15px;font-weight:700;margin-bottom:6px">아직 노트가 없습니다</p>' +
+                                '<p style="font-size:13px;color:var(--ink3)">학습을 완료하면 자동으로 생성됩니다.</p>' +
+                                '<div style="margin-top:20px"><textarea id="earlyMemo" placeholder="미리 메모를 작성할 수도 있어요..." style="width:100%;min-height:80px;padding:12px;border:1.5px solid var(--cream);border-radius:12px;font-size:13px;font-family:inherit;resize:vertical;outline:none"></textarea>' +
+                                '<button onclick="saveEarlyMemo()" style="margin-top:8px;padding:8px 20px;background:var(--primary);color:white;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">저장</button></div>' +
+                                "</div>";
+                            return;
+                        }
+                        var html = "";
+                        // 섹션 1: 취약점
+                        html +=
+                            '<div style="margin-bottom:28px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span class="material-symbols-outlined" style="font-size:18px;color:var(--rose)">error</span><span style="font-size:14px;font-weight:800">오답/취약 정리</span></div>';
+                        if (d.weak_points && d.weak_points.length) {
+                            d.weak_points.forEach(function (wp) {
+                                html +=
+                                    '<div style="padding:12px 16px;background:var(--rose-bg);border-radius:12px;margin-bottom:8px;font-size:13px">' +
+                                    '<div style="font-weight:700;color:var(--rose);margin-bottom:4px">T' +
+                                    wp.turn +
+                                    " · score " +
+                                    wp.score +
+                                    "</div>" +
+                                    (wp.question
+                                        ? '<div style="color:var(--ink2);margin-bottom:4px"><b>Q:</b> ' +
+                                          wp.question +
+                                          "</div>"
+                                        : "") +
+                                    '<div style="color:var(--ink3)"><b>내 답변:</b> ' +
+                                    wp.answer +
+                                    "</div>" +
+                                    "</div>";
+                            });
+                        } else {
+                            html +=
+                                '<div style="padding:16px;background:var(--teal-bg);border-radius:12px;font-size:13px;color:var(--teal);font-weight:600">취약 부분 없이 잘 학습하셨습니다!</div>';
+                        }
+                        html += "</div>";
+
+                        // 섹션 2: 용어 단어장
+                        html +=
+                            '<div style="margin-bottom:28px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span class="material-symbols-outlined" style="font-size:18px;color:var(--blue)">dictionary</span><span style="font-size:14px;font-weight:800">핵심 용어 단어장</span></div>';
+                        if (d.vocabulary && d.vocabulary.length) {
+                            html += '<div style="display:grid;gap:8px">';
+                            d.vocabulary.forEach(function (v) {
+                                html +=
+                                    '<div style="padding:12px 16px;background:var(--blue-bg);border-radius:12px;font-size:13px;display:flex;gap:12px;align-items:flex-start">' +
+                                    '<div style="font-weight:800;color:var(--blue);min-width:100px">' +
+                                    v.term +
+                                    "</div>" +
+                                    '<div style="flex:1"><div style="color:var(--ink2)">' +
+                                    v.definition +
+                                    "</div>" +
+                                    (v.user_said
+                                        ? '<div style="font-size:11px;color:var(--ink3);margin-top:2px">💬 내가 말한 표현: "' +
+                                          v.user_said +
+                                          '"</div>'
+                                        : "") +
+                                    "</div></div>";
+                            });
+                            html += "</div>";
+                        } else {
+                            html +=
+                                '<div style="padding:16px;background:var(--blue-bg);border-radius:12px;font-size:13px;color:var(--blue)">용어 정보가 없습니다.</div>';
+                        }
+                        html += "</div>";
+
+                        // 섹션 3: 개인 필기
+                        html +=
+                            '<div style="margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span class="material-symbols-outlined" style="font-size:18px;color:var(--violet)">edit_note</span><span style="font-size:14px;font-weight:800">개인 필기 노트</span></div>' +
+                            '<textarea id="noteMemo" style="width:100%;min-height:120px;padding:14px;border:1.5px solid var(--cream);border-radius:12px;font-size:13.5px;font-family:inherit;line-height:1.7;resize:vertical;outline:none;transition:border-color .15s" onfocus="this.style.borderColor=\'var(--violet)\'" onblur="this.style.borderColor=\'var(--cream)\'" placeholder="학습하면서 메모할 내용을 적어보세요...">' +
+                            (d.personal_memo || "") +
+                            "</textarea>" +
+                            '<div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="saveMemo()" style="padding:8px 20px;background:var(--violet);color:white;border:none;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">메모 저장</button></div>' +
+                            "</div>";
+
+                        body.innerHTML = html;
+                    })
+                    .catch(function (e) {
+                        document.getElementById("noteBody").innerHTML =
+                            '<p style="color:var(--ink3);text-align:center;padding:40px">노트를 불러올 수 없습니다.</p>';
+                    });
+            }
+            function saveMemo() {
+                var memo = document.getElementById("noteMemo").value;
+                fetch(
+                    "/test/note/" + encodeURIComponent(currentNodeId) + "/memo",
+                    {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ memo: memo }),
+                    },
+                ).then(function () {
+                    var btn = event.target;
+                    btn.textContent = "저장됨 ✓";
+                    btn.style.background = "var(--teal)";
+                    setTimeout(function () {
+                        btn.textContent = "메모 저장";
+                        btn.style.background = "var(--violet)";
+                    }, 1500);
+                });
+            }
+            function saveEarlyMemo() {
+                var memo = document.getElementById("earlyMemo").value;
+                if (!memo.trim()) return;
+                fetch(
+                    "/test/note/" + encodeURIComponent(currentNodeId) + "/memo",
+                    {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ memo: memo }),
+                    },
+                ).then(function () {
+                    alert("메모가 저장되었습니다!");
+                });
+            }
+
+            async function toggleNodeList() {
+                var dd = $("nodeDD");
+                if (dd.classList.contains("open")) {
+                    dd.classList.remove("open");
+                    return;
+                }
+                if (!nodeListCache) {
+                    try {
+                        var r = await fetch("/test/kg");
+                        nodeListCache = await r.json();
+                    } catch (e) {
+                        return;
+                    }
+                }
+                var nodes = nodeListCache.nodes || [];
+                var cats = {};
+                nodes.forEach(function (n) {
+                    var c = n.category || "기타";
+                    if (!cats[c]) cats[c] = [];
+                    cats[c].push(n);
+                });
+                var html = "";
+                for (var cat in cats) {
+                    html += '<div class="nd-cat">' + cat + "</div>";
+                    cats[cat].forEach(function (n) {
+                        var p = n.progress || {};
+                        var st = p.status || "not_started";
+                        var isCur = n.id === currentNodeId;
+                        var dotCls =
+                            st === "completed"
+                                ? "done"
+                                : isCur
+                                  ? "cur"
+                                  : "ready";
+                        var cls = isCur ? "nd-item active" : "nd-item";
+                        html +=
+                            '<div class="' +
+                            cls +
+                            '" onclick="selectNode(\'' +
+                            n.id +
+                            '\')"><span class="nd-dot ' +
+                            dotCls +
+                            '"></span>' +
+                            (n.label || n.id) +
+                            "</div>";
+                    });
+                }
+                dd.innerHTML = html;
+                dd.classList.add("open");
+            }
+            function selectNode(nodeId) {
+                $("nodeDD").classList.remove("open");
+                // detail 페이지로 이동하여 해당 노드의 기존 대화를 확인할 수 있도록
+                sessionStorage.setItem("ale_show_detail", "1");
+                sessionStorage.setItem("ale_focus_node", nodeId);
+                window.location.href = "/dashboard";
+            }
+            document.addEventListener("click", function (e) {
+                if (
+                    !e.target.closest("#nodeDD") &&
+                    !e.target.closest("#hSubject")
+                )
+                    $("nodeDD").classList.remove("open");
+            });
+
+            // ── editorial header: 학습 목표 접기/펼치기 ──
+            var _edOpen = true;
+            function toggleEdHeader() {
+                var edH = $("edHeader");
+                var btn = $("edToggle");
+                var icon = btn.querySelector(".material-symbols-outlined");
+                if (_edOpen) {
+                    edH.classList.remove("open");
+                    edH.classList.add("closed");
+                    icon.textContent = "keyboard_arrow_down";
+                    icon.style.transform = "rotate(0deg)";
+                    _edOpen = false;
+                } else {
+                    edH.classList.remove("closed");
+                    edH.classList.add("open");
+                    icon.textContent = "keyboard_arrow_up";
+                    icon.style.transform = "rotate(0deg)";
+                    _edOpen = true;
+                }
+            }
+
+            function loadEditorialHeader(nodeId) {
+                fetch("/test/summary/" + encodeURIComponent(nodeId))
+                    .then(function (r) {
+                        return r.json();
+                    })
+                    .then(function (d) {
+                        showEdHeader(d.label || nodeId, d.summary || "");
+                    })
+                    .catch(function () {
+                        fetch("/test/wiki/" + encodeURIComponent(nodeId))
+                            .then(function (r) {
+                                return r.json();
+                            })
+                            .then(function (d) {
+                                if (d.error) return;
+                                var lines = (d.content || "").split("\n");
+                                var desc = "";
+                                for (var li = 0; li < lines.length; li++) {
+                                    var l = lines[li].trim();
+                                    if (
+                                        l &&
+                                        !l.startsWith("#") &&
+                                        !l.startsWith("|") &&
+                                        !l.startsWith("---") &&
+                                        l.length > 10
+                                    ) {
+                                        desc = l;
+                                        break;
+                                    }
+                                }
+                                if (desc.length > 120)
+                                    desc = desc.substring(0, 120) + "…";
+                                showEdHeader(d.label || nodeId, desc);
+                            })
+                            .catch(function () {});
+                    });
+            }
+            function showEdHeader(label, desc) {
+                var edH = $("edHeader");
+                edH.style.display = "block";
+                edH.classList.add("open");
+                edH.classList.remove("closed");
+                _edOpen = true;
+                $("edTitle").textContent = label + "에 대해 함께 학습합니다";
+                $("edDesc").textContent = desc;
+                // 토글 버튼 표시
+                var btn = $("edToggle");
+                btn.style.display = "inline-flex";
+                btn.querySelector(".material-symbols-outlined").textContent =
+                    "keyboard_arrow_up";
+            }
+
+            function startNode(nodeId) {
+                if (!nodeId) return;
+                $("thread").innerHTML = "";
+                scores = [];
+                sid = null;
+                clItems = [];
+                clState = {};
+                nextNodes = [];
+                currentNodeId = nodeId;
+                $("hSubject").textContent = nodeId;
+                updateHeader();
+                showTyping();
+                loadEditorialHeader(nodeId);
+                fetch("/test/start", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ node_id: nodeId }),
+                })
+                    .then(function (r) {
+                        return r.json();
+                    })
+                    .then(function (d) {
+                        hideTyping();
+                        sid = d.session_id;
+                        localStorage.setItem("ale_sid", sid);
+                        localStorage.setItem("ale_node", nodeId);
+                        if (d.checklist_items && d.checklist_items.length) {
+                            clItems = d.checklist_items;
+                            clState = {};
+                            clItems.forEach(function (it) {
+                                clState[it.id] = "not_yet";
+                            });
+                            updateHeader();
+                        }
+                        var initCl = {};
+                        if (clItems.length)
+                            clItems.forEach(function (it) {
+                                initCl[it.id] = "not_yet";
+                            });
+                        updateDebug({
+                            checklist: initCl,
+                            score: null,
+                            turn: 0,
+                        });
+                        addT(clean(d.first_message));
+                    })
+                    .catch(function (e) {
+                        hideTyping();
+                        addT("오류: " + e.message);
+                    });
+            }
+
+            var _sending = false;
+            async function send() {
+                if (_sending) return;
+                var i = $("uI"),
+                    t = i.value.trim();
+                if (!t) return;
+                _sending = true;
+
+                // sid 없으면 → 새 세션 (restoreSession에서 이미 복구 시도했으므로 여기까지 왔으면 정말 없는 것)
+                if (!sid) {
+                    try {
+                        var sr = await fetch("/test/start", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ node_id: currentNodeId }),
+                        });
+                        var sd = await sr.json();
+                        if (sd.error) {
+                            addT("오류: " + sd.error);
+                            _sending = false;
+                            return;
+                        }
+                        sid = sd.session_id;
+                        localStorage.setItem("ale_sid", sid);
+                        localStorage.setItem("ale_node", currentNodeId);
+                        if (sd.checklist_items && sd.checklist_items.length)
+                            clItems = sd.checklist_items;
+                    } catch (e) {
+                        addT("세션 생성 실패");
+                        _sending = false;
+                        return;
+                    }
+                }
+
+                i.value = "";
+                autoResize(i);
+                addU(t);
+                showTyping();
+                try {
+                    var r = await fetch("/test/answer", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ session_id: sid, answer: t }),
+                    });
+                    var txt = await r.text();
+                    var d;
+                    try {
+                        d = JSON.parse(txt);
+                    } catch (pe) {
+                        hideTyping();
+                        addT("서버 응답 파싱 오류");
+                        console.error("[PARSE]", pe, txt.substring(0, 300));
+                        _sending = false;
+                        return;
+                    }
+                    hideTyping();
+                    if (d.error) {
+                        addT("오류: " + d.error);
+                        _sending = false;
+                        return;
+                    }
+                    if (d.checklist) updateCL(d.checklist);
+                    updateDebug(d);
+                    addT(clean(d.tutor_message));
+                    if (d.gate && d.gate.completed) {
+                        nextNodes = d.next_nodes || [];
+                        addDone(
+                            $("hSubject").textContent,
+                            d.confirmed_count,
+                            d.total_items,
+                            d.turn,
+                        );
+                    }
+                } catch (e) {
+                    hideTyping();
+                    addT("오류: " + e.message);
+                    console.error("[SEND]", e);
+                }
+                _sending = false;
+            }
+
+            // ── newSession: 유일하게 새 세션을 만드는 함수 ──
+            function newSession() {
+                $("thread").innerHTML = "";
+                scores = [];
+                window._dbgScores = [];
+                sid = null;
+                clItems = [];
+                clState = {};
+                nextNodes = [];
+                updateHeader();
+                localStorage.removeItem("ale_sid");
+                localStorage.removeItem("ale_node");
+                startNode(currentNodeId || "치매_개요");
+            }
+
+            // ── 세션 복원: 새로고침/페이지 진입 시 기존 대화 표시만, 새 세션 안 만듦 ──
+            async function tryRestoreOrStart() {
+                var savedSid = localStorage.getItem("ale_sid"),
+                    savedNode = localStorage.getItem("ale_node");
+                var params = new URLSearchParams(window.location.search);
+                var urlNode = params.get("node");
+                var isNew = params.get("new") === "1";
+                var action = params.get("action");
+
+                // 0. ?node=xxx&action=note → 노트 모달만 열기
+                if (urlNode && action === "note") {
+                    currentNodeId = urlNode;
+                    $("hSubject").textContent = urlNode;
+                    history.replaceState(
+                        null,
+                        "",
+                        "/student?node=" + encodeURIComponent(urlNode),
+                    );
+                    setTimeout(function () {
+                        showNotes();
+                    }, 300);
+                    return;
+                }
+
+                // 1. ?node=xxx&new=1 → 새 세션 (detail.js NEW 버튼에서만 이 URL 생성)
+                if (urlNode && isNew) {
+                    currentNodeId = urlNode;
+                    $("hSubject").textContent = urlNode;
+                    startNode(urlNode);
+                    // URL에서 new=1 제거 (새로고침 시 다시 새 세션 만들지 않도록)
+                    history.replaceState(
+                        null,
+                        "",
+                        "/student?node=" + encodeURIComponent(urlNode),
+                    );
+                    return;
+                }
+
+                // 2. ?node=xxx (new 없음) → 해당 노드의 마지막 세션 복원 시도
+                if (urlNode) {
+                    currentNodeId = urlNode;
+                    $("hSubject").textContent = urlNode;
+                    // 해당 노드의 세션이 localStorage에 있으면 복원
+                    if (savedNode === urlNode && savedSid) {
+                        await restoreSession(savedSid, urlNode);
+                        return;
+                    }
+                    // 없으면 빈 화면 + 첫 send 시 새 세션
+                    sid = null;
+                    return;
+                }
+
+                // 3. localStorage에 세션 있으면 → 복원
+                if (savedSid) {
+                    await restoreSession(savedSid, savedNode);
+                    return;
+                }
+
+                // 4. 아무것도 없으면 → 빈 화면 (대시보드에서 진입 유도)
+                currentNodeId = "치매_개요";
+                $("hSubject").textContent = "치매_개요";
+                addT("학습을 시작하려면 대시보드에서 과목을 선택하세요.");
+            }
+
+            // ── 세션 복원 헬퍼: 대화 표시 + 인메모리 세션 즉시 복구 ──
+            async function restoreSession(sessionId, nodeId) {
+                try {
+                    var r = await fetch(
+                        "/test/restore?session_id=" + sessionId,
+                    );
+                    var d = await r.json();
+                    if (d.conversation && d.conversation.length > 0) {
+                        currentNodeId = d.node_id || nodeId || "치매_개요";
+                        $("hSubject").textContent = currentNodeId;
+                        loadEditorialHeader(currentNodeId);
+
+                        // 체크리스트 items 복원
+                        if (d.checklist_items && d.checklist_items.length) {
+                            clItems = d.checklist_items;
+                        }
+
+                        // 체크리스트 상태 복원 (last_state에서)
+                        var restoredCl = {};
+                        if (d.last_state && d.last_state.checklist_state) {
+                            try {
+                                restoredCl = JSON.parse(
+                                    d.last_state.checklist_state,
+                                );
+                            } catch (e) {}
+                        }
+
+                        // checklist_state가 없으면 items로 초기 상태 생성
+                        if (
+                            Object.keys(restoredCl).length === 0 &&
+                            clItems.length > 0
+                        ) {
+                            clItems.forEach(function (it) {
+                                restoredCl[it.id] = "not_yet";
+                            });
+                        }
+
+                        // 상태 반영 (진행바 + 디버그)
+                        clState = restoredCl;
+                        updateHeader();
+                        updateDebug({
+                            checklist: restoredCl,
+                            score: d.last_state ? d.last_state.mastery : null,
+                            turn: d.last_state ? d.last_state.turn : 0,
+                            moving_avg: d.last_state
+                                ? d.last_state.moving_avg
+                                : null,
+                            trend: d.last_state ? d.last_state.trend : null,
+                        });
+
+                        // 대화 표시
+                        d.conversation.forEach(function (msg) {
+                            if (msg.role === "user") addU(msg.content);
+                            else addT(clean(msg.content));
+                        });
+
+                        // score_history 복원
+                        if (d.score_history && d.score_history.length) {
+                            scores = d.score_history;
+                            window._dbgScores = d.score_history.slice();
+                        }
+
+                        // ── 인메모리 세션 복구 (기존 session_id 재사용, 새 세션 안 만듦) ──
+                        var restoreHistory = d.conversation.map(function (msg) {
+                            return {
+                                role:
+                                    msg.role === "user" ? "user" : "assistant",
+                                content: msg.content,
+                            };
+                        });
+                        try {
+                            var sr = await fetch("/test/resume", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    session_id: sessionId,
+                                    node_id: currentNodeId,
+                                    restore_history: restoreHistory,
+                                    restore_checklist: restoredCl,
+                                }),
+                            });
+                            var sd = await sr.json();
+                            if (sd.session_id) {
+                                sid = sd.session_id; // 기존 sessionId와 동일
+                                localStorage.setItem("ale_sid", sid);
+                                localStorage.setItem("ale_node", currentNodeId);
+                                if (
+                                    sd.checklist_items &&
+                                    sd.checklist_items.length
+                                )
+                                    clItems = sd.checklist_items;
+                                console.log(
+                                    "[RESTORE] inmemory resumed, sid=" +
+                                        sid +
+                                        " (no new session created)",
+                                );
+                            }
+                        } catch (e) {
+                            console.error(
+                                "[RESTORE] inmemory resume failed:",
+                                e,
+                            );
+                        }
+                    }
+                } catch (e) {
+                    console.error("[RESTORE] failed:", e);
+                }
+            }
+
+            function autoResize(el) {
+                el.style.height = "auto";
+                el.style.height = Math.min(100, el.scrollHeight) + "px";
+            }
+            function toggleDebug() {
+                $("dbgPanel").classList.toggle("open");
+            }
+            function updateDebug(d) {
+                if (!d) return;
+                $("dbgScore").textContent =
+                    d.score != null ? d.score.toFixed(2) : "—";
+                $("dbgBrief").textContent = d.brief || "—";
+                $("dbgAvg").textContent =
+                    d.moving_avg != null ? d.moving_avg.toFixed(3) : "—";
+                $("dbgTrend").textContent =
+                    d.trend != null
+                        ? (d.trend >= 0 ? "+" : "") + d.trend.toFixed(2)
+                        : "—";
+                $("dbgTurn").textContent = d.turn || 0;
+                $("dbgStruggle").textContent = d.struggle || "—";
+                $("dbgBkt").textContent =
+                    d.bkt_mastery != null ? d.bkt_mastery.toFixed(4) : "—";
+                if (d.gate) {
+                    $("dbgGateA").textContent = d.gate.gate_a ? "✓" : "✗";
+                    $("dbgGateA").style.color = d.gate.gate_a
+                        ? "#14b8a6"
+                        : "#f43f5e";
+                    $("dbgGateB").textContent = d.gate.gate_b ? "✓" : "✗";
+                    $("dbgGateB").style.color = d.gate.gate_b
+                        ? "#14b8a6"
+                        : "#f43f5e";
+                    $("dbgCompleted").textContent = d.gate.completed
+                        ? "✓"
+                        : "✗";
+                    $("dbgCompleted").style.color = d.gate.completed
+                        ? "#14b8a6"
+                        : "#f43f5e";
+                }
+                if (d.checklist) {
+                    var items = Object.entries(d.checklist);
+                    $("dbgChecklist").innerHTML = items
+                        .map(function (e) {
+                            var done = e[1] === "confirmed";
+                            var label = "";
+                            for (var i = 0; i < clItems.length; i++) {
+                                if (clItems[i].id === e[0]) {
+                                    label = clItems[i].label;
+                                    break;
+                                }
+                            }
+                            return (
+                                '<div class="dbg-cl-item" style="flex-wrap:wrap"><span class="dbg-cl-dot ' +
+                                (done ? "done" : "not") +
+                                '"></span><span class="k" style="font-weight:700">' +
+                                e[0] +
+                                '</span><span class="v" style="margin-left:auto;color:' +
+                                (done ? "#14b8a6" : "var(--ink3)") +
+                                '">' +
+                                e[1] +
+                                "</span>" +
+                                (label
+                                    ? '<div style="width:100%;padding-left:14px;font-size:10px;color:var(--ink3);line-height:1.4;margin-top:2px">' +
+                                      label +
+                                      "</div>"
+                                    : "") +
+                                "</div>"
+                            );
+                        })
+                        .join("");
+                }
+                if (d.score != null && typeof d.score === "number") {
+                    if (!window._dbgScores) window._dbgScores = [];
+                    window._dbgScores.push(d.score);
+                    $("dbgScoreBar").innerHTML = window._dbgScores
+                        .map(function (s, i) {
+                            var h = Math.max(3, s * 40);
+                            var c =
+                                s >= 0.7
+                                    ? "var(--teal)"
+                                    : s >= 0.4
+                                      ? "#4f6af6"
+                                      : "#f43f5e";
+                            var op =
+                                i === window._dbgScores.length - 1 ? 1 : 0.4;
+                            return (
+                                '<div style="height:' +
+                                h +
+                                "px;background:" +
+                                c +
+                                ";opacity:" +
+                                op +
+                                '"></div>'
+                            );
+                        })
+                        .join("");
+                    $("dbgScoreList").innerHTML = window._dbgScores
+                        .map(function (s, i) {
+                            return (
+                                "T" +
+                                (i + 1) +
+                                ": " +
+                                s.toFixed(2) +
+                                (i === window._dbgScores.length - 1 ? " ←" : "")
+                            );
+                        })
+                        .join(" · ");
+                }
+                var strMap = {
+                    unproductive: ["⚠ 정체", "up"],
+                    productive: ["▲ 접근중", "pr"],
+                    breakthrough: ["★ 돌파", "bt"],
+                    comfort: ["● 완료임박", "co"],
+                    too_early: ["… 대기", "te"],
+                };
+                var strInfo = strMap[d.struggle] || strMap.too_early;
+                $("dbgStrBadge").textContent = strInfo[0];
+                $("dbgStrBadge").className = "str-badge " + strInfo[1];
+                if (d.moving_avg != null)
+                    $("dbgAvg2").textContent = d.moving_avg.toFixed(3);
+                if (d.trend != null)
+                    $("dbgTrend2").textContent =
+                        (d.trend >= 0 ? "+" : "") + d.trend.toFixed(2);
+                if (d.usage) {
+                    $("dbgCost").textContent =
+                        "$" + (d.usage.turn_cost_usd || 0).toFixed(4);
+                    $("dbgTokens").textContent =
+                        "in:" +
+                        (d.usage.analyst_tokens
+                            ? d.usage.analyst_tokens.in
+                            : 0) +
+                        " out:" +
+                        (d.usage.analyst_tokens
+                            ? d.usage.analyst_tokens.out
+                            : 0);
+                }
+                $("dbgJson").textContent = JSON.stringify(d, null, 2);
+            }
+            function toggleMenu() {
+                $("menuDD").classList.toggle("open");
+                $("menuOverlay").classList.toggle("open");
+            }
+
+            (async function () {
+                try {
+                    var r = await fetch("/auth/me");
+                    if (!r.ok) {
+                        window.location.href = "/login";
+                        return;
+                    }
+                } catch (e) {
+                    window.location.href = "/login";
+                    return;
+                }
+                tryRestoreOrStart();
+            })();
+        </script>
+    </body>
+</html>
