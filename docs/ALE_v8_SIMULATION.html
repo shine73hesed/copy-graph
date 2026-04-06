@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>ALE v8 — 평가 프레임워크 시뮬레이션</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Pretendard:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&family=Material+Symbols+Outlined:wght@300&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink:#1a1a1a; --ink2:#555; --ink3:#888; --ink4:#bbb;
+  --paper:#fbfaf8; --paper2:#f5f3f0; --cream:#edeae4;
+  --accent:#c0582e; --accent-light:#faf0ea;
+  --teal:#14b8a6; --teal-bg:#ecfdf5; --teal-dim:#d1fae5;
+  --red:#ef4444; --red-bg:#fef2f2;
+  --blue:#3b82f6; --blue-bg:#eff6ff;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Pretendard',-apple-system,sans-serif;
+  --mono:'DM Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;overflow-x:hidden}
+::selection{background:var(--accent-light);color:var(--accent)}
+
+/* ── 레이아웃 ── */
+.app{max-width:960px;margin:0 auto;padding:24px 20px 80px}
+.top-bar{display:flex;align-items:center;gap:12px;padding:16px 0;border-bottom:1px solid var(--cream);margin-bottom:32px}
+.top-bar h1{font-family:var(--serif);font-size:28px;font-weight:300;letter-spacing:-0.5px}
+.top-bar .ver{font-family:var(--mono);font-size:11px;color:var(--accent);background:var(--accent-light);padding:2px 8px;border-radius:4px}
+
+/* ── 스테이지 네비게이션 ── */
+.stage-nav{display:flex;gap:4px;margin-bottom:32px;background:var(--paper2);border-radius:12px;padding:4px}
+.stage-tab{flex:1;padding:10px 8px;text-align:center;font-size:12px;font-weight:500;color:var(--ink3);border-radius:8px;cursor:pointer;transition:all .25s;position:relative}
+.stage-tab:hover{color:var(--ink2)}
+.stage-tab.active{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.stage-tab.done{color:var(--teal)}
+.stage-tab .num{display:block;font-family:var(--mono);font-size:10px;color:var(--ink4);margin-bottom:2px}
+
+/* ── 패널 ── */
+.panel{display:none;animation:fadeUp .4s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+/* ── 카드 ── */
+.card{background:#fff;border:1px solid var(--cream);border-radius:12px;padding:24px;margin-bottom:16px}
+.card-title{font-size:13px;font-weight:600;color:var(--ink2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.card-title .bloom-tag{font-family:var(--mono);font-size:10px;padding:2px 6px;border-radius:4px;font-weight:500}
+.bloom-remember{background:#dbeafe;color:#1d4ed8}
+.bloom-understand{background:#e0e7ff;color:#4338ca}
+.bloom-apply{background:#fef3c7;color:#92400e}
+.bloom-analyze{background:#fce7f3;color:#9d174d}
+
+.question{font-size:15px;line-height:1.7;margin-bottom:16px;color:var(--ink)}
+.options{display:flex;flex-direction:column;gap:8px}
+.opt{padding:12px 16px;border:1px solid var(--cream);border-radius:8px;font-size:14px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:10px}
+.opt:hover{border-color:var(--ink4);background:var(--paper2)}
+.opt.selected{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:500}
+.opt .radio{width:16px;height:16px;border:2px solid var(--ink4);border-radius:50%;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.opt.selected .radio{border-color:var(--accent);background:var(--accent)}
+.opt.selected .radio::after{content:'';width:6px;height:6px;background:#fff;border-radius:50%}
+
+textarea.sa{width:100%;min-height:100px;border:1px solid var(--cream);border-radius:8px;padding:12px;font-family:var(--sans);font-size:14px;line-height:1.6;resize:vertical;outline:none;transition:border .2s}
+textarea.sa:focus{border-color:var(--accent)}
+.timer{font-family:var(--mono);font-size:11px;color:var(--ink3);margin-top:8px}
+
+/* ── 버튼 ── */
+.btn{padding:10px 24px;border:none;border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{background:#333}
+.btn-primary:disabled{background:var(--ink4);cursor:not-allowed}
+.btn-secondary{background:var(--paper2);color:var(--ink2);border:1px solid var(--cream)}
+.btn-secondary:hover{background:var(--cream)}
+.btn-row{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
+
+/* ── 채점 결과 ── */
+.scoring{margin-top:16px;padding:16px;background:var(--paper2);border-radius:8px;font-size:13px}
+.scoring .concept-row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.concept-row .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.yes{background:var(--teal)}
+.dot.no{background:var(--red)}
+.score-result{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--accent);margin-top:12px}
+
+/* ── 대화 시뮬 ── */
+.chat-area{max-height:400px;overflow-y:auto;padding:16px 0}
+.msg{max-width:80%;margin-bottom:12px;animation:fadeUp .3s ease}
+.msg-t{margin-right:auto}
+.msg-t .bubble{background:var(--paper2);border-radius:2px 12px 12px 12px;padding:12px 16px;font-size:14px;line-height:1.7}
+.msg-u{margin-left:auto}
+.msg-u .bubble{background:var(--ink);color:#fff;border-radius:12px 12px 2px 12px;padding:12px 16px;font-size:14px;line-height:1.7}
+.msg .meta{font-family:var(--mono);font-size:10px;color:var(--ink3);margin-top:4px}
+.eval-box{margin-top:8px;padding:8px 12px;background:#fff;border:1px solid var(--cream);border-radius:6px;font-size:12px}
+.eval-box .ev-row{display:flex;align-items:center;gap:6px;padding:2px 0}
+.chat-input{display:flex;gap:8px;padding:12px 0;border-top:1px solid var(--cream);margin-top:8px}
+.chat-input input{flex:1;padding:10px 14px;border:1px solid var(--cream);border-radius:8px;font-size:14px;outline:none}
+.chat-input input:focus{border-color:var(--accent)}
+
+/* ── 프로그레스 ── */
+.progress-bar{height:4px;background:var(--cream);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.progress-fill{height:100%;background:var(--teal);border-radius:2px;transition:width .5s ease}
+
+/* ── 리포트 ── */
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.report-grid{grid-template-columns:1fr}}
+.report-card{background:#fff;border:1px solid var(--cream);border-radius:12px;padding:20px}
+.report-card h3{font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.gain-big{font-family:var(--serif);font-size:48px;font-weight:300;color:var(--teal);line-height:1}
+.gain-label{font-size:12px;color:var(--ink3);margin-top:4px}
+.bloom-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.bloom-bar .label{width:80px;font-size:12px;font-weight:500;color:var(--ink2)}
+.bloom-bar .bar{flex:1;height:20px;background:var(--cream);border-radius:4px;overflow:hidden;position:relative}
+.bloom-bar .fill-pre{position:absolute;height:100%;background:var(--ink4);border-radius:4px;transition:width .6s}
+.bloom-bar .fill-post{position:absolute;height:100%;background:var(--teal);border-radius:4px;transition:width .6s}
+.bloom-bar .val{font-family:var(--mono);font-size:11px;width:60px;text-align:right;color:var(--ink2)}
+.cl-item{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px}
+.cl-item .check{font-size:14px}
+.cl-item .turn{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.clinical-level{display:flex;gap:4px;margin-top:8px}
+.cl-dot{width:32px;height:8px;border-radius:4px;background:var(--cream)}
+.cl-dot.filled{background:var(--accent)}
+
+/* ── Reading 시뮬 ── */
+.reading-content{max-height:350px;overflow-y:auto;padding:20px;background:#fff;border:1px solid var(--cream);border-radius:12px;font-size:14px;line-height:1.8}
+.reading-content h2{font-family:var(--serif);font-size:22px;font-weight:400;margin:16px 0 8px;color:var(--accent)}
+.reading-timer{display:flex;align-items:center;gap:12px;padding:12px 0;font-size:13px}
+.reading-timer .time{font-family:var(--mono);font-size:14px;font-weight:500}
+
+/* ── 설명 박스 ── */
+.explainer{padding:16px 20px;background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;margin-bottom:20px;font-size:13px;line-height:1.7;color:#1e3a5f}
+.explainer strong{color:var(--blue)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top-bar">
+    <h1>ALE v8 평가 프레임워크</h1>
+    <span class="ver">SIMULATION</span>
+  </div>
+
+  <!-- 스테이지 네비게이션 -->
+  <div class="stage-nav">
+    <div class="stage-tab active" data-stage="pre" onclick="goStage('pre')">
+      <span class="num">Stage 1</span>Pre-test
+    </div>
+    <div class="stage-tab" data-stage="learn" onclick="goStage('learn')">
+      <span class="num">Stage 2</span>Learning
+    </div>
+    <div class="stage-tab" data-stage="post" onclick="goStage('post')">
+      <span class="num">Stage 3</span>Post-test
+    </div>
+    <div class="stage-tab" data-stage="report" onclick="goStage('report')">
+      <span class="num">Stage 4</span>Report
+    </div>
+  </div>
+
+  <!-- ====== STAGE 1: PRE-TEST ====== -->
+  <div class="panel active" id="panel-pre">
+    <div class="explainer">
+      <strong>Stage 1: 사전 평가 (Pre-Assessment)</strong><br>
+      학습 전 기존 지식 수준을 측정합니다. Bloom 수준별 문항(Remember → Understand → Apply)으로 구성되며, 결과에 따라 Tutoring 모드의 시작점이 조정됩니다. <strong>채점 원칙: LLM은 개념 유무만 판별(binary), 점수는 코드가 계산합니다.</strong>
+    </div>
+
+    <!-- Q1 MCQ -->
+    <div class="card" id="preQ1">
+      <div class="card-title"><span class="bloom-tag bloom-remember">Remember</span> 문항 1/3</div>
+      <div class="question">치매의 가장 정확한 정의를 고르세요.</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'preQ1')"><span class="radio"></span>A) 노화에 따른 자연스러운 기억력 감퇴</div>
+        <div class="opt" onclick="selectOpt(this,'preQ1')" data-correct="1"><span class="radio"></span>B) 후천적 인지기능 저하로 일상생활에 장애가 있는 증후군</div>
+        <div class="opt" onclick="selectOpt(this,'preQ1')"><span class="radio"></span>C) 뇌의 특정 부위가 손상되어 발생하는 단일 질환</div>
+        <div class="opt" onclick="selectOpt(this,'preQ1')"><span class="radio"></span>D) 일시적인 혼란과 기억 장애 상태</div>
+      </div>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <!-- Q2 MCQ -->
+    <div class="card" id="preQ2">
+      <div class="card-title"><span class="bloom-tag bloom-understand">Understand</span> 문항 2/3</div>
+      <div class="question">치매를 '증후군(syndrome)'이라 부르는 이유로 가장 적절한 것은?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'preQ2')"><span class="radio"></span>A) 원인이 밝혀지지 않았기 때문에</div>
+        <div class="opt" onclick="selectOpt(this,'preQ2')" data-correct="1"><span class="radio"></span>B) 다양한 원인 질환에 의해 유사한 증상 묶음이 나타나기 때문에</div>
+        <div class="opt" onclick="selectOpt(this,'preQ2')"><span class="radio"></span>C) 증상이 시간에 따라 변하기 때문에</div>
+        <div class="opt" onclick="selectOpt(this,'preQ2')"><span class="radio"></span>D) 진단 기준이 표준화되지 않았기 때문에</div>
+      </div>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <!-- Q3 서술형 -->
+    <div class="card" id="preQ3">
+      <div class="card-title"><span class="bloom-tag bloom-apply">Apply</span> 문항 3/3 — 서술형</div>
+      <div class="question">73세 할머니가 약 먹는 것을 자꾸 잊습니다. 가족은 '요즘 깜빡깜빡한다'고 합니다. 이 분이 치매인지 단순 건망증인지 어떻게 구분하시겠어요? 근거를 들어 설명해주세요.</div>
+      <textarea class="sa" id="preQ3Answer" placeholder="여기에 답변을 입력하세요..."></textarea>
+      <div class="timer" id="preQ3Timer">⏱ 응답 시간: 0초</div>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="submitPreTest()">사전 평가 제출 →</button>
+    </div>
+  </div>
+
+  <!-- ====== STAGE 2: LEARNING ====== -->
+  <div class="panel" id="panel-learn">
+    <div class="explainer">
+      <strong>Stage 2: 학습 (Learning)</strong><br>
+      두 가지 모드를 전환하여 비교할 수 있습니다. <strong>Reading</strong>: 동일 콘텐츠를 자율 학습. <strong>Tutoring</strong>: 동일 콘텐츠 + Socratic 대화. 차이는 대화 유무 하나만. 채점은 매 턴 binary 추출 → matched/total로 코드가 계산합니다.
+    </div>
+
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+      <button class="btn btn-secondary" id="btnReading" onclick="switchMode('reading')" style="flex:1">📖 Reading Mode</button>
+      <button class="btn btn-primary" id="btnTutoring" onclick="switchMode('tutoring')" style="flex:1">💬 Tutoring Mode</button>
+    </div>
+
+    <!-- Reading -->
+    <div id="mode-reading" style="display:none">
+      <div class="reading-timer">
+        <span>경과:</span><span class="time" id="readingTime">0:00</span>
+        <span style="color:var(--ink3)">/ 최소 2:00</span>
+        <div style="flex:1"><div class="progress-bar"><div class="progress-fill" id="readingProgress" style="width:0%"></div></div></div>
+      </div>
+      <div class="reading-content">
+        <h2>치매의 정의</h2>
+        <p><strong>치매(dementia)</strong>는 후천적으로 인지기능이 저하되어 일상생활에 장애가 있는 <em>증후군</em>을 말합니다. 단일 질환이 아니라, 다양한 원인 질환에 의해 유사한 증상 묶음이 나타나는 상태입니다.</p>
+        <h2>핵심 진단 기준</h2>
+        <p>① <strong>후천적</strong> — 이전에 정상이었던 인지기능이 저하<br>
+        ② <strong>다영역 침범</strong> — 기억력뿐 아니라 언어, 실행기능, 시공간 능력 등 복수 영역<br>
+        ③ <strong>ADL 장애</strong> — 일상생활 수행 능력(요리, 금전관리, 운전 등)에 지장<br>
+        ④ <strong>증후군</strong> — 알츠하이머, 혈관성, 루이체 등 다양한 원인 → 원인 감별 필요</p>
+        <h2>건망증과의 차이</h2>
+        <p>건망증은 힌트를 주면 기억이 나며 ADL에 지장이 없지만, 치매는 사건 자체를 잊고 일상생활에 장애가 발생합니다.</p>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="readingDone" onclick="completeReading()" disabled>학습 완료 → Post-test</button>
+      </div>
+    </div>
+
+    <!-- Tutoring -->
+    <div id="mode-tutoring" style="display:none">
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div style="flex:1">
+          <div class="progress-bar"><div class="progress-fill" id="clProgress" style="width:0%"></div></div>
+          <div style="font-size:11px;color:var(--ink3);font-family:var(--mono)" id="clCount">체크리스트: 0/5 confirmed</div>
+        </div>
+      </div>
+      <div class="chat-area" id="chatArea"></div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="답변을 입력하세요..." onkeydown="if(event.key==='Enter')sendChat()"/>
+        <button class="btn btn-primary" onclick="sendChat()">전송</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STAGE 3: POST-TEST ====== -->
+  <div class="panel" id="panel-post">
+    <div class="explainer">
+      <strong>Stage 3: 사후 평가 (Post-Assessment)</strong><br>
+      독립 환경(튜터 없음)에서 <strong>새로운 사례</strong>에 적용합니다. Pre-test와 동형(Form B)이되 다른 문항입니다. 임상 사례에 대해 C1~C4 근거를 들어 종합 판단하며, 임상 루브릭(Level 1~5)이 코드에 의해 자동 결정됩니다.
+    </div>
+
+    <div class="card" id="postQ1">
+      <div class="card-title"><span class="bloom-tag bloom-remember">Remember</span> 문항 1/4</div>
+      <div class="question">치매의 가장 흔한 원인 질환은?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'postQ1')"><span class="radio"></span>A) 혈관성 치매</div>
+        <div class="opt" onclick="selectOpt(this,'postQ1')"><span class="radio"></span>B) 루이체 치매</div>
+        <div class="opt" onclick="selectOpt(this,'postQ1')" data-correct="1"><span class="radio"></span>C) 알츠하이머병</div>
+        <div class="opt" onclick="selectOpt(this,'postQ1')"><span class="radio"></span>D) 전두측두엽 치매</div>
+      </div>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <div class="card" id="postQ2">
+      <div class="card-title"><span class="bloom-tag bloom-understand">Understand</span> 문항 2/4</div>
+      <div class="question">치매 진단에서 '후천적'이라는 조건이 중요한 이유는?</div>
+      <div class="options">
+        <div class="opt" onclick="selectOpt(this,'postQ2')" data-correct="1"><span class="radio"></span>A) 선천적 지적장애와 구분하기 위해</div>
+        <div class="opt" onclick="selectOpt(this,'postQ2')"><span class="radio"></span>B) 치료 가능성을 판단하기 위해</div>
+        <div class="opt" onclick="selectOpt(this,'postQ2')"><span class="radio"></span>C) 발병 시기를 정확히 알기 위해</div>
+        <div class="opt" onclick="selectOpt(this,'postQ2')"><span class="radio"></span>D) 유전 여부를 확인하기 위해</div>
+      </div>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <div class="card" id="postQ3">
+      <div class="card-title"><span class="bloom-tag bloom-apply">Apply + Clinical</span> 문항 3/4 — 임상 사례</div>
+      <div class="question">68세 김할아버지. 3개월 전부터 운전 중 길을 자주 잃고, 은행 ATM 사용법을 까먹었습니다. 배우자는 '원래 요리를 잘 했는데 이제 라면도 못 끓인다'고 합니다. 지난주에는 머리를 감고 나서 샴푸를 또 짰습니다.<br><br>이 분이 치매인지 판단하시고, <strong>근거를 들어</strong> 설명해주세요.</div>
+      <textarea class="sa" id="postQ3Answer" placeholder="C1~C4 근거를 들어 판단하세요..."></textarea>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <div class="card" id="postQ4">
+      <div class="card-title"><span class="bloom-tag bloom-analyze">Analyze</span> 문항 4/4</div>
+      <div class="question">위 김할아버지에게 MMSE를 실시한다면, 어떤 인지 영역에서 점수가 특히 낮을 것으로 예상하나요? 사례의 증상과 연결하여 설명해주세요.</div>
+      <textarea class="sa" id="postQ4Answer" placeholder="MMSE 영역과 증상을 연결하세요..."></textarea>
+      <div class="scoring" style="display:none"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="submitPostTest()">사후 평가 제출 →</button>
+    </div>
+  </div>
+
+  <!-- ====== STAGE 4: REPORT ====== -->
+  <div class="panel" id="panel-report">
+    <div class="explainer">
+      <strong>Stage 4: 성적표 (Report)</strong><br>
+      Pre vs Post를 비교하여 gain을 계산하고, Bloom 수준별 분리 분석 결과를 시각화합니다. 임상 루브릭은 C1~C4 언급 수 + 구조화 + 감별한계에 의해 코드가 자동으로 Level을 결정합니다.
+    </div>
+
+    <div class="report-grid" id="reportGrid">
+      <!-- JS에서 동적 생성 -->
+    </div>
+  </div>
+</div>
+
+<script>
+// ── 상태 ──
+const state = {
+  phase: 'pre',
+  preScores: {},
+  postScores: {},
+  preTotal: 0,
+  postTotal: 0,
+  chatTurn: 0,
+  checklist: {C1:false,C2:false,C3:false,C4:false,C5:false},
+  mode: 'tutoring',
+  readingSec: 0,
+  readingInterval: null,
+  preStartTime: Date.now()
+};
+
+// ── 스테이지 전환 ──
+function goStage(s) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-'+s).classList.add('active');
+  document.querySelector(`[data-stage="${s}"]`).classList.add('active');
+  state.phase = s;
+}
+
+// ── MCQ 선택 ──
+function selectOpt(el, qId) {
+  document.querySelectorAll(`#${qId} .opt`).forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ── Pre-test 제출 ──
+function submitPreTest() {
+  // Q1 MCQ
+  const q1sel = document.querySelector('#preQ1 .opt.selected');
+  const q1score = q1sel && q1sel.dataset.correct ? 1.0 : 0.0;
+  showMCQResult('preQ1', q1score);
+
+  // Q2 MCQ
+  const q2sel = document.querySelector('#preQ2 .opt.selected');
+  const q2score = q2sel && q2sel.dataset.correct ? 1.0 : 0.0;
+  showMCQResult('preQ2', q2score);
+
+  // Q3 서술형 — binary 추출 시뮬레이션
+  const q3answer = document.getElementById('preQ3Answer').value;
+  const q3result = binaryExtract(q3answer, [
+    {key:'후천적',keywords:['후천','이전에 정상','나중에','원래는']},
+    {key:'다영역',keywords:['다영역','여러 영역','기억력 외','언어','실행','시공간']},
+    {key:'ADL',keywords:['일상','ADL','생활','요리','금전','운전','밥']},
+    {key:'감별',keywords:['건망증','감별','구분','차이','힌트']}
+  ]);
+  showBinaryResult('preQ3', q3result, [
+    {key:'후천적',label:'후천적 인지 저하',w:0.2},
+    {key:'다영역',label:'다영역 침범 여부',w:0.2},
+    {key:'ADL',label:'ADL 장애 여부',w:0.3},
+    {key:'감별',label:'건망증과의 감별 기준',w:0.3}
+  ]);
+
+  // pre_score 계산 (가중 평균)
+  const preScore = (q1score*1.0 + q2score*1.5 + q3result.score*2.0) / (1.0+1.5+2.0);
+  state.preTotal = preScore;
+  state.preScores = {remember:q1score, understand:q2score, apply:q3result.score};
+
+  // 다음 스테이지 활성화
+  setTimeout(() => {
+    document.querySelector('[data-stage="pre"]').classList.add('done');
+    goStage('learn');
+    if (state.mode === 'tutoring') initChat();
+  }, 800);
+}
+
+// ── Binary 추출 시뮬레이션 ──
+function binaryExtract(text, concepts) {
+  const lower = text.toLowerCase().replace(/\s/g,'');
+  const results = {};
+  let matched = 0;
+  concepts.forEach(c => {
+    const found = c.keywords.some(k => lower.includes(k.replace(/\s/g,'')));
+    results[c.key] = found;
+    if (found) matched++;
+  });
+  return {results, matched, total:concepts.length, score: matched/concepts.length};
+}
+
+// ── MCQ 결과 표시 ──
+function showMCQResult(qId, score) {
+  const box = document.querySelector(`#${qId} .scoring`);
+  box.style.display = 'block';
+  box.innerHTML = `<div style="display:flex;align-items:center;gap:8px">
+    <span style="font-size:18px">${score===1?'✅':'❌'}</span>
+    <span>MCQ 정답 매칭: <strong>${score===1?'정답':'오답'}</strong></span>
+    <span class="score-result" style="margin:0;margin-left:auto;font-size:14px">${score.toFixed(1)}</span>
+  </div><div style="font-size:11px;color:var(--ink3);margin-top:4px">LLM 불필요 — 코드가 정답 키 매칭</div>`;
+}
+
+// ── Binary 추출 결과 표시 ──
+function showBinaryResult(qId, result, rubric) {
+  const box = document.querySelector(`#${qId} .scoring`);
+  box.style.display = 'block';
+  let html = '<div style="font-size:11px;color:var(--blue);margin-bottom:8px;font-weight:600">📋 LLM Binary 추출 결과 (LLM은 yes/no만 판별, 점수는 코드가 계산)</div>';
+  rubric.forEach(r => {
+    const yes = result.results[r.key];
+    html += `<div class="concept-row"><span class="dot ${yes?'yes':'no'}"></span><span>${r.label}</span><span style="margin-left:auto;font-family:var(--mono);font-size:11px;color:${yes?'var(--teal)':'var(--red)'}">${yes?'yes':'no'}</span><span style="font-family:var(--mono);font-size:10px;color:var(--ink3);margin-left:8px">×${r.w}</span></div>`;
+  });
+  html += `<div class="score-result">matched ${result.matched}/${result.total} → score = ${result.score.toFixed(2)}</div>`;
+  html += `<div style="font-size:11px;color:var(--ink3)">공식: Σ(matched × weight) / Σ(weight)</div>`;
+  box.innerHTML = html;
+}
+
+// ── Mode 전환 ──
+function switchMode(m) {
+  state.mode = m;
+  document.getElementById('mode-reading').style.display = m==='reading'?'block':'none';
+  document.getElementById('mode-tutoring').style.display = m==='tutoring'?'block':'none';
+  document.getElementById('btnReading').className = 'btn '+(m==='reading'?'btn-primary':'btn-secondary');
+  document.getElementById('btnTutoring').className = 'btn '+(m==='tutoring'?'btn-primary':'btn-secondary');
+  if (m==='reading') startReadingTimer();
+  if (m==='tutoring' && state.chatTurn===0) initChat();
+}
+
+// ── Reading 타이머 ──
+function startReadingTimer() {
+  if (state.readingInterval) return;
+  state.readingSec = 0;
+  state.readingInterval = setInterval(() => {
+    state.readingSec++;
+    const m = Math.floor(state.readingSec/60);
+    const s = state.readingSec%60;
+    document.getElementById('readingTime').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    const pct = Math.min(100, state.readingSec/120*100);
+    document.getElementById('readingProgress').style.width = pct+'%';
+    if (state.readingSec >= 120) document.getElementById('readingDone').disabled = false;
+  }, 1000);
+}
+function completeReading() {
+  clearInterval(state.readingInterval);
+  document.querySelector('[data-stage="learn"]').classList.add('done');
+  goStage('post');
+}
+
+// ── Tutoring 대화 시뮬 ──
+const chatScript = [
+  {tutor:"안녕하세요! 오늘은 치매에 대해 함께 알아볼게요. 🙂\n\n[Q] 혹시 '치매'라는 말을 들으면 가장 먼저 떠오르는 게 뭔가요?", checklist:{}, bloom:'remember'},
+  {
+    match: ['기억','잊','까먹'],
+    tutor:"맞아요, 기억력 문제가 떠오르죠! 그런데 기억력만 나빠지면 치매일까요?\n\n[Q] 치매에서 '기억력 말고' 또 어떤 능력이 떨어질 수 있을까요?",
+    checklist:{C1:true}, bloom:'understand',
+    concepts:{C1:true,C2:false,C3:false,C4:false,C5:false}
+  },
+  {
+    match: ['언어','실행','판단','시공간','계산'],
+    tutor:"훌륭해요! 기억력뿐 아니라 언어, 실행기능, 시공간 능력 등 **여러 영역**이 함께 떨어지는 거예요.\n\n[Q] 그러면 이렇게 여러 인지 기능이 떨어졌을 때, 어떤 문제가 일상에서 생길까요?",
+    checklist:{C1:true,C2:true}, bloom:'understand',
+    concepts:{C1:true,C2:true,C3:false,C4:false,C5:false}
+  },
+  {
+    match: ['일상','요리','운전','밥','생활','ADL','금전'],
+    tutor:"정확해요! 요리, 금전관리, 운전 같은 **일상생활 수행능력(ADL)**에 장애가 생기는 거죠. 이게 건망증과의 결정적 차이예요.\n\n[Q] 그럼 치매는 하나의 '병'인가요, 아니면 다른 개념일까요?",
+    checklist:{C1:true,C2:true,C3:true}, bloom:'apply',
+    concepts:{C1:true,C2:true,C3:true,C4:false,C5:false}
+  },
+  {
+    match: ['증후군','여러','원인','알츠하이머','혈관'],
+    tutor:"바로 그거예요! 치매는 단일 질환이 아니라 **증후군**이에요. 알츠하이머, 혈관성, 루이체 등 다양한 원인이 비슷한 증상을 만들어내죠.\n\n잘 배우셨어요! 제가 한 가지가 좀 헷갈리는데, 다시 설명해주실 수 있어요?\n[Q] 치매가 증후군이라는 게 왜 임상적으로 중요한 건가요?",
+    checklist:{C1:true,C2:true,C3:true,C4:true}, bloom:'analyze',
+    concepts:{C1:true,C2:true,C3:true,C4:true,C5:false}
+  },
+  {
+    match: ['감별','원인','검사','MMSE','확인','치료'],
+    tutor:"완벽해요! 증후군이기 때문에 **원인 감별**이 필요하고, 그에 따라 치료 방향이 달라지죠. 이해가 깊어지셨네요!\n\n[TOPIC_COMPLETE]",
+    checklist:{C1:true,C2:true,C3:true,C4:true,C5:true}, bloom:'analyze',
+    concepts:{C1:true,C2:true,C3:true,C4:true,C5:true}
+  }
+];
+
+function initChat() {
+  state.chatTurn = 0;
+  document.getElementById('chatArea').innerHTML = '';
+  addTutorMsg(chatScript[0].tutor, chatScript[0]);
+}
+
+function addTutorMsg(text, data) {
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'msg msg-t';
+  let evalHtml = '';
+  if (data && data.concepts) {
+    const entries = Object.entries(data.concepts);
+    const matched = entries.filter(([,v])=>v).length;
+    const total = entries.length;
+    const score = (matched/total).toFixed(2);
+    evalHtml = `<div class="eval-box">
+      <div style="font-size:10px;color:var(--blue);font-weight:600;margin-bottom:4px">📊 Binary 추출 → 코드 채점</div>
+      ${entries.map(([k,v])=>`<div class="ev-row"><span class="dot ${v?'yes':'no'}"></span><span style="font-size:11px">${k}</span><span style="font-family:var(--mono);font-size:10px;margin-left:auto;color:${v?'var(--teal)':'var(--ink4)'}">${v?'yes':'no'}</span></div>`).join('')}
+      <div style="font-family:var(--mono);font-size:12px;margin-top:6px;color:var(--accent);font-weight:600">score = ${matched}/${total} = ${score}</div>
+      <div style="font-size:10px;color:var(--ink3)">bloom: ${data.bloom}</div>
+    </div>`;
+  }
+  div.innerHTML = `<div class="bubble">${text.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\[Q\]/g,'<span style="color:var(--accent);font-weight:600">❓</span>')}</div>${evalHtml}`;
+  area.appendChild(div);
+  area.scrollTop = area.scrollHeight;
+
+  // 체크리스트 업데이트
+  if (data && data.checklist) {
+    Object.assign(state.checklist, data.checklist);
+    const confirmed = Object.values(state.checklist).filter(v=>v).length;
+    document.getElementById('clProgress').style.width = (confirmed/5*100)+'%';
+    document.getElementById('clCount').textContent = `체크리스트: ${confirmed}/5 confirmed`;
+  }
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  // 사용자 메시지
+  const area = document.getElementById('chatArea');
+  const div = document.createElement('div');
+  div.className = 'msg msg-u';
+  div.innerHTML = `<div class="bubble">${text}</div><div class="meta">Turn ${state.chatTurn+1} · ${text.length}자</div>`;
+  area.appendChild(div);
+
+  state.chatTurn++;
+  // 다음 스크립트 매칭
+  const next = chatScript[state.chatTurn];
+  if (!next) return;
+
+  const lower = text.toLowerCase();
+  const matched = !next.match || next.match.some(k => lower.includes(k));
+
+  setTimeout(() => {
+    if (matched) {
+      addTutorMsg(next.tutor, next);
+      if (next.tutor.includes('[TOPIC_COMPLETE]')) {
+        setTimeout(() => {
+          document.querySelector('[data-stage="learn"]').classList.add('done');
+          goStage('post');
+        }, 1500);
+      }
+    } else {
+      addTutorMsg("좋은 시도예요! 조금 더 생각해볼까요?\n\n[Q] " + chatScript[state.chatTurn-1].tutor.split('[Q]')[1], {});
+      state.chatTurn--; // 재시도
+    }
+  }, 600);
+  area.scrollTop = area.scrollHeight;
+}
+
+// ── Post-test 제출 ──
+function submitPostTest() {
+  // Q1 MCQ
+  const pq1 = document.querySelector('#postQ1 .opt.selected');
+  const pq1s = pq1 && pq1.dataset.correct ? 1.0 : 0.0;
+  showMCQResult('postQ1', pq1s);
+
+  // Q2 MCQ
+  const pq2 = document.querySelector('#postQ2 .opt.selected');
+  const pq2s = pq2 && pq2.dataset.correct ? 1.0 : 0.0;
+  showMCQResult('postQ2', pq2s);
+
+  // Q3 임상 사례 — binary 추출 + clinical level
+  const pq3a = document.getElementById('postQ3Answer').value;
+  const pq3r = binaryExtract(pq3a, [
+    {key:'후천적',keywords:['후천','3개월','최근','이전']},
+    {key:'다영역',keywords:['다영역','여러','기억','실행','시공간','길','ATM','요리']},
+    {key:'ADL',keywords:['일상','ADL','생활','요리','라면','운전','ATM']},
+    {key:'증후군',keywords:['증후군','원인','감별','알츠하이머']},
+    {key:'구조화',keywords:['첫째','둘째','①','②','따라서','결론']},
+    {key:'감별한계',keywords:['확정','어렵','추가','MMSE','검사','필요']}
+  ]);
+  // Clinical Level 자동 결정
+  const coreMatched = ['후천적','다영역','ADL','증후군'].filter(k=>pq3r.results[k]).length;
+  const hasStructure = pq3r.results['구조화'];
+  const hasLimit = pq3r.results['감별한계'];
+  let clinLevel = 1, clinScore = 0.2;
+  if (coreMatched>=4 && hasStructure && hasLimit) { clinLevel=5; clinScore=1.0; }
+  else if (coreMatched>=4 && hasStructure) { clinLevel=4; clinScore=0.8; }
+  else if (coreMatched>=2) { clinLevel=3; clinScore=0.6; }
+  else if (coreMatched>=1) { clinLevel=2; clinScore=0.4; }
+
+  showClinicalResult('postQ3', pq3r, [
+    {key:'후천적',label:'후천적 발생',w:0.15},
+    {key:'다영역',label:'다영역 침범',w:0.20},
+    {key:'ADL',label:'ADL 장애',w:0.25},
+    {key:'증후군',label:'증후군/감별',w:0.15},
+    {key:'구조화',label:'구조화된 논리',w:0.15},
+    {key:'감별한계',label:'감별 한계 인식',w:0.10}
+  ], clinLevel, clinScore);
+
+  // Q4 Analyze
+  const pq4a = document.getElementById('postQ4Answer').value;
+  const pq4r = binaryExtract(pq4a, [
+    {key:'기억력',keywords:['기억','회상','등록','recall']},
+    {key:'실행기능',keywords:['실행','주의','집중','계획','ATM']},
+    {key:'시공간',keywords:['시공간','길','방향','운전','지남력']},
+    {key:'매칭',keywords:['요리','라면','샴푸','길을 잃']}
+  ]);
+  showBinaryResult('postQ4', pq4r, [
+    {key:'기억력',label:'기억력 영역 예측',w:0.25},
+    {key:'실행기능',label:'실행기능/주의집중',w:0.25},
+    {key:'시공간',label:'시공간 능력',w:0.25},
+    {key:'매칭',label:'사례-MMSE 매칭 근거',w:0.25}
+  ]);
+
+  state.postScores = {remember:pq1s, understand:pq2s, apply:pq3r.score, analyze:pq4r.score, clinical:clinScore, clinLevel};
+  state.postTotal = (pq1s*1.0 + pq2s*1.5 + pq3r.score*2.0 + pq4r.score*2.5) / (1.0+1.5+2.0+2.5);
+
+  setTimeout(() => {
+    document.querySelector('[data-stage="post"]').classList.add('done');
+    buildReport();
+    goStage('report');
+  }, 1000);
+}
+
+function showClinicalResult(qId, result, rubric, level, clinScore) {
+  showBinaryResult(qId, result, rubric);
+  const box = document.querySelector(`#${qId} .scoring`);
+  box.innerHTML += `
+    <div style="margin-top:12px;padding:12px;background:#fff;border:1px solid var(--cream);border-radius:8px">
+      <div style="font-size:11px;font-weight:600;color:var(--accent);margin-bottom:6px">🏥 임상 적용 루브릭 — Level ${level} (코드가 자동 결정)</div>
+      <div class="clinical-level">${[1,2,3,4,5].map(l=>`<div class="cl-dot${l<=level?' filled':''}"></div>`).join('')}</div>
+      <div style="font-size:11px;color:var(--ink3);margin-top:6px">C1~C4 matched: ${['후천적','다영역','ADL','증후군'].filter(k=>result.results[k]).length}/4 · structured: ${result.results['구조화']?'yes':'no'} · limitation: ${result.results['감별한계']?'yes':'no'}</div>
+      <div style="font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600;margin-top:4px">clinical_score = ${clinScore.toFixed(1)}</div>
+    </div>`;
+}
+
+// ── Report 생성 ──
+function buildReport() {
+  const gain = state.postTotal - state.preTotal;
+  const grid = document.getElementById('reportGrid');
+  grid.innerHTML = `
+    <!-- Gain -->
+    <div class="report-card">
+      <h3>학습 성장</h3>
+      <div style="display:flex;align-items:baseline;gap:12px">
+        <div class="gain-big">${gain>=0?'+':''}${gain.toFixed(2)}</div>
+        <div><div class="gain-label">pre: ${state.preTotal.toFixed(2)}</div><div class="gain-label">post: ${state.postTotal.toFixed(2)}</div></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="progress-bar" style="height:8px"><div class="progress-fill" style="width:${state.postTotal*100}%;background:var(--teal)"></div></div>
+      </div>
+    </div>
+
+    <!-- Clinical -->
+    <div class="report-card">
+      <h3>임상 적용 루브릭</h3>
+      <div style="font-family:var(--serif);font-size:36px;font-weight:300;color:var(--accent)">Level ${state.postScores.clinLevel||'—'}</div>
+      <div class="clinical-level" style="margin-top:8px">${[1,2,3,4,5].map(l=>`<div class="cl-dot${l<=(state.postScores.clinLevel||0)?' filled':''}"></div>`).join('')}</div>
+      <div style="font-size:12px;color:var(--ink3);margin-top:8px">clinical_score: ${(state.postScores.clinical||0).toFixed(1)}</div>
+    </div>
+
+    <!-- Bloom별 -->
+    <div class="report-card" style="grid-column:1/-1">
+      <h3>Bloom 수준별 분석</h3>
+      ${['remember','understand','apply','analyze'].map(b => {
+        const pre = state.preScores[b]!=null ? state.preScores[b] : null;
+        const post = state.postScores[b]!=null ? state.postScores[b] : null;
+        const label = {remember:'Remember',understand:'Understand',apply:'Apply',analyze:'Analyze'}[b];
+        const cls = 'bloom-'+b;
+        return `<div class="bloom-bar">
+          <div class="label"><span class="bloom-tag ${cls}">${label}</span></div>
+          <div class="bar">
+            ${pre!=null?`<div class="fill-pre" style="width:${pre*100}%"></div>`:''}
+            ${post!=null?`<div class="fill-post" style="width:${post*100}%"></div>`:''}
+          </div>
+          <div class="val">${pre!=null?pre.toFixed(1):'—'} → ${post!=null?post.toFixed(1):'—'}</div>
+        </div>`;
+      }).join('')}
+      <div style="display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--ink3)">
+        <span>■ <span style="color:var(--ink4)">Pre</span></span>
+        <span>■ <span style="color:var(--teal)">Post</span></span>
+      </div>
+    </div>
+
+    <!-- 채점 원칙 -->
+    <div class="report-card" style="grid-column:1/-1">
+      <h3>v8 채점 원칙</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px">
+        <div style="padding:12px;background:var(--red-bg);border-radius:8px">
+          <strong style="color:var(--red)">v7 (블랙박스)</strong><br>
+          LLM: "이 답변은 0.7점" → 저장<br>
+          <span style="color:var(--ink3)">왜 0.7인지 모름</span>
+        </div>
+        <div style="padding:12px;background:var(--teal-bg);border-radius:8px">
+          <strong style="color:var(--teal)">v8 (Binary 추출)</strong><br>
+          LLM: "C1:yes, C2:no, C3:yes" → 코드: 2/3=0.67<br>
+          <span style="color:var(--ink3)">투명, 재현 가능, 설명 가능</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Q3 타이머 ──
+let preQ3Sec = 0;
+setInterval(() => {
+  if (state.phase === 'pre') {
+    preQ3Sec++;
+    const el = document.getElementById('preQ3Timer');
+    if (el) el.textContent = `⏱ 응답 시간: ${preQ3Sec}초`;
+  }
+}, 1000);
+
+// 초기화
+switchMode('tutoring');
+</script>
+</body>
+</html>
